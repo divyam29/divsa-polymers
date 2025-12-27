@@ -4,22 +4,17 @@ from logging.handlers import RotatingFileHandler
 from datetime import datetime
 from flask import Flask, render_template, request, flash, redirect, url_for, send_from_directory, make_response
 from flask_sqlalchemy import SQLAlchemy
+from config import Config
 
 
 # App initialization with environment-friendly defaults
 app = Flask(__name__, static_folder='static', template_folder='templates')
-app.secret_key = os.environ.get('SECRET_KEY', 'divsa_secret_key')
 
-# Database configuration (use DATABASE_URL in production)
-# Explicitly set database path to workspace root
-db_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'database.db')
-db_uri = os.environ.get('DATABASE_URL')
-if not db_uri:
-    # Use forward slashes for SQLite URIs on Windows
-    db_uri = 'sqlite:///' + db_path.replace('\\', '/')
-app.config['SQLALCHEMY_DATABASE_URI'] = db_uri
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config['DEBUG'] = os.environ.get('FLASK_DEBUG', '0') == '1'
+# Load configuration from config.py (which reads .env)
+app.config.from_object(Config)
+
+# Expose secret key for extensions that read it directly
+app.secret_key = app.config.get('SECRET_KEY')
 
 db = SQLAlchemy(app)
 
