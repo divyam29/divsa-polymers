@@ -11,7 +11,13 @@ app = Flask(__name__, static_folder='static', template_folder='templates')
 app.secret_key = os.environ.get('SECRET_KEY', 'divsa_secret_key')
 
 # Database configuration (use DATABASE_URL in production)
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', 'sqlite:///database.db')
+# Explicitly set database path to workspace root
+db_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'database.db')
+db_uri = os.environ.get('DATABASE_URL')
+if not db_uri:
+    # Use forward slashes for SQLite URIs on Windows
+    db_uri = 'sqlite:///' + db_path.replace('\\', '/')
+app.config['SQLALCHEMY_DATABASE_URI'] = db_uri
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['DEBUG'] = os.environ.get('FLASK_DEBUG', '0') == '1'
 

@@ -3,20 +3,29 @@ document.addEventListener('DOMContentLoaded', function () {
     const distributorForm = document.getElementById('distributor-form');
     if (distributorForm) {
         distributorForm.addEventListener('submit', function (e) {
-            e.preventDefault(); // Prevent actual submission
+            e.preventDefault();
 
-            // Get form data
             const formData = new FormData(distributorForm);
-            const data = Object.fromEntries(formData.entries());
 
-            // Log data to console (in a real site, you'd send this to a server)
-            console.log('Form Submitted:', data);
-
-            // Show a success message
-            alert('Thank you for your inquiry! We will get back to you within 24 hours.');
-
-            // Clear the form
-            distributorForm.reset();
+            // Send the form to the Flask endpoint
+            fetch('/submit-inquiry', {
+                method: 'POST',
+                body: formData,
+                credentials: 'same-origin'
+            })
+            .then(response => {
+                // If server redirected, follow it in the browser so flashed messages render
+                if (response.redirected) {
+                    window.location = response.url;
+                } else {
+                    // Fallback: go to dealership section
+                    window.location = '/#dealership';
+                }
+            })
+            .catch(err => {
+                console.error('Form submit error:', err);
+                alert('There was an error submitting the form. Please try again later.');
+            });
         });
     }
 
