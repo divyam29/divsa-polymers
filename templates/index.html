@@ -436,1078 +436,320 @@
         .product-card-content .view-details i {
             transition: transform 0.3s ease;
             margin-left: 5px;
-        }
-
-        .product-card-content .view-details:hover i {
-            transform: translateX(5px);
-        }
-
-        /* --- 🔜 Coming Soon Section --- */
-        #coming-soon {
-            background-color: var(--dark-blue);
-            color: var(--white);
-            text-align: center;
-        }
-
-        #coming-soon h2 {
-            color: var(--white);
-            margin-bottom: 0.5rem;
-        }
-
-        #coming-soon p {
-            color: var(--text-light);
-            font-size: 1.1rem;
-            margin-bottom: 2rem;
-        }
-
-        /* --- 🏭 Infrastructure Section --- */
-        .infra-wrapper {
-            display: flex;
-            align-items: center;
-            gap: 50px;
-        }
-
-        .infra-image {
-            flex: 1;
-        }
-
-        .infra-image img {
-            border-radius: 12px;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
-        }
-
-        .infra-text {
-            flex: 1;
-        }
-
-        .infra-text .section-tag {
-            margin-bottom: 10px;
-        }
-
-        .infra-text h2 {
-            text-align: left;
-            margin-bottom: 1.5rem;
-        }
-
-        .infra-features {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 25px;
-            margin-top: 2rem;
-        }
-
-        .infra-feature-item {
-            display: flex;
-            align-items: flex-start;
-            gap: 15px;
-        }
-
-        .infra-feature-item i {
-            font-size: 1.8rem;
-            color: var(--primary-blue);
-            margin-top: 5px;
-        }
-
-        .infra-feature-item h4 {
-            font-size: 1.1rem;
-            color: var(--dark-blue);
-            margin-bottom: 0.25rem;
-        }
-
-        .infra-feature-item p {
-            font-size: 0.9rem;
-            margin-bottom: 0;
-        }
-
-        .infra-text .btn-dark {
-            margin-top: 2rem;
-        }
-
-        /* --- 🤝 Dealership Section --- */
-        #dealership {
-            background-color: var(--light-blue);
-        }
-
-        .dealership-wrapper {
-            display: flex;
-            align-items: flex-start;
-            gap: 50px;
-        }
-
-        .dealership-info {
-            flex: 1.2;
-        }
-
-        .dealership-info h2 {
-            text-align: left;
-            margin-bottom: 1.5rem;
-        }
-
-        .dealership-info .section-tag {
-            background-color: var(--white);
-        }
-
-        .dealership-benefits {
-            margin: 2rem 0;
-        }
-
-        .benefit-item {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            margin-bottom: 1.5rem;
-        }
-
-        .benefit-item i {
-            font-size: 1.5rem;
-            color: var(--accent-green);
-            background-color: var(--white);
-            padding: 10px;
-            border-radius: 50%;
-        }
-
-        .benefit-item h4 {
-            margin-bottom: 0;
-            font-size: 1.1rem;
-            color: var(--dark-blue);
-        }
-
-        .dealership-form-container {
-            flex: 1;
-            background: var(--white);
-            padding: 35px;
-            border-radius: 12px;
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
-        }
-
-        .dealership-form-container h3 {
-            font-size: 1.8rem;
-            color: var(--dark-blue);
-            text-align: center;
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        .form-group label {
-            display: block;
-            font-weight: 500;
-            margin-bottom: 8px;
-            font-size: 0.9rem;
-        }
-
-        .form-group input,
-        .form-group textarea {
-            width: 100%;
-            padding: 12px 15px;
-            border: 1px solid #ccc;
-            border-radius: 8px;
-            font-family: 'Poppins', sans-serif;
-            font-size: 1rem;
-        }
-
-        .form-group input:focus,
-        .form-group textarea:focus {
-            outline: none;
-            border-color: var(--primary-blue);
-            box-shadow: 0 0 0 2px var(--light-blue);
-        }
-
-        .form-group textarea {
-            resize: vertical;
-            min-height: 100px;
-        }
-
-        .form-submit-btn {
-            width: 100%;
-            padding: 15px;
-            font-size: 1.1rem;
-        }
-
-        .form-note {
-            text-align: center;
-            font-size: 0.9rem;
-            margin-top: 15px;
-        }
-
-        /* --- 🤔 Why Choose Us Section --- */
-        #why-choose-us {
-            background-color: var(--dark-blue);
-            color: var(--white);
-        }
-
-        #why-choose-us h2 {
-            color: var(--white);
-        }
-
-        #why-choose-us .section-subtitle {
-            text-align: center;
-            color: var(--text-light);
-            max-width: 600px;
-            margin: -1rem auto 3rem auto;
-        }
-
-        .why-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 30px;
-        }
-
-        .why-card {
-            background: #193755;
-            /* Slightly lighter than dark blue */
-            padding: 30px;
-            border-radius: 12px;
-            transition: background-color 0.3s ease;
-        }
-
-        .why-card:hover {
-            background-color: #2a4a6b;
-        }
-
-        .why-card i {
-            font-size: 2.5rem;
-            color: var(--accent-orange);
-            margin-bottom: 1rem;
-        }
-
-        .why-card h3 {
-            font-size: 1.4rem;
-            color: var(--white);
-            margin-bottom: 0.5rem;
-        }
-
-        .why-card p {
-            color: var(--text-light);
-            font-size: 0.95rem;
-            margin-bottom: 0;
-        }
-
-        /* --- 📊 Stats Bar --- */
-        #stats {
-            background-color: var(--grey);
-            padding: 50px 0;
-        }
-
-        .stats-bar-wrapper {
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            text-align: center;
-            flex-wrap: wrap;
-            gap: 20px;
-        }
-
-        .stats-bar-item {
-            flex: 1;
-            min-width: 150px;
-        }
-
-        .stats-bar-item h3 {
-            font-size: 2.8rem;
-            font-weight: 700;
-            color: var(--primary-blue);
-            margin-bottom: 0.25rem;
-        }
-
-        .stats-bar-item p {
-            font-size: 1.1rem;
-            color: var(--text-dark);
-            margin-bottom: 0;
-            font-weight: 500;
-        }
-
-        /* --- 🦶 Footer --- */
-        footer {
-            background-color: var(--dark-blue);
-            color: var(--text-light);
-            padding: 60px 0 20px 0;
-        }
-
-        .footer-grid {
-            display: grid;
-            grid-template-columns: 2fr 1fr 1.5fr 1.5fr;
-            gap: 40px;
-            margin-bottom: 40px;
-        }
-
-        .footer-logo {
-            font-size: 2rem;
-            font-weight: 700;
-            color: var(--white);
-            text-transform: uppercase;
-            margin-bottom: 1rem;
-        }
-
-        .footer-about p {
-            color: var(--text-light);
-            font-size: 0.95rem;
-            max-width: 300px;
-        }
-
-        .social-links {
-            display: flex;
-            gap: 15px;
-            margin-top: 1.5rem;
-        }
-
-        .social-links a {
-            color: var(--white);
-            font-size: 1.4rem;
-            transition: color 0.3s ease, transform 0.3s ease;
-        }
-
-        .social-links a:hover {
-            color: var(--accent-orange);
-            transform: scale(1.1);
-        }
-
-        .footer-col h4 {
-            font-size: 1.3rem;
-            color: var(--white);
-            margin-bottom: 1.5rem;
-        }
-
-        .footer-links {
-            list-style: none;
-        }
-
-        .footer-links li {
-            margin-bottom: 12px;
-        }
-
-        .footer-links a {
-            color: var(--text-light);
-            font-size: 1rem;
-            position: relative;
-            padding-left: 15px;
-        }
-
-        .footer-links a::before {
-            content: '\f105';
-            /* Font Awesome arrow */
-            font-family: "Font Awesome 6 Free";
-            font-weight: 900;
-            position: absolute;
-            left: 0;
-            top: 2px;
-            transition: transform 0.3s ease;
-        }
-
-        .footer-links a:hover {
-            color: var(--accent-orange);
-        }
-
-        .footer-links a:hover::before {
-            transform: translateX(3px);
-        }
-
-        .footer-contact li {
-            display: flex;
-            align-items: flex-start;
-            gap: 12px;
-            margin-bottom: 15px;
-            font-size: 1rem;
-            color: var(--text-light);
-        }
-
-        .footer-contact i {
-            font-size: 1.1rem;
-            margin-top: 5px;
-            color: var(--accent-orange);
-        }
-
-        .footer-contact a {
-            color: var(--text-light);
-        }
-
-        .footer-contact a:hover {
-            color: var(--accent-orange);
-        }
-
-        .copyright {
-            text-align: center;
-            padding-top: 20px;
-            border-top: 1px solid #2a4a6b;
-            font-size: 0.9rem;
-            color: var(--text-light);
-        }
-
-        /* --- 🟢 Floating WhatsApp Button --- */
-        .whatsapp-btn {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            background-color: #25D366;
-            color: var(--white);
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 2.5rem;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-            z-index: 999;
-            transition: transform 0.3s ease;
-        }
-
-        .whatsapp-btn:hover {
-            transform: scale(1.1);
-        }
-
-        /* --- ✨ Animation --- */
-        .animate-on-scroll {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-        }
-
-        .animate-on-scroll.is-visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* --- 📱 Responsive Design --- */
-        @media (max-width: 992px) {
-            h2 {
-                font-size: 2.2rem;
-            }
-
-            .nav-links {
-                display: none;
-                flex-direction: column;
-                position: absolute;
-                top: 76px;
-                left: 0;
-                width: 100%;
-                background: var(--white);
-                box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
-                padding: 10px 0;
-            }
-
-            .nav-links li {
-                margin: 0;
-            }
-
-            .nav-links a {
-                display: block;
-                padding: 15px 20px;
-                text-align: center;
-            }
-
-            .nav-links a:hover::after {
-                width: 0;
-            }
-
-            .navbar .btn-primary {
-                display: none;
-            }
-
-            .menu-icon {
-                display: block;
-            }
-
-            #menu-toggle:checked~.nav-links {
-                display: flex;
-            }
-
-            .hero-content-wrapper {
-                flex-direction: column;
-                text-align: center;
-            }
-
-            .hero-text {
-                max-width: 100%;
-            }
-
-            .hero-text h1 {
-                font-size: 2.8rem;
-            }
-
-            .hero-text p {
-                max-width: 100%;
-            }
-
-            .hero-stats {
-                justify-content: center;
-            }
-
-            .hero-image {
-                display: none;
-            }
-
-            /* Hiding image for a cleaner mobile hero */
-
-            .product-grid {
-                grid-template-columns: 1fr 1fr;
-            }
-
-            .infra-wrapper {
-                flex-direction: column-reverse;
-            }
-
-            .infra-text h2 {
-                text-align: center;
-            }
-
-            .dealership-wrapper {
-                flex-direction: column;
-            }
-
-            .dealership-info h2 {
-                text-align: center;
-            }
-
-            .why-grid {
-                grid-template-columns: 1fr 1fr;
-            }
-
-            .footer-grid {
-                grid-template-columns: 1fr 1fr;
-            }
-        }
-
-        @media (max-width: 768px) {
-            section {
-                padding: 40px 0;
-            }
-
-            .hero-stats {
-                flex-direction: column;
-                gap: 20px;
-                align-items: center;
-            }
-
-            .hero-stats .stat-item {
-                text-align: center;
-            }
-
-            .product-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .infra-features {
-                grid-template-columns: 1fr;
-            }
-
-            .why-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .stats-bar-wrapper {
-                flex-direction: column;
-                gap: 30px;
-            }
-
-            .footer-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .footer-col h4 {
-                margin-bottom: 1rem;
-            }
-
-            .whatsapp-btn {
-                width: 50px;
-                height: 50px;
-                font-size: 2rem;
-                bottom: 20px;
-                right: 20px;
-            }
-        }
-    </style>
-</head>
-
-<body>
-
-    <header>
-        <nav class="container navbar">
-            <a href="#" class="logo">DIVSA POLYMERS</a>
-
-            <input type="checkbox" id="menu-toggle">
-            <label for="menu-toggle" class="menu-icon"><i class="fas fa-bars"></i></label>
-
-            <ul class="nav-links">
-                <li><a href="#home">Home</a></li>
-                <li><a href="#about">About Us</a></li>
-                <li><a href="#products">Products</a></li>
-                <li><a href="#infrastructure">Infrastructure</a></li>
-                <li><a href="#dealership">Distribution</a></li>
-                <li><a href="#contact">Contact Us</a></li>
-            </ul>
-            <a href="#dealership" class="btn btn-primary">Become a Distributor</a>
-        </nav>
-    </header>
-
-    <main>
-
-        <section class="hero" id="home">
-            <div class="container">
-                <div class="hero-content-wrapper">
-                    <div class="hero-text animate-on-scroll">
-                        <span class="section-tag">10+ Years of Manufacturing Excellence</span>
-                        <h1>Strength That Flows — Trusted PVC & Polymer Pipes</h1>
-                        <p>India's leading manufacturer of high-quality PVC garden pipes, braided pipes, and recycled
-                            pipes. Built for durability, tested for excellence, and trusted by distributors nationwide.
-                        </p>
-
-                        <div class="hero-buttons">
-                            <a href="#dealership" class="btn btn-primary">Become a Distributor <i
-                                    class="fas fa-arrow-right"></i></a>
-                            <a href="#products" class="btn btn-secondary">Explore Product Range</a>
+        {% extends 'base.html' %}
+
+        {% block content %}
+        <main>
+
+            <section class="hero" id="home">
+                <div class="container">
+                    <div class="hero-content-wrapper">
+                        <div class="hero-text animate-on-scroll">
+                            <span class="section-tag">10+ Years of Manufacturing Excellence</span>
+                            <h1>Strength That Flows — Trusted PVC & Polymer Pipes</h1>
+                            <p>India's leading manufacturer of high-quality PVC garden pipes, braided pipes, and recycled
+                                pipes. Built for durability, tested for excellence, and trusted by distributors nationwide.
+                            </p>
+
+                            <div class="hero-buttons">
+                                <a href="#dealership" class="btn btn-primary">Become a Distributor <i class="fas fa-arrow-right"></i></a>
+                                <a href="#products" class="btn btn-secondary">Explore Product Range</a>
+                            </div>
+
+                            <div class="hero-stats">
+                                <div class="stat-item">
+                                    <h3>₹10Cr</h3>
+                                    <p>Annual Revenue</p>
+                                </div>
+                                <div class="stat-item">
+                                    <h3>25%</h3>
+                                    <p>Profit Margin</p>
+                                </div>
+                                <div class="stat-item">
+                                    <h3>PAN</h3>
+                                    <p>India Delivery</p>
+                                </div>
+                                <div class="stat-item">
+                                    <i class="fas fa-check-circle" style="font-size: 2rem; margin-bottom: 0.25rem;"></i>
+                                    <p>ISO Certified</p>
+                                </div>
+                            </div>
                         </div>
 
-                        <div class="hero-stats">
-                            <div class="stat-item">
-                                <h3>₹10Cr</h3>
-                                <p>Annual Revenue</p>
+                        <div class="hero-image animate-on-scroll">
+                            <img src="{{ url_for('static', filename='assets/factory-hero.jpg') }}" alt="Stack of PVC pipes">
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="products">
+                <div class="container">
+                    <div style="text-align: center;">
+                        <span class="section-tag">Our Product Range</span>
+                        <h2 class="animate-on-scroll">Premium Quality Pipes for Every Need</h2>
+                    </div>
+
+                    <div class="product-grid">
+                        <div class="product-card animate-on-scroll">
+                            <span class="product-card-tag tag-best-seller">Best Seller</span>
+                            <div class="product-card-image">
+                                <img src="{{ url_for('static', filename='assets/factory-hero.jpg') }}" alt="Green PVC Garden Pipes">
                             </div>
-                            <div class="stat-item">
-                                <h3>25%</h3>
-                                <p>Profit Margin</p>
+                            <div class="product-card-content">
+                                <h3>PVC Garden Pipes</h3>
+                                <p>Durable, flexible garden pipes designed for efficient water flow and long-lasting
+                                    performance in all weather conditions.</p>
+                                <ul>
+                                    <li><i class="fas fa-check-circle"></i> UV resistant & weather-proof</li>
+                                    <li><i class="fas fa-check-circle"></i> Lightweight & easy to install</li>
+                                    <li><i class="fas fa-check-circle"></i> Available in multiple sizes</li>
+                                </ul>
+                                <a href="#" class="view-details">View Details <i class="fas fa-long-arrow-alt-right"></i></a>
                             </div>
-                            <div class="stat-item">
-                                <h3>PAN</h3>
-                                <p>India Delivery</p>
+                        </div>
+
+                        <div class="product-card animate-on-scroll">
+                            <span class="product-card-tag tag-premium">Premium</span>
+                            <div class="product-card-image">
+                                <img src="{{ url_for('static', filename='assets/factory-hero.jpg') }}" alt="PVC Braided Garden Pipes">
                             </div>
-                            <div class="stat-item">
-                                <i class="fas fa-check-circle" style="font-size: 2rem; margin-bottom: 0.25rem;"></i>
-                                <p>ISO Certified</p>
+                            <div class="product-card-content">
+                                <h3>PVC Braided Garden Pipes</h3>
+                                <p>Heavy-duty braided pipes with reinforced strength for high-pressure applications and
+                                    commercial use.</p>
+                                <ul>
+                                    <li><i class="fas fa-check-circle"></i> High burst pressure resistance</li>
+                                    <li><i class="fas fa-check-circle"></i> Kink-free & flexible design</li>
+                                    <li><i class="fas fa-check-circle"></i> Long service life</li>
+                                </ul>
+                                <a href="#" class="view-details">View Details <i class="fas fa-long-arrow-alt-right"></i></a>
+                            </div>
+                        </div>
+
+                        <div class="product-card animate-on-scroll">
+                            <span class="product-card-tag tag-eco">Eco-Friendly</span>
+                            <div class="product-card-image">
+                                <img src="{{ url_for('static', filename='assets/factory-hero.jpg') }}" alt="PVC Recycled Pipes in a warehouse">
+                            </div>
+                            <div class="product-card-content">
+                                <h3>PVC Recycled Pipes</h3>
+                                <p>Sustainable recycled PVC pipes that deliver quality performance while protecting the
+                                    environment.</p>
+                                <ul>
+                                    <li><i class="fas fa-check-circle"></i> Environmentally sustainable</li>
+                                    <li><i class="fas fa-check-circle"></i> Cost-effective solution</li>
+                                    <li><i class="fas fa-check-circle"></i> Maintains quality standards</li>
+                                </ul>
+                                <a href="#" class="view-details">View Details <i class="fas fa-long-arrow-alt-right"></i></a>
                             </div>
                         </div>
                     </div>
+                </div>
+            </section>
 
-                    <div class="hero-image animate-on-scroll">
-                        <img src="{{ url_for('static', filename='assets/factory-hero.jpg') }}" alt="Stack of PVC pipes">
+            <section id="coming-soon">
+                <div class="container animate-on-scroll">
+                    <i class="fas fa-shipping-fast" style="font-size: 2rem; margin-bottom: 1rem;"></i>
+                    <h2>Expanding Our Product Line</h2>
+                    <p>Coming Soon: PVC Conduits • Electrical Pipes • HDPE Pipes • PPR Pipes</p>
+                    <a href="#" class="btn btn-primary" style="background-color: var(--white); color: var(--dark-blue);">
+                        <i class="fas fa-download"></i> View Full Catalogue
+                    </a>
+                </div>
+            </section>
+
+            <section id="infrastructure">
+                <div class="container">
+                    <div class="infra-wrapper">
+                        <div class="infra-text animate-on-scroll">
+                            <span class="section-tag">World-Class Infrastructure</span>
+                            <h2>State-of-the-Art Manufacturing Excellence</h2>
+                            <p>Our advanced manufacturing facilities are equipped with the latest technology and machinery,
+                                ensuring every pipe meets the highest quality standards. From production to quality control,
+                                we maintain excellence at every step.</p>
+
+                            <div class="infra-features">
+                                <div class="infra-feature-item">
+                                    <i class="fas fa-cogs"></i>
+                                    <div>
+                                        <h4>Advanced Machinery</h4>
+                                        <p>50+ automated machines for precision manufacturing.</p>
+                                    </div>
+                                </div>
+                                <div class="infra-feature-item">
+                                    <i class="fas fa-recycle"></i>
+                                    <div>
+                                        <h4>Recycling Plant</h4>
+                                        <p>Eco-friendly recycling facility for sustainable production.</p>
+                                    </div>
+                                </div>
+                                <div class="infra-feature-item">
+                                    <i class="fas fa-flask"></i>
+                                    <div>
+                                        <h4>R&D Laboratory</h4>
+                                        <p>In-house testing and innovation center.</p>
+                                    </div>
+                                </div>
+                                <div class="infra-feature-item">
+                                    <i class="fas fa-shield-alt"></i>
+                                    <div>
+                                        <h4>Quality Assurance</h4>
+                                        <p>Rigorous testing protocols for every batch.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <a href="#" class="btn btn-dark">Explore Our Infrastructure <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                        <div class="infra-image animate-on-scroll">
+                            <img src="{{ url_for('static', filename='assets/factory-hero.jpg') }}" alt="Industrial machinery for pipe manufacturing">
+                        </div>
                     </div>
                 </div>
-            </div>
-        </section>
+            </section>
 
-        <section id="products">
-            <div class="container">
-                <div style="text-align: center;">
-                    <span class="section-tag">Our Product Range</span>
-                    <h2 class="animate-on-scroll">Premium Quality Pipes for Every Need</h2>
-                </div>
+            <section id="dealership">
+                <div class="container">
+                    <div class="dealership-wrapper">
+                        <div class="dealership-info animate-on-scroll">
+                            <span class="section-tag">Why Partner With Us</span>
+                            <h2>Join India's Fastest Growing PVC Pipe Network</h2>
+                            <p>Partner with Divsa Polymers and gain access to premium products, competitive margins, and
+                                nationwide support. We are looking for hundreds of successful distributors across India.
+                                Start your partnership with Divsa Polymers today.</p>
 
-                <div class="product-grid">
-                    <div class="product-card animate-on-scroll">
-                        <span class="product-card-tag tag-best-seller">Best Seller</span>
-                        <div class="product-card-image">
-                            <img src="{{ url_for('static', filename='assets/factory-hero.jpg') }}"
-                                alt="Green PVC Garden Pipes">
-                        </div>
-                        <div class="product-card-content">
-                            <h3>PVC Garden Pipes</h3>
-                            <p>Durable, flexible garden pipes designed for efficient water flow and long-lasting
-                                performance in all weather conditions.</p>
+                            <div class="dealership-benefits">
+                                <div class="benefit-item">
+                                    <i class="fas fa-percent"></i>
+                                    <h4>High Margins (20-25%)</h4>
+                                </div>
+                                <div class="benefit-item">
+                                    <i class="fas fa-truck-fast"></i>
+                                    <h4>Fast, Pan-India Delivery</h4>
+                                </div>
+                                <div class="benefit-item">
+                                    <i class="fas fa-headset"></i>
+                                    <h4>Dedicated 24/7 Support</h4>
+                                </div>
+                                <div class="benefit-item">
+                                    <i class="fas fa-chart-line"></i>
+                                    <h4>Full Marketing Support</h4>
+                                </div>
+                            </div>
+
+                            <h3>Ready to Grow Your Business?</h3>
                             <ul>
-                                <li><i class="fas fa-check-circle"></i> UV resistant & weather-proof</li>
-                                <li><i class="fas fa-check-circle"></i> Lightweight & easy to install</li>
-                                <li><i class="fas fa-check-circle"></i> Available in multiple sizes</li>
+                                <li><i class="fas fa-check" style="color: var(--accent-green); margin-right: 8px;"></i> No upfront franchise fees</li>
+                                <li><i class="fas fa-check" style="color: var(--accent-green); margin-right: 8px;"></i> Flexible order quantities</li>
+                                <li><i class="fas fa-check" style="color: var(--accent-green); margin-right: 8px;"></i> Exclusive territory options</li>
                             </ul>
-                            <a href="#" class="view-details">View Details <i
-                                    class="fas fa-long-arrow-alt-right"></i></a>
                         </div>
-                    </div>
 
-                    <div class="product-card animate-on-scroll">
-                        <span class="product-card-tag tag-premium">Premium</span>
-                        <div class="product-card-image">
-                            <img src="{{ url_for('static', filename='assets/factory-hero.jpg') }}"
-                                alt="PVC Braided Garden Pipes">
-                        </div>
-                        <div class="product-card-content">
-                            <h3>PVC Braided Garden Pipes</h3>
-                            <p>Heavy-duty braided pipes with reinforced strength for high-pressure applications and
-                                commercial use.</p>
-                            <ul>
-                                <li><i class="fas fa-check-circle"></i> High burst pressure resistance</li>
-                                <li><i class="fas fa-check-circle"></i> Kink-free & flexible design</li>
-                                <li><i class="fas fa-check-circle"></i> Long service life</li>
-                            </ul>
-                            <a href="#" class="view-details">View Details <i
-                                    class="fas fa-long-arrow-alt-right"></i></a>
-                        </div>
-                    </div>
-
-                    <div class="product-card animate-on-scroll">
-                        <span class="product-card-tag tag-eco">Eco-Friendly</span>
-                        <div class="product-card-image">
-                            <img src="{{ url_for('static', filename='assets/factory-hero.jpg') }}"
-                                alt="PVC Recycled Pipes in a warehouse">
-                        </div>
-                        <div class="product-card-content">
-                            <h3>PVC Recycled Pipes</h3>
-                            <p>Sustainable recycled PVC pipes that deliver quality performance while protecting the
-                                environment.</p>
-                            <ul>
-                                <li><i class="fas fa-check-circle"></i> Environmentally sustainable</li>
-                                <li><i class="fas fa-check-circle"></i> Cost-effective solution</li>
-                                <li><i class="fas fa-check-circle"></i> Maintains quality standards</li>
-                            </ul>
-                            <a href="#" class="view-details">View Details <i
-                                    class="fas fa-long-arrow-alt-right"></i></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="coming-soon">
-            <div class="container animate-on-scroll">
-                <i class="fas fa-shipping-fast" style="font-size: 2rem; margin-bottom: 1rem;"></i>
-                <h2>Expanding Our Product Line</h2>
-                <p>Coming Soon: PVC Conduits • Electrical Pipes • HDPE Pipes • PPR Pipes</p>
-                <a href="#" class="btn btn-primary" style="background-color: var(--white); color: var(--dark-blue);">
-                    <i class="fas fa-download"></i> View Full Catalogue
-                </a>
-            </div>
-        </section>
-
-        <section id="infrastructure">
-            <div class="container">
-                <div class="infra-wrapper">
-                    <div class="infra-text animate-on-scroll">
-                        <span class="section-tag">World-Class Infrastructure</span>
-                        <h2>State-of-the-Art Manufacturing Excellence</h2>
-                        <p>Our advanced manufacturing facilities are equipped with the latest technology and machinery,
-                            ensuring every pipe meets the highest quality standards. From production to quality control,
-                            we maintain excellence at every step.</p>
-
-                        <div class="infra-features">
-                            <div class="infra-feature-item">
-                                <i class="fas fa-cogs"></i>
-                                <div>
-                                    <h4>Advanced Machinery</h4>
-                                    <p>50+ automated machines for precision manufacturing.</p>
+                        <div class="dealership-form-container animate-on-scroll">
+                            {% with messages = get_flashed_messages() %}
+                            {% if messages %}
+                            {% for message in messages %}
+                            <div style="padding: 10px; background-color: #d4edda; color: #155724; border-radius: 5px; margin-bottom: 20px;">
+                                {{ message }}
+                            </div>
+                            {% endfor %}
+                            {% endif %}
+                            {% endwith %}
+                            <h3>Become a Distributor</h3>
+                            <form id="distributor-form" action="/submit-inquiry" method="POST">
+                                <div class="form-group">
+                                    <label for="name">Your Name *</label>
+                                    <input type="text" id="name" name="name" required>
                                 </div>
-                            </div>
-                            <div class="infra-feature-item">
-                                <i class="fas fa-recycle"></i>
-                                <div>
-                                    <h4>Recycling Plant</h4>
-                                    <p>Eco-friendly recycling facility for sustainable production.</p>
+                                <div class="form-group">
+                                    <label for="email">Email Address *</label>
+                                    <input type="email" id="email" name="email" required>
                                 </div>
-                            </div>
-                            <div class="infra-feature-item">
-                                <i class="fas fa-flask"></i>
-                                <div>
-                                    <h4>R&D Laboratory</h4>
-                                    <p>In-house testing and innovation center.</p>
+                                <div class="form-group">
+                                    <label for="phone">Phone Number *</label>
+                                    <input type="tel" id="phone" name="phone" required>
                                 </div>
-                            </div>
-                            <div class="infra-feature-item">
-                                <i class="fas fa-shield-alt"></i>
-                                <div>
-                                    <h4>Quality Assurance</h4>
-                                    <p>Rigorous testing protocols for every batch.</p>
+                                <div class="form-group">
+                                    <label for="city">City / Location</label>
+                                    <input type="text" id="city" name="city">
                                 </div>
-                            </div>
+                                <div class="form-group">
+                                    <label for="business">Tell us about your business (optional)</label>
+                                    <textarea id="business" name="business"></textarea>
+                                </div>
+                                <button type="submit" class="btn btn-primary form-submit-btn">Submit Inquiry <i class="fas fa-paper-plane"></i></button>
+                                <p class="form-note">We'll get back to you within 24 hours</p>
+                            </form>
                         </div>
-                        <a href="#" class="btn btn-dark">Explore Our Infrastructure <i
-                                class="fas fa-arrow-right"></i></a>
-                    </div>
-                    <div class="infra-image animate-on-scroll">
-                        <img src="{{ url_for('static', filename='assets/factory-hero.jpg') }}"
-                            alt="Industrial machinery for pipe manufacturing">
                     </div>
                 </div>
-            </div>
-        </section>
+            </section>
 
-        <section id="dealership">
-            <div class="container">
-                <div class="dealership-wrapper">
-                    <div class="dealership-info animate-on-scroll">
-                        <span class="section-tag">Why Partner With Us</span>
-                        <h2>Join India's Fastest Growing PVC Pipe Network</h2>
-                        <p>Partner with Divsa Polymers and gain access to premium products, competitive margins, and
-                            nationwide support. We are looking for hundreds of successful distributors across India.
-                            Start your partnership with Divsa Polymers today.</p>
+            <section id="why-choose-us">
+                <div class="container">
+                    <div style="text-align: center;">
+                        <span class="section-tag" style="background-color: #193755; color: var(--text-light);">Our Commitment</span>
+                        <h2 class="animate-on-scroll">Why Choose Divsa Polymers?</h2>
+                        <p class="section-subtitle animate-on-scroll">Built on a foundation of quality, innovation, and trust — we're committed to delivering excellence in every pipe.</p>
+                    </div>
 
-                        <div class="dealership-benefits">
-                            <div class="benefit-item">
-                                <i class="fas fa-percent"></i>
-                                <h4>High Margins (20-25%)</h4>
-                            </div>
-                            <div class="benefit-item">
-                                <i class="fas fa-truck-fast"></i>
-                                <h4>Fast, Pan-India Delivery</h4>
-                            </div>
-                            <div class="benefit-item">
-                                <i class="fas fa-headset"></i>
-                                <h4>Dedicated 24/7 Support</h4>
-                            </div>
-                            <div class="benefit-item">
-                                <i class="fas fa-chart-line"></i>
-                                <h4>Full Marketing Support</h4>
-                            </div>
+                    <div class="why-grid">
+                        <div class="why-card animate-on-scroll">
+                            <i class="fas fa-medal"></i>
+                            <h3>Quality First</h3>
+                            <p>Every pipe undergoes rigorous quality testing to ensure it meets international standards and exceeds customer expectations.</p>
                         </div>
-
-                        <h3>Ready to Grow Your Business?</h3>
-                        <ul>
-                            <li><i class="fas fa-check" style="color: var(--accent-green); margin-right: 8px;"></i> No
-                                upfront franchise fees</li>
-                            <li><i class="fas fa-check" style="color: var(--accent-green); margin-right: 8px;"></i>
-                                Flexible order quantities</li>
-                            <li><i class="fas fa-check" style="color: var(--accent-green); margin-right: 8px;"></i>
-                                Exclusive territory options</li>
-                        </ul>
-                    </div>
-
-                    <div class="dealership-form-container animate-on-scroll">
-                        {% with messages = get_flashed_messages() %}
-                        {% if messages %}
-                        {% for message in messages %}
-                        <div
-                            style="padding: 10px; background-color: #d4edda; color: #155724; border-radius: 5px; margin-bottom: 20px;">
-                            {{ message }}
+                        <div class="why-card animate-on-scroll">
+                            <i class="fas fa-seedling"></i>
+                            <h3>Sustainability</h3>
+                            <p>Our in-house recycling plant and eco-friendly manufacturing processes help build a greener future for India.</p>
                         </div>
-                        {% endfor %}
-                        {% endif %}
-                        {% endwith %}
-                        <h3>Become a Distributor</h3>
-                        <form id="distributor-form" action="/submit-inquiry" method="POST">
-                            <div class="form-group">
-                                <label for="name">Your Name *</label>
-                                <input type="text" id="name" name="name" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="email">Email Address *</label>
-                                <input type="email" id="email" name="email" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="phone">Phone Number *</label>
-                                <input type="tel" id="phone" name="phone" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="city">City / Location</label>
-                                <input type="text" id="city" name="city">
-                            </div>
-                            <div class="form-group">
-                                <label for="business">Tell us about your business (optional)</label>
-                                <textarea id="business" name="business"></textarea>
-                            </div>
-                            <button type="submit" class="btn btn-primary form-submit-btn">Submit Inquiry <i
-                                    class="fas fa-paper-plane"></i></button>
-                            <p class="form-note">We'll get back to you within 24 hours</p>
-                        </form>
+                        <div class="why-card animate-on-scroll">
+                            <i class="fas fa-lightbulb"></i>
+                            <h3>Innovation</h3>
+                            <p>Continuous R&D and product development keep us ahead in delivering cutting-edge piping solutions for modern needs.</p>
+                        </div>
+                        <div class="why-card animate-on-scroll">
+                            <i class="fas fa-users"></i>
+                            <h3>Customer Focus</h3>
+                            <p>Your success is our success. We provide dedicated support and reliable service to help your business thrive.</p>
+                        </div>
+                        <div class="why-card animate-on-scroll">
+                            <i class="fas fa-sync-alt"></i>
+                            <h3>Reliability</h3>
+                            <p>With 10+ years of expertise and ₹10 crore annual revenue, we're a trusted partner you can count on.</p>
+                        </div>
+                        <div class="why-card animate-on-scroll">
+                            <i class="fas fa-globe-asia"></i>
+                            <h3>Pan-India Reach</h3>
+                            <p>A nationwide distribution network ensures timely delivery and consistent supply across all regions of India.</p>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </section>
+            </section>
 
-        <section id="why-choose-us">
-            <div class="container">
-                <div style="text-align: center;">
-                    <span class="section-tag" style="background-color: #193755; color: var(--text-light);">Our
-                        Commitment</span>
-                    <h2 class="animate-on-scroll">Why Choose Divsa Polymers?</h2>
-                    <p class="section-subtitle animate-on-scroll">Built on a foundation of quality, innovation, and
-                        trust — we're committed to delivering excellence in every pipe.</p>
-                </div>
-
-                <div class="why-grid">
-                    <div class="why-card animate-on-scroll">
-                        <i class="fas fa-medal"></i>
-                        <h3>Quality First</h3>
-                        <p>Every pipe undergoes rigorous quality testing to ensure it meets international standards and
-                            exceeds customer expectations.</p>
-                    </div>
-                    <div class="why-card animate-on-scroll">
-                        <i class="fas fa-seedling"></i>
-                        <h3>Sustainability</h3>
-                        <p>Our in-house recycling plant and eco-friendly manufacturing processes help build a greener
-                            future for India.</p>
-                    </div>
-                    <div class="why-card animate-on-scroll">
-                        <i class="fas fa-lightbulb"></i>
-                        <h3>Innovation</h3>
-                        <p>Continuous R&D and product development keep us ahead in delivering cutting-edge piping
-                            solutions for modern needs.</p>
-                    </div>
-                    <div class="why-card animate-on-scroll">
-                        <i class="fas fa-users"></i>
-                        <h3>Customer Focus</h3>
-                        <p>Your success is our success. We provide dedicated support and reliable service to help your
-                            business thrive.</p>
-                    </div>
-                    <div class="why-card animate-on-scroll">
-                        <i class="fas fa-sync-alt"></i>
-                        <h3>Reliability</h3>
-                        <p>With 10+ years of expertise and ₹10 crore annual revenue, we're a trusted partner you can
-                            count on.</p>
-                    </div>
-                    <div class="why-card animate-on-scroll">
-                        <i class="fas fa-globe-asia"></i>
-                        <h3>Pan-India Reach</h3>
-                        <p>A nationwide distribution network ensures timely delivery and consistent supply across all
-                            regions of India.</p>
+            <section id="stats">
+                <div class="container">
+                    <div class="stats-bar-wrapper">
+                        <div class="stats-bar-item animate-on-scroll">
+                            <h3>10+</h3>
+                            <p>Years Experience</p>
+                        </div>
+                        <div class="stats-bar-item animate-on-scroll">
+                            <h3>50+</h3>
+                            <p>Manufacturing Units</p>
+                        </div>
+                        <div class="stats-bar-item animate-on-scroll">
+                            <h3>100+</h3>
+                            <p>Distributors</p>
+                        </div>
+                        <div class="stats-bar-item animate-on-scroll">
+                            <h3>₹10Cr</h3>
+                            <p>Annual Revenue</p>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </section>
+            </section>
 
-        <section id="stats">
-            <div class="container">
-                <div class="stats-bar-wrapper">
-                    <div class="stats-bar-item animate-on-scroll">
-                        <h3>10+</h3>
-                        <p>Years Experience</p>
-                    </div>
-                    <div class="stats-bar-item animate-on-scroll">
-                        <h3>50+</h3>
-                        <p>Manufacturing Units</p>
-                    </div>
-                    <div class="stats-bar-item animate-on-scroll">
-                        <h3>100+</h3>
-                        <p>Distributors</p>
-                    </div>
-                    <div class="stats-bar-item animate-on-scroll">
-                        <h3>₹10Cr</h3>
-                        <p>Annual Revenue</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-    </main>
-
-    <footer id="contact">
-        <div class="container">
-            <div class="footer-grid">
-                <div class="footer-col">
-                    <a href="#" class="footer-logo">Divsa Polymers</a>
-                    <p>India's trusted manufacturer of premium PVC pipes and polymer solutions. Strength that flows
-                        through every meter.</p>
-                    <div class="social-links">
-                        <a href="#" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
-                        <a href="#" title="Instagram"><i class="fab fa-instagram"></i></a>
-                        <a href="#" title="Facebook"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#" title="YouTube"><i class="fab fa-youtube"></i></a>
-                    </div>
-                </div>
-
-                <div class="footer-col">
-                    <h4>Quick Links</h4>
-                    <ul class="footer-links">
-                        <li><a href="#about">About Us</a></li>
-                        <li><a href="#products">Products</a></li>
-                        <li><a href="#infrastructure">Infrastructure</a></li>
-                        <li><a href="#dealership">Distribution</a></li>
-                        <li><a href="#contact">Contact</a></li>
-                    </ul>
-                </div>
-
-                <div class="footer-col">
-                    <h4>Our Products</h4>
-                    <ul class="footer-links">
-                        <li><a href="#">PVC Garden Pipes</a></li>
-                        <li><a href="#">PVC Braided Pipes</a></li>
-                        <li><a href="#">PVC Recycled Pipes</a></li>
-                        <li><a href="#">(Coming Soon) Conduits</a></li>
-                        <li><a href="#dealership">Distribution / Dealership</a></li>
-                    </ul>
-                </div>
-
-                <div class="footer-col">
-                    <h4>Contact Us</h4>
-                    <ul class="footer-links footer-contact">
-                        <li>
-                            <i class="fas fa-map-marker-alt"></i>
-                            <div>Divsa Polymers<br>Industrial Area, India</div>
-                        </li>
-                        <li>
-                            <i class="fas fa-phone"></i>
-                            <a href="tel:+911234567890">+91 123 456 7890</a>
-                        </li>
-                        <li>
-                            <i class="fas fa-envelope"></i>
-                            <a href="mailto:sales@divsapolymers.com">sales@divsapolymers.com</a>
-                        </li>
-                        <li>
-                            <i class="fas fa-directions"></i>
-                            <a href="#" target="_blank">Get Directions</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-
-            <div class="copyright">
-                © 2025 Divsa Polymers. All Rights Reserved. |
-                <a href="#" style="color: var(--text-light);">Privacy Policy</a> |
-                <a href="#" style="color: var(--text-light);">Terms of Service</a>
-            </div>
-        </div>
-    </footer>
-
-    <a href="https://wa.me/911234567890" target="_blank" class="whatsapp-btn" title="Chat with us on WhatsApp">
-        <i class="fab fa-whatsapp"></i>
-    </a>
-
-    <script>
-        // --- Simple Form Submission Handler (for demo) ---
-        const distributorForm = document.getElementById('distributor-form');
-        distributorForm.addEventListener('submit', function (e) {
-            e.preventDefault(); // Prevent actual submission
-
-            // Get form data
-            const formData = new FormData(distributorForm);
-            const data = Object.fromEntries(formData.entries());
-
-            // Log data to console (in a real site, you'd send this to a server)
-            console.log('Form Submitted:', data);
-
-            // Show a success message
-            alert('Thank you for your inquiry! We will get back to you within 24 hours.');
-
-            // Clear the form
-            distributorForm.reset();
-        });
-
-        // --- Scroll Animation Handler (Intersection Observer) ---
-        document.addEventListener('DOMContentLoaded', () => {
-            const animatedElements = document.querySelectorAll('.animate-on-scroll');
-
-            if ("IntersectionObserver" in window) {
-                const observer = new IntersectionObserver((entries, observer) => {
-                    entries.forEach(entry => {
-                        if (entry.isIntersecting) {
-                            entry.target.classList.add('is-visible');
-                            observer.unobserve(entry.target);
-                        }
-                    });
-                }, {
-                    rootMargin: '0px 0px -50px 0px' // Trigger 50px before it's fully in view
-                });
-
-                animatedElements.forEach(el => {
-                    observer.observe(el);
-                });
-            } else {
-                // Fallback for older browsers
-                animatedElements.forEach(el => {
-                    el.classList.add('is-visible');
-                });
-            }
-        });
-
-        // --- Mobile Menu Toggle ---
-        const menuToggle = document.getElementById('menu-toggle');
-        const navLinks = document.querySelectorAll('.nav-links a');
-
-        navLinks.forEach(link => {
-            link.addEventListener('click', () => {
-                menuToggle.checked = false; // Close menu when a link is clicked
-            });
-        });
-
-    </script>
-
-</body>
-
-</html>
+        </main>
+        {% endblock %}
