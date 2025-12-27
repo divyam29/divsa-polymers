@@ -8,7 +8,7 @@ from config import Config
 
 
 # App initialization with environment-friendly defaults
-app = Flask(__name__, static_folder='static', template_folder='templates')
+app = Flask(__name__, static_url_path='/static',static_folder='static', template_folder='templates')
 
 # Load configuration from config.py (which reads .env)
 app.config.from_object(Config)
