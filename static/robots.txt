@@ -1,3 +1,4 @@
 User-agent: *
-Disallow:
-Sitemap: https://example.com/sitemap.xml
+Allow: /
+Disallow: /admin/
+Sitemap: https://www.divsapolymers.com/sitemap.xml

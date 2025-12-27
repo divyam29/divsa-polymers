@@ -104,16 +104,17 @@ def favicon():
     return send_from_directory(os.path.join(app.root_path, 'static'), 'favicon.ico', mimetype='image/vnd.microsoft.icon')
 
 
-# Simple sitemap.xml generation for SEO (extend as needed)
+# SEO Sitemap - for Google/Bing indexing
 @app.route('/sitemap.xml')
 def sitemap():
     pages = [
-        {'loc': url_for('home', _external=True), 'priority': '1.0'},
+        {'loc': url_for('home', _external=True), 'priority': '1.0', 'changefreq': 'weekly'},
     ]
     sitemap_xml = ['<?xml version="1.0" encoding="UTF-8"?>', '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">']
     for p in pages:
         sitemap_xml.append('<url>')
         sitemap_xml.append(f"<loc>{p['loc']}</loc>")
+        sitemap_xml.append(f"<changefreq>{p.get('changefreq', 'monthly')}</changefreq>")
         sitemap_xml.append(f"<priority>{p['priority']}</priority>")
         sitemap_xml.append('</url>')
     sitemap_xml.append('</urlset>')
