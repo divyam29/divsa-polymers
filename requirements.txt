@@ -1,5 +1,4 @@
 Flask
 Flask-SQLAlchemy
 gunicorn
-python-dotenvPyMongo==4.6.1
-DNS==1.0
+python-dotenv
