@@ -5,6 +5,7 @@ from datetime import datetime
 from flask import Flask, render_template, request, flash, redirect, url_for, send_from_directory, make_response
 from pymongo import MongoClient
 from bson.objectid import ObjectId
+import certifi
 from config import Config
 
 
@@ -21,18 +22,23 @@ app.secret_key = app.config.get('SECRET_KEY')
 MONGO_URI = app.config.get('MONGODB_URI')
 if not MONGO_URI:
     app.logger.warning('MONGODB_URI not configured in environment variables')
-    
-client = MongoClient(MONGO_URI) if MONGO_URI else None
+
+if MONGO_URI:
+    # Use certifi for SSL certificate verification
+    client = MongoClient(MONGO_URI, tlsCAFile=certifi.where())
+else:
+    client = None
 db = client['divsa'] if client is not None else None
 inquiries_collection = db['inquiries'] if db is not None else None
 
 
 # MongoDB connection verification (app startup)
-try:
-    client.admin.command('ping')
-    app.logger.info('Successfully connected to MongoDB Atlas')
-except Exception as e:
-    app.logger.error(f'Failed to connect to MongoDB Atlas: {e}')
+if client is not None:
+    try:
+        client.admin.command('ping')
+        app.logger.info('Successfully connected to MongoDB Atlas')
+    except Exception as e:
+        app.logger.error(f'Failed to connect to MongoDB Atlas: {e}')
 
 
 
