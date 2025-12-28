@@ -12,7 +12,10 @@ class Config:
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     DEBUG = os.environ.get('FLASK_DEBUG', '0') == '1'
 
-    # Database configuration
+    # MongoDB Atlas configuration
+    MONGODB_URI = os.environ.get('MONGODB_URI', '')
+    
+    # Legacy database configuration (SQLite)
     DATABASE_URL = os.environ.get('DATABASE_URL')
     if DATABASE_URL:
         SQLALCHEMY_DATABASE_URI = DATABASE_URL

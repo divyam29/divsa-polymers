@@ -3,7 +3,8 @@ import logging
 from logging.handlers import RotatingFileHandler
 from datetime import datetime
 from flask import Flask, render_template, request, flash, redirect, url_for, send_from_directory, make_response
-from flask_sqlalchemy import SQLAlchemy
+from pymongo import MongoClient
+from bson.objectid import ObjectId
 from config import Config
 
 
@@ -16,23 +17,23 @@ app.config.from_object(Config)
 # Expose secret key for extensions that read it directly
 app.secret_key = app.config.get('SECRET_KEY')
 
-db = SQLAlchemy(app)
+# MongoDB connection
+MONGO_URI = app.config.get('MONGODB_URI')
+if not MONGO_URI:
+    app.logger.warning('MONGODB_URI not configured in environment variables')
+    
+client = MongoClient(MONGO_URI) if MONGO_URI else None
+db = client['divsa'] if client is not None else None
+inquiries_collection = db['inquiries'] if db is not None else None
 
 
-# --- Database Model ---
-class Inquiry(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(100), nullable=False)
-    email = db.Column(db.String(100), nullable=False)
-    phone = db.Column(db.String(20), nullable=False)
-    city = db.Column(db.String(100))
-    business_info = db.Column(db.Text)
-    date_submitted = db.Column(db.DateTime, default=datetime.utcnow)
+# MongoDB connection verification (app startup)
+try:
+    client.admin.command('ping')
+    app.logger.info('Successfully connected to MongoDB Atlas')
+except Exception as e:
+    app.logger.error(f'Failed to connect to MongoDB Atlas: {e}')
 
-
-# Ensure database exists
-with app.app_context():
-    db.create_all()
 
 
 # --- Logging ---
@@ -77,15 +78,20 @@ def submit_inquiry():
         flash('Please provide name, email and phone.', 'error')
         return redirect(url_for('home') + '#dealership')
 
-    new_inquiry = Inquiry(name=name, email=email, phone=phone, city=city, business_info=business)
+    inquiry_data = {
+        'name': name,
+        'email': email,
+        'phone': phone,
+        'city': city,
+        'business_info': business,
+        'date_submitted': datetime.utcnow()
+    }
 
     try:
-        db.session.add(new_inquiry)
-        db.session.commit()
-        flash(f'Success! {new_inquiry.name}, your inquiry has been saved.', 'success')
-        app.logger.info('New inquiry saved: %s', new_inquiry.email)
+        result = inquiries_collection.insert_one(inquiry_data)
+        flash(f'Success! {name}, your inquiry has been saved.', 'success')
+        app.logger.info('New inquiry saved: %s', email)
     except Exception as e:
-        db.session.rollback()
         flash('There was an error saving your inquiry. Please try again later.', 'error')
         app.logger.exception('Error saving inquiry')
 
@@ -94,8 +100,8 @@ def submit_inquiry():
 
 @app.route('/admin/inquiries')
 def view_inquiries():
-    all_inquiries = Inquiry.query.order_by(Inquiry.date_submitted.desc()).all()
-    return f"Total Inquiries: {len(all_inquiries)}<br>" + "<br>".join([f"{i.name} ({i.email}) from {i.city}" for i in all_inquiries])
+    all_inquiries = list(inquiries_collection.find().sort('date_submitted', -1))
+    return f"Total Inquiries: {len(all_inquiries)}<br>" + "<br>".join([f"{i.get('name')} ({i.get('email')}) from {i.get('city')}" for i in all_inquiries])
 
 
 # Serve favicon (if present in static)
