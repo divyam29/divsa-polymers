@@ -4,6 +4,7 @@ from logging.handlers import RotatingFileHandler
 from datetime import datetime
 from flask import Flask, render_template, request, flash, redirect, url_for, send_from_directory, make_response
 from pymongo import MongoClient
+from pymongo.errors import ServerSelectionTimeoutError
 from bson.objectid import ObjectId
 import certifi
 from config import Config
@@ -24,14 +25,17 @@ if not MONGO_URI:
     app.logger.warning('MONGODB_URI not configured in environment variables')
 
 if MONGO_URI:
-    # Use certifi for SSL certificate verification
-    # Add tlsInsecure=True as a workaround for Render's SSL/TLS handshake issues
+    # MongoDB connection with Render-compatible settings
     client = MongoClient(
-        MONGO_URI, 
+        MONGO_URI,
         tlsCAFile=certifi.where(),
-        tlsInsecure=True,
-        serverSelectionTimeoutMS=30000,
-        connectTimeoutMS=30000
+        serverSelectionTimeoutMS=60000,
+        connectTimeoutMS=60000,
+        socketTimeoutMS=60000,
+        retryWrites=False,  # Disable retry writes to avoid SSL issues
+        maxPoolSize=10,
+        minPoolSize=1,
+        waitQueueTimeoutMS=60000
     )
 else:
     client = None
@@ -42,10 +46,12 @@ inquiries_collection = db['inquiries'] if db is not None else None
 # MongoDB connection verification (app startup)
 if client is not None:
     try:
-        client.admin.command('ping')
+        client.admin.command('ping', timeoutMS=30000)
         app.logger.info('Successfully connected to MongoDB Atlas')
+    except ServerSelectionTimeoutError as e:
+        app.logger.error(f'MongoDB Atlas connection timeout - this may resolve on first request: {e}')
     except Exception as e:
-        app.logger.error(f'Failed to connect to MongoDB Atlas: {e}')
+        app.logger.error(f'Failed to connect to MongoDB Atlas at startup: {e}')
 
 
 
@@ -104,6 +110,9 @@ def submit_inquiry():
         result = inquiries_collection.insert_one(inquiry_data)
         flash(f'Success! {name}, your inquiry has been saved.', 'success')
         app.logger.info('New inquiry saved: %s', email)
+    except ServerSelectionTimeoutError as e:
+        flash('Database connection timeout. Please try again in a moment.', 'error')
+        app.logger.error(f'MongoDB connection timeout while saving inquiry: {e}')
     except Exception as e:
         flash('There was an error saving your inquiry. Please try again later.', 'error')
         app.logger.exception('Error saving inquiry')

@@ -4,7 +4,7 @@ services:
     name: divsa-polymers-app
     runtime: python
     buildCommand: pip install -r requirements.txt
-    startCommand: gunicorn app:app
+    startCommand: gunicorn app:app --workers=1 --worker-class=sync --timeout=120 --graceful-timeout=120 --bind=0.0.0.0:$PORT
     envVars:
       - key: DATABASE_URL
         fromDatabase:
