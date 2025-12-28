@@ -25,7 +25,14 @@ if not MONGO_URI:
 
 if MONGO_URI:
     # Use certifi for SSL certificate verification
-    client = MongoClient(MONGO_URI, tlsCAFile=certifi.where())
+    # Add tlsInsecure=True as a workaround for Render's SSL/TLS handshake issues
+    client = MongoClient(
+        MONGO_URI, 
+        tlsCAFile=certifi.where(),
+        tlsInsecure=True,
+        serverSelectionTimeoutMS=30000,
+        connectTimeoutMS=30000
+    )
 else:
     client = None
 db = client['divsa'] if client is not None else None
