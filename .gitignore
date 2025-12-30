@@ -54,4 +54,6 @@ Thumbs.db
 .mypy_cache/
 .pytest_cache/
 .cache/
+
 Makefile
+*.md

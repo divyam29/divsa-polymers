@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>PVC Recycled Pipes | Sustainable PVC Solutions — Divsa Polymers</title>
+    <meta name="description" content="Sustainable recycled PVC pipes offering performance and reduced environmental impact. Distributor and bulk orders available.">
+    <link rel="canonical" href="{{ SITE.url }}/pvc-recycled-pipes">
+</head>
+<body>
+    {% include '_header_seo.html' %}
+    <main class="container">
+        <section>
+            <span class="section-tag">Recycled Pipes</span>
+            <h1>PVC Recycled Pipes — Sustainable & Reliable</h1>
+            <p>Our recycled PVC range offers eco-friendly alternatives without compromising performance.</p>
+
+            <h2>Benefits</h2>
+            <ul>
+                <li>Reduced environmental footprint</li>
+                <li>Cost-effective supply chain for large orders</li>
+                <li>Quality-checked recycled content</li>
+            </ul>
+
+            <a href="#dealership" class="btn btn-primary">Become a Distributor</a>
+            <a href="tel:{{ SITE.phone }}" class="btn btn-secondary">Call Us</a>
+
+            <hr>
+            <h2>FAQs</h2>
+            <div id="faqs">
+                {% for f in faqs %}
+                <details>
+                    <summary>{{ f.question }}</summary>
+                    <p>{{ f.answer }}</p>
+                </details>
+                {% endfor %}
+            </div>
+
+            <script type="application/ld+json">
+            {
+                "@context": "https://schema.org",
+                "@type": "FAQPage",
+                "mainEntity": [
+                    {% for f in faqs %}
+                    {
+                        "@type": "Question",
+                        "name": "{{ f.question }}",
+                        "acceptedAnswer": {"@type": "Answer", "text": "{{ f.answer }}"}
+                    }{% if not loop.last %},{% endif %}
+                    {% endfor %}
+                ]
+            }
+            </script>
+        </section>
+    </main>
+    {% include '_footer_seo.html' %}
+</body>
+</html>

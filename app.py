@@ -5,19 +5,29 @@ from datetime import datetime
 from flask import Flask, render_template, request, flash, redirect, url_for, send_from_directory, make_response
 from pymongo import MongoClient
 from pymongo.errors import ServerSelectionTimeoutError
-from bson.objectid import ObjectId
 import certifi
 from config import Config
 
 
 # App initialization with environment-friendly defaults
-app = Flask(__name__, static_url_path='/static',static_folder='static', template_folder='templates')
+app = Flask(__name__, static_url_path='/static', static_folder='static', template_folder='templates')
 
 # Load configuration from config.py (which reads .env)
 app.config.from_object(Config)
 
 # Expose secret key for extensions that read it directly
 app.secret_key = app.config.get('SECRET_KEY')
+
+# Site-wide settings (exposed to templates via context_processor)
+SITE = {
+    'name': 'Divsa Polymers',
+    'url': app.config.get('SITE_URL', 'https://www.divsapolymers.com'),
+    'phone': app.config.get('COMPANY_PHONE', '+91-173-1234567'),
+    'address': 'Plot No. 21, Industrial Area, Ambala Cantt, Ambala, Haryana 134006, India',
+    'latitude': 30.3782,
+    'longitude': 76.7767,
+    'ga_measurement_id': app.config.get('GA_MEASUREMENT_ID', '')
+}
 
 # MongoDB connection
 MONGO_URI = app.config.get('MONGODB_URI')
@@ -67,7 +77,6 @@ if not app.debug:
     app.logger.info('Divsa Polymers startup')
 
 
-# --- Security headers ---
 @app.after_request
 def set_security_headers(response):
     response.headers['X-Frame-Options'] = 'SAMEORIGIN'
@@ -77,6 +86,12 @@ def set_security_headers(response):
     # HSTS only for HTTPS deployments
     response.headers.setdefault('Strict-Transport-Security', 'max-age=31536000; includeSubDomains')
     return response
+
+
+# Make SITE available in all templates
+@app.context_processor
+def inject_site():
+    return dict(SITE=SITE)
 
 
 @app.route('/')
@@ -107,9 +122,13 @@ def submit_inquiry():
     }
 
     try:
-        result = inquiries_collection.insert_one(inquiry_data)
-        flash(f'Success! {name}, your inquiry has been saved.', 'success')
-        app.logger.info('New inquiry saved: %s', email)
+        if inquiries_collection is not None:
+            result = inquiries_collection.insert_one(inquiry_data)
+            flash(f'Success! {name}, your inquiry has been saved.', 'success')
+            app.logger.info('New inquiry saved: %s', email)
+        else:
+            app.logger.warning('No database configured; skipping save.')
+            flash(f'Thank you {name}, we received your inquiry.', 'success')
     except ServerSelectionTimeoutError as e:
         flash('Database connection timeout. Please try again in a moment.', 'error')
         app.logger.error(f'MongoDB connection timeout while saving inquiry: {e}')
@@ -117,13 +136,82 @@ def submit_inquiry():
         flash('There was an error saving your inquiry. Please try again later.', 'error')
         app.logger.exception('Error saving inquiry')
 
-    return redirect(url_for('home') + '#dealership')
+    # Redirect to thank-you page for better conversion tracking
+    return redirect(url_for('thank_you'))
 
 
 @app.route('/admin/inquiries')
 def view_inquiries():
+    if inquiries_collection is None:
+        return 'No database configured.'
     all_inquiries = list(inquiries_collection.find().sort('date_submitted', -1))
     return f"Total Inquiries: {len(all_inquiries)}<br>" + "<br>".join([f"{i.get('name')} ({i.get('email')}) from {i.get('city')}" for i in all_inquiries])
+
+
+# Product routes
+@app.route('/pvc-garden-pipes')
+def pvc_garden_pipes():
+    faqs = [
+        {"question": "Are your PVC garden pipes UV resistant?", "answer": "Yes — our garden pipes are UV stabilized for long outdoor life."},
+        {"question": "What sizes are available?", "answer": "We supply 1/2 inch to 2 inch diameters in various lengths and thicknesses."},
+        {"question": "Do you provide bulk discounts for distributors?", "answer": "Yes — competitive distributor pricing is available on application."},
+        {"question": "Is delivery available PAN India?", "answer": "We ship nationwide with reliable logistics partners."}
+    ]
+    return render_template('pvc-garden-pipes.html', faqs=faqs)
+
+
+@app.route('/pvc-braided-pipes')
+def pvc_braided_pipes():
+    faqs = [
+        {"question": "Are braided pipes suitable for high-pressure use?", "answer": "Yes — braided reinforcement increases burst pressure tolerance."},
+        {"question": "What materials are used in the braid?", "answer": "High-strength synthetic fibers with corrosion-resistant coatings."},
+        {"question": "Can braided pipes be used in agriculture and industry?", "answer": "Yes — suitable for both heavy-duty agricultural and light industrial use."},
+        {"question": "What warranty do you provide?", "answer": "Standard manufacturer warranty applies; extended warranties available for bulk customers."}
+    ]
+    return render_template('pvc-braided-pipes.html', faqs=faqs)
+
+
+@app.route('/pvc-recycled-pipes')
+def pvc_recycled_pipes():
+    faqs = [
+        {"question": "Are recycled PVC pipes as strong as virgin PVC?", "answer": "Our recycled products meet strict QA standards and perform comparably for many applications."},
+        {"question": "What percentage of recycled content is used?", "answer": "The recycled content varies by product line and is disclosed on specification sheets."},
+        {"question": "Do recycled pipes meet regulatory standards?", "answer": "Yes — they are produced under controlled processes to meet safety specs."},
+        {"question": "Can I request a material safety data sheet (MSDS)?", "answer": "Yes — MSDS are available on request for all product lines."}
+    ]
+    return render_template('pvc-recycled-pipes.html', faqs=faqs)
+
+
+@app.route('/pvc-conduits')
+def pvc_conduits():
+    faqs = [
+        {"question": "Are these conduits flame-retardant?", "answer": "We offer self-extinguishing formulations for electrical conduits."},
+        {"question": "Do you supply conduit fittings?", "answer": "Yes — a range of compatible fittings and accessories are available."},
+        {"question": "What sizes are available?", "answer": "Standard electrical conduit sizes from 16mm to 50mm are stocked."},
+        {"question": "Can conduits be ordered in custom lengths?", "answer": "Yes — contact sales for custom length and packaging options."}
+    ]
+    return render_template('pvc-conduits.html', faqs=faqs)
+
+
+# City / Local pages
+@app.route('/pvc-pipes-in-ambala')
+def pvc_pipes_in_ambala():
+    return render_template('pvc-pipes-in-ambala.html', city='Ambala')
+
+
+@app.route('/pvc-pipes-in-delhi')
+def pvc_pipes_in_delhi():
+    return render_template('pvc-pipes-in-delhi.html', city='Delhi')
+
+
+@app.route('/pvc-pipes-in-punjab')
+def pvc_pipes_in_punjab():
+    return render_template('pvc-pipes-in-punjab.html', city='Punjab')
+
+
+@app.route('/thank-you')
+def thank_you():
+    return render_template('thank-you.html')
 
 
 # Serve favicon (if present in static)
@@ -137,6 +225,14 @@ def favicon():
 def sitemap():
     pages = [
         {'loc': url_for('home', _external=True), 'priority': '1.0', 'changefreq': 'weekly'},
+        {'loc': url_for('pvc_garden_pipes', _external=True), 'priority': '0.9', 'changefreq': 'monthly'},
+        {'loc': url_for('pvc_braided_pipes', _external=True), 'priority': '0.9', 'changefreq': 'monthly'},
+        {'loc': url_for('pvc_recycled_pipes', _external=True), 'priority': '0.9', 'changefreq': 'monthly'},
+        {'loc': url_for('pvc_conduits', _external=True), 'priority': '0.8', 'changefreq': 'monthly'},
+        {'loc': url_for('pvc_pipes_in_ambala', _external=True), 'priority': '0.7', 'changefreq': 'monthly'},
+        {'loc': url_for('pvc_pipes_in_delhi', _external=True), 'priority': '0.7', 'changefreq': 'monthly'},
+        {'loc': url_for('pvc_pipes_in_punjab', _external=True), 'priority': '0.7', 'changefreq': 'monthly'},
+        {'loc': url_for('thank_you', _external=True), 'priority': '0.5', 'changefreq': 'yearly'}
     ]
     sitemap_xml = ['<?xml version="1.0" encoding="UTF-8"?>', '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">']
     for p in pages:
@@ -155,7 +251,8 @@ def sitemap():
 def robots_txt():
     lines = [
         'User-agent: *',
-        'Disallow:',
+        'Allow: /',
+        'Disallow: /admin',
         f"Sitemap: {url_for('sitemap', _external=True)}"
     ]
     response = make_response('\n'.join(lines))

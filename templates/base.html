@@ -3,50 +3,69 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Dynamic SEO Title and Meta -->
     <title>{% block title %}PVC Pipes Manufacturer in Ambala | Divsa Polymers - Quality & Reliability{% endblock %}</title>
-    <meta name="description" content="Divsa Polymers - Trusted PVC pipe manufacturer in Ambala, Haryana. Premium garden pipes, braided pipes, recycled pipes. 10+ years excellence. Distributor opportunities available.">
-    <meta name="keywords" content="PVC pipes Ambala, PVC pipes manufacturer India, garden pipes, braided pipes, recycled pipes HDPE, Divsa Polymers Ambala, PVC pipe distributor, quality pipes">
+    <meta name="description" content="{% block meta_description %}Divsa Polymers - Trusted PVC pipe manufacturer in Ambala, Haryana. Premium garden pipes, braided pipes, recycled pipes. 10+ years excellence. Distributor opportunities available.{% endblock %}">
+    <meta name="keywords" content="{% block meta_keywords %}PVC pipes Ambala, PVC pipes manufacturer India, garden pipes, braided pipes, recycled pipes HDPE, Divsa Polymers Ambala, PVC pipe distributor, quality pipes{% endblock %}">
     <meta name="author" content="Divsa Polymers">
+    
+    <!-- Geo Tags -->
     <meta name="geo.region" content="IN-HR">
     <meta name="geo.placename" content="Ambala, Haryana, India">
-    <meta name="geo.position" content="30.3889;77.1497">
-    <meta name="ICBM" content="30.3889, 77.1497">
-    <link rel="canonical" href="https://www.divsapolymers.com/">
+    <meta name="geo.position" content="{{ SITE.latitude }};{{ SITE.longitude }}">
+    <meta name="ICBM" content="{{ SITE.latitude }}, {{ SITE.longitude }}">
+    
+    <!-- Canonical URL (dynamic) -->
+    <link rel="canonical" href="{% block canonical %}{{ SITE.url }}{% endblock %}">
+    
+    <!-- Preload hero image for performance (Core Web Vitals) -->
+    <link rel="preload" as="image" href="{{ url_for('static', filename='assets/factory-hero.webp') }}" type="image/webp">
+    <link rel="preload" as="image" href="{{ url_for('static', filename='assets/factory-hero.jpg') }}" type="image/jpeg">
+    
+    <!-- Fonts and Icons -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/performance.css') }}">
 
-    <!-- Open Graph / Social -->
-    <meta property="og:title" content="PVC Pipes Manufacturer in Ambala | Divsa Polymers">
-    <meta property="og:description" content="Trusted manufacturer of high-quality PVC pipes in Ambala. Garden pipes, braided pipes, recycled pipes. 10+ years of excellence.">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://www.divsapolymers.com/">
-    <meta property="og:image" content="https://www.divsapolymers.com/static/assets/factory-hero.jpg">
+    <!-- Open Graph / Social Media -->
+    <meta property="og:title" content="{% block og_title %}PVC Pipes Manufacturer in Ambala | Divsa Polymers{% endblock %}">
+    <meta property="og:description" content="{% block og_description %}Trusted manufacturer of high-quality PVC pipes in Ambala. Garden pipes, braided pipes, recycled pipes. 10+ years of excellence.{% endblock %}">
+    <meta property="og:type" content="{% block og_type %}website{% endblock %}">
+    <meta property="og:url" content="{% block og_url %}{{ SITE.url }}{% endblock %}">
+    <meta property="og:image" content="{% block og_image %}{{ SITE.url }}/static/assets/factory-hero.jpg{% endblock %}">
     <meta property="og:site_name" content="Divsa Polymers">
     <meta property="og:locale" content="en_IN">
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="PVC Pipes Manufacturer in Ambala | Divsa Polymers">
-    <meta name="twitter:description" content="Quality PVC pipes, garden pipes, braided pipes. Trusted by distributors nationwide.">
     
-    <!-- Structured Data (Schema.org) -->
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{% block twitter_title %}PVC Pipes Manufacturer in Ambala | Divsa Polymers{% endblock %}">
+    <meta name="twitter:description" content="{% block twitter_description %}Quality PVC pipes, garden pipes, braided pipes. Trusted by distributors nationwide.{% endblock %}">
+    <meta name="twitter:image" content="{% block twitter_image %}{{ SITE.url }}/static/assets/factory-hero.jpg{% endblock %}">
+    
+    <!-- Structured Data (Schema.org) - Organization -->
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
         "@type": "Organization",
-        "name": "Divsa Polymers",
-        "url": "https://www.divsapolymers.com",
-        "logo": "https://www.divsapolymers.com/static/assets/logo.png",
+        "name": "{{ SITE.name }}",
+        "url": "{{ SITE.url }}",
+        "logo": "{{ SITE.url }}/static/assets/logo.png",
         "description": "Leading manufacturer of PVC pipes in Ambala, Haryana, India",
         "address": {
             "@type": "PostalAddress",
+            "streetAddress": "{{ SITE.address }}",
             "addressLocality": "Ambala",
             "addressRegion": "Haryana",
-            "postalCode": "134003",
+            "postalCode": "134006",
             "addressCountry": "IN"
         },
         "areaServed": "IN",
+        "telephone": "{{ SITE.phone }}",
+        "email": "sales@divsapolymers.com",
         "sameAs": [
             "https://www.facebook.com/divsapolymers",
             "https://www.linkedin.com/company/divsa-polymers"
@@ -55,29 +74,35 @@
     }
     </script>
     
-    <!-- Local Business Schema -->
+    <!-- Structured Data (Schema.org) - Local Business -->
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
         "@type": "LocalBusiness",
-        "name": "Divsa Polymers",
-        "image": "https://www.divsapolymers.com/static/assets/factory-hero.jpg",
-        "description": "PVC Pipes Manufacturer",
+        "name": "{{ SITE.name }}",
+        "image": "{{ SITE.url }}/static/assets/factory-hero.jpg",
+        "description": "PVC Pipes Manufacturer and Distributor",
         "address": {
             "@type": "PostalAddress",
-            "streetAddress": "Your Street Address",
+            "streetAddress": "{{ SITE.address }}",
             "addressLocality": "Ambala",
             "addressRegion": "HR",
-            "postalCode": "134003",
+            "postalCode": "134006",
             "addressCountry": "IN"
         },
-        "telephone": "+91-XXXXXXXXXX",
-        "url": "https://www.divsapolymers.com",
+        "telephone": "{{ SITE.phone }}",
+        "url": "{{ SITE.url }}",
+        "geo": {
+            "@type": "GeoCoordinates",
+            "latitude": {{ SITE.latitude }},
+            "longitude": {{ SITE.longitude }}
+        },
         "priceRange": "$$",
-        "areaServed": "IN"
+        "areaServed": ["Ambala", "Haryana", "Punjab", "Delhi", "India"]
     }
     </script>
-
+    
+    <!-- Extra head content (page-specific) -->
     {% block head_extra %}{% endblock %}
 </head>
 <body>
@@ -88,6 +113,22 @@
     {% include '_footer.html' %}
 
     <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    
+    <!-- Google Analytics 4 -->
+    {% if SITE.ga_measurement_id %}
+    <script async src="https://www.googletagmanager.com/gtag/js?id={{ SITE.ga_measurement_id }}"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', '{{ SITE.ga_measurement_id }}', {
+            'page_path': '{{ request.path }}',
+            'anonymize_ip': true
+        });
+    </script>
+    <script src="{{ url_for('static', filename='js/main.seo.js') }}"></script>
+    {% endif %}
+    
     {% block scripts %}{% endblock %}
 </body>
 </html>
