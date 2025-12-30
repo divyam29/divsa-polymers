@@ -1,40 +1,40 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>PVC Pipes in Ambala | Local PVC Distributor — Divsa Polymers</title>
-    <meta name="description" content="Divsa Polymers supplies PVC pipes in Ambala with fast local delivery and dealership opportunities across Haryana and PAN India.">
-    <link rel="canonical" href="{{ SITE.url }}/pvc-pipes-in-ambala">
-    <script type="application/ld+json">
-    {
-        "@context":"https://schema.org",
-        "@type":"LocalBusiness",
-        "name":"Divsa Polymers",
-        "image":"{{ SITE.url }}/static/assets/factory-hero.jpg",
-        "address":{
-            "@type":"PostalAddress",
-            "streetAddress":"Plot No. 21, Industrial Area, Ambala Cantt",
-            "addressLocality":"Ambala",
-            "addressRegion":"Haryana",
-            "postalCode":"134006",
-            "addressCountry":"IN"
-        },
-        "telephone":"{{ SITE.phone }}",
-        "geo": {"@type": "GeoCoordinates", "latitude": {{ SITE.latitude }}, "longitude": {{ SITE.longitude }} },
-        "url":"{{ SITE.url }}",
-        "areaServed":"Ambala, Haryana, India"
-    }
-    </script>
-</head>
-<body>
-    {% include '_header_seo.html' %}
-    <main class="container">
-        <h1>PVC Pipes in Ambala</h1>
-        <p>Local supply and distribution for Ambala and surrounding regions. We provide pan-India delivery and dedicated dealer support.</p>
-        <a href="#dealership" class="btn btn-primary">Partner With Us</a>
-        <a href="tel:{{ SITE.phone }}" class="btn btn-secondary">Call Now</a>
-    </main>
-    {% include '_footer_seo.html' %}
-</body>
-</html>
+{% extends 'base.html' %}
+
+{% block title %}PVC Pipes in Ambala | Local PVC Distributor — Divsa Polymers{% endblock %}
+{% block meta_description %}Divsa Polymers supplies PVC pipes in Ambala with fast local delivery and dealership opportunities across Haryana and PAN India.{% endblock %}
+{% block meta_keywords %}PVC pipes Ambala, local PVC distributor, pipes in Ambala, Haryana, Divsa Polymers{% endblock %}
+{% block canonical %}{{ SITE.url }}/pvc-pipes-in-ambala{% endblock %}
+{% block og_title %}PVC Pipes in Ambala | Divsa Polymers{% endblock %}
+{% block og_description %}Local PVC pipe supply and distribution in Ambala with pan-India dealer support.{% endblock %}
+
+{% block head_extra %}
+<script type="application/ld+json">
+{
+    "@context":"https://schema.org",
+    "@type":"LocalBusiness",
+    "name":"Divsa Polymers",
+    "image":"{{ SITE.url }}/static/assets/factory-hero.jpg",
+    "address":{
+        "@type":"PostalAddress",
+        "streetAddress":"Plot No. 21, Industrial Area, Ambala Cantt",
+        "addressLocality":"Ambala",
+        "addressRegion":"Haryana",
+        "postalCode":"134006",
+        "addressCountry":"IN"
+    },
+    "telephone":"{{ SITE.phone }}",
+    "geo": {"@type": "GeoCoordinates", "latitude": {{ SITE.latitude }}, "longitude": {{ SITE.longitude }} },
+    "url":"{{ SITE.url }}",
+    "areaServed":"Ambala, Haryana, India"
+}
+</script>
+{% endblock %}
+
+{% block content %}
+<main class="container">
+    <h1>PVC Pipes in Ambala</h1>
+    <p>Local supply and distribution for Ambala and surrounding regions. We provide pan-India delivery and dedicated dealer support.</p>
+    <a href="{{ url_for('home') }}#dealership" class="btn btn-primary">Partner With Us</a>
+    <a href="tel:{{ SITE.phone }}" class="btn btn-dark">Call Now</a>
+</main>
+{% endblock %}

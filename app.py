@@ -182,16 +182,6 @@ def pvc_recycled_pipes():
     return render_template('pvc-recycled-pipes.html', faqs=faqs)
 
 
-@app.route('/pvc-conduits')
-def pvc_conduits():
-    faqs = [
-        {"question": "Are these conduits flame-retardant?", "answer": "We offer self-extinguishing formulations for electrical conduits."},
-        {"question": "Do you supply conduit fittings?", "answer": "Yes — a range of compatible fittings and accessories are available."},
-        {"question": "What sizes are available?", "answer": "Standard electrical conduit sizes from 16mm to 50mm are stocked."},
-        {"question": "Can conduits be ordered in custom lengths?", "answer": "Yes — contact sales for custom length and packaging options."}
-    ]
-    return render_template('pvc-conduits.html', faqs=faqs)
-
 
 # City / Local pages
 @app.route('/pvc-pipes-in-ambala')
@@ -228,7 +218,6 @@ def sitemap():
         {'loc': url_for('pvc_garden_pipes', _external=True), 'priority': '0.9', 'changefreq': 'monthly'},
         {'loc': url_for('pvc_braided_pipes', _external=True), 'priority': '0.9', 'changefreq': 'monthly'},
         {'loc': url_for('pvc_recycled_pipes', _external=True), 'priority': '0.9', 'changefreq': 'monthly'},
-        {'loc': url_for('pvc_conduits', _external=True), 'priority': '0.8', 'changefreq': 'monthly'},
         {'loc': url_for('pvc_pipes_in_ambala', _external=True), 'priority': '0.7', 'changefreq': 'monthly'},
         {'loc': url_for('pvc_pipes_in_delhi', _external=True), 'priority': '0.7', 'changefreq': 'monthly'},
         {'loc': url_for('pvc_pipes_in_punjab', _external=True), 'priority': '0.7', 'changefreq': 'monthly'},

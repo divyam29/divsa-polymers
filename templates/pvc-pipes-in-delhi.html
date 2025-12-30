@@ -1,36 +1,36 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>PVC Pipes in Delhi | Divsa Polymers — Pan India Delivery</title>
-    <meta name="description" content="Divsa Polymers supplies PVC pipes across Delhi with fast distribution. Dealer enquiries welcome.">
-    <link rel="canonical" href="{{ SITE.url }}/pvc-pipes-in-delhi">
-    <script type="application/ld+json">
-    {
-        "@context":"https://schema.org",
-        "@type":"LocalBusiness",
-        "name":"Divsa Polymers",
-        "address":{
-            "@type":"PostalAddress",
-            "addressLocality":"Delhi",
-            "addressRegion":"Delhi",
-            "addressCountry":"IN"
-        },
-        "telephone":"{{ SITE.phone }}",
-        "url":"{{ SITE.url }}",
-        "areaServed":"Delhi, NCR, Pan India"
-    }
-    </script>
-</head>
-<body>
-    {% include '_header_seo.html' %}
-    <main class="container">
-        <h1>PVC Pipes in Delhi</h1>
-        <p>Serving Delhi with reliable pipe supply and nationwide logistics. Reach out for dealership and bulk orders.</p>
-        <a href="#dealership" class="btn btn-primary">Become a Dealer</a>
-        <a href="tel:{{ SITE.phone }}" class="btn btn-secondary">Call Now</a>
-    </main>
-    {% include '_footer_seo.html' %}
-</body>
-</html>
+{% extends 'base.html' %}
+
+{% block title %}PVC Pipes in Delhi | Divsa Polymers — Pan India Delivery{% endblock %}
+{% block meta_description %}Divsa Polymers supplies PVC pipes across Delhi with fast distribution. Dealer enquiries welcome.{% endblock %}
+{% block meta_keywords %}PVC pipes Delhi, NCR pipes, Delhi distributor, Divsa Polymers{% endblock %}
+{% block canonical %}{{ SITE.url }}/pvc-pipes-in-delhi{% endblock %}
+{% block og_title %}PVC Pipes in Delhi | Divsa Polymers{% endblock %}
+{% block og_description %}Reliable PVC pipe supply and nationwide logistics service in Delhi and NCR region.{% endblock %}
+
+{% block head_extra %}
+<script type="application/ld+json">
+{
+    "@context":"https://schema.org",
+    "@type":"LocalBusiness",
+    "name":"Divsa Polymers",
+    "address":{
+        "@type":"PostalAddress",
+        "addressLocality":"Delhi",
+        "addressRegion":"Delhi",
+        "addressCountry":"IN"
+    },
+    "telephone":"{{ SITE.phone }}",
+    "url":"{{ SITE.url }}",
+    "areaServed":"Delhi, NCR, Pan India"
+}
+</script>
+{% endblock %}
+
+{% block content %}
+<main class="container">
+    <h1>PVC Pipes in Delhi</h1>
+    <p>Serving Delhi with reliable pipe supply and nationwide logistics. Reach out for dealership and bulk orders.</p>
+    <a href="{{ url_for('home') }}#dealership" class="btn btn-primary">Become a Dealer</a>
+    <a href="tel:{{ SITE.phone }}" class="btn btn-dark">Call Now</a>
+</main>
+{% endblock %}

@@ -1,19 +1,15 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Thank You — Divsa Polymers</title>
-    <meta name="description" content="Thank you for contacting Divsa Polymers. We'll reach out shortly to discuss your requirements.">
-    <link rel="canonical" href="{{ SITE.url }}/thank-you">
-</head>
-<body>
-    {% include '_header_seo.html' %}
-    <main class="container">
-        <h1>Thank You</h1>
-        <p>We appreciate your inquiry. A member of our team will contact you within 24 hours.</p>
-        <a href="{{ url_for('home') }}" class="btn">Return Home</a>
-    </main>
-    {% include '_footer_seo.html' %}
-</body>
-</html>
+{% extends 'base.html' %}
+
+{% block title %}Thank You — Divsa Polymers{% endblock %}
+{% block meta_description %}Thank you for contacting Divsa Polymers. We'll reach out shortly to discuss your requirements.{% endblock %}
+{% block canonical %}{{ SITE.url }}/thank-you{% endblock %}
+
+{% block content %}
+<main class="container">
+    <section style="text-align: center; padding: 100px 20px;">
+        <h1 style="color: var(--accent-green);">Thank You!</h1>
+        <p style="font-size: 1.2rem; max-width: 600px; margin: 2rem auto;">We appreciate your inquiry. A member of our team will contact you within 24 hours.</p>
+        <a href="{{ url_for('home') }}" class="btn btn-primary">Return Home <i class="fas fa-home"></i></a>
+    </section>
+</main>
+{% endblock %}

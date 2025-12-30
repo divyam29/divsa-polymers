@@ -1,35 +1,35 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>PVC Pipes in Punjab | Local Suppliers — Divsa Polymers</title>
-    <meta name="description" content="Divsa Polymers supports distributors and customers across Punjab with high-quality PVC products and dependable delivery.">
-    <link rel="canonical" href="{{ SITE.url }}/pvc-pipes-in-punjab">
-    <script type="application/ld+json">
-    {
-        "@context":"https://schema.org",
-        "@type":"LocalBusiness",
-        "name":"Divsa Polymers",
-        "address":{
-            "@type":"PostalAddress",
-            "addressRegion":"Punjab",
-            "addressCountry":"IN"
-        },
-        "telephone":"{{ SITE.phone }}",
-        "url":"{{ SITE.url }}",
-        "areaServed":"Punjab, Pan India"
-    }
-    </script>
-</head>
-<body>
-    {% include '_header_seo.html' %}
-    <main class="container">
-        <h1>PVC Pipes in Punjab</h1>
-        <p>Local distribution and dealer support across Punjab. Fast dispatch and tailored dealer programs available.</p>
-        <a href="#dealership" class="btn btn-primary">Join Our Network</a>
-        <a href="tel:{{ SITE.phone }}" class="btn btn-secondary">Call Now</a>
-    </main>
-    {% include '_footer_seo.html' %}
-</body>
-</html>
+{% extends 'base.html' %}
+
+{% block title %}PVC Pipes in Punjab | Local Suppliers — Divsa Polymers{% endblock %}
+{% block meta_description %}Divsa Polymers supports distributors and customers across Punjab with high-quality PVC products and dependable delivery.{% endblock %}
+{% block meta_keywords %}PVC pipes Punjab, Punjab distributor, local PVC supplier, Divsa Polymers{% endblock %}
+{% block canonical %}{{ SITE.url }}/pvc-pipes-in-punjab{% endblock %}
+{% block og_title %}PVC Pipes in Punjab | Divsa Polymers{% endblock %}
+{% block og_description %}Local distribution and dealer support across Punjab with quality PVC pipes and fast dispatch.{% endblock %}
+
+{% block head_extra %}
+<script type="application/ld+json">
+{
+    "@context":"https://schema.org",
+    "@type":"LocalBusiness",
+    "name":"Divsa Polymers",
+    "address":{
+        "@type":"PostalAddress",
+        "addressRegion":"Punjab",
+        "addressCountry":"IN"
+    },
+    "telephone":"{{ SITE.phone }}",
+    "url":"{{ SITE.url }}",
+    "areaServed":"Punjab, Pan India"
+}
+</script>
+{% endblock %}
+
+{% block content %}
+<main class="container">
+    <h1>PVC Pipes in Punjab</h1>
+    <p>Local distribution and dealer support across Punjab. Fast dispatch and tailored dealer programs available.</p>
+    <a href="{{ url_for('home') }}#dealership" class="btn btn-primary">Join Our Network</a>
+    <a href="tel:{{ SITE.phone }}" class="btn btn-dark">Call Now</a>
+</main>
+{% endblock %}
