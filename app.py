@@ -22,10 +22,11 @@ app.secret_key = app.config.get('SECRET_KEY')
 SITE = {
     'name': 'Divsa Polymers',
     'url': app.config.get('SITE_URL', 'https://www.divsapolymers.com'),
-    'phone': app.config.get('COMPANY_PHONE', '+91-173-1234567'),
-    'address': 'Plot No. 21, Industrial Area, Ambala Cantt, Ambala, Haryana 134006, India',
-    'latitude': 30.3782,
-    'longitude': 76.7767,
+    'phone': app.config.get('COMPANY_PHONE', '+918607125915'),
+    'email': app.config.get('COMPANY_EMAIL', 'divyamjain29@gmail.com'),
+    'address': 'Khasra No. 92//21 & 108//1/1, Dukheri Road, Dukheri, Ambala-133004, Haryana, India',
+    'latitude': 30.2758361,
+    'longitude': 76.8669546,
     'ga_measurement_id': app.config.get('GA_MEASUREMENT_ID', '')
 }
 
@@ -204,6 +205,11 @@ def thank_you():
     return render_template('thank-you.html')
 
 
+@app.route('/infrastructure')
+def infrastructure():
+    return render_template('infrastructure.html')
+
+
 # Serve favicon (if present in static)
 @app.route('/favicon.ico')
 def favicon():
@@ -218,6 +224,7 @@ def sitemap():
         {'loc': url_for('pvc_garden_pipes', _external=True), 'priority': '0.9', 'changefreq': 'monthly'},
         {'loc': url_for('pvc_braided_pipes', _external=True), 'priority': '0.9', 'changefreq': 'monthly'},
         {'loc': url_for('pvc_recycled_pipes', _external=True), 'priority': '0.9', 'changefreq': 'monthly'},
+        {'loc': url_for('infrastructure', _external=True), 'priority': '0.8', 'changefreq': 'monthly'},
         {'loc': url_for('pvc_pipes_in_ambala', _external=True), 'priority': '0.7', 'changefreq': 'monthly'},
         {'loc': url_for('pvc_pipes_in_delhi', _external=True), 'priority': '0.7', 'changefreq': 'monthly'},
         {'loc': url_for('pvc_pipes_in_punjab', _external=True), 'priority': '0.7', 'changefreq': 'monthly'},
