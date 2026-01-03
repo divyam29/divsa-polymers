@@ -9,6 +9,9 @@ import os
 import sys
 from pathlib import Path
 
+# Toggle: Delete originals after successful conversion?
+DELETE_ORIGINALS = False
+
 try:
     from PIL import Image
 except ImportError:
@@ -20,7 +23,7 @@ def convert_to_webp(image_path, output_path, quality=80):
     """Convert image to WebP format"""
     try:
         with Image.open(image_path) as img:
-            # Convert RGBA to RGB if needed (WebP doesn't support transparency in all cases)
+            # Convert RGBA to RGB if needed
             if img.mode in ('RGBA', 'LA', 'P'):
                 rgb_img = Image.new('RGB', img.size, (255, 255, 255))
                 rgb_img.paste(img, mask=img.split()[-1] if img.mode == 'RGBA' else None)
@@ -30,6 +33,17 @@ def convert_to_webp(image_path, output_path, quality=80):
         return True
     except Exception as e:
         print(f"  ✗ Error converting {image_path}: {e}")
+        return False
+
+
+def delete_original(image_path):
+    """Delete original image safely"""
+    try:
+        os.remove(image_path)
+        print(f"   🗑️ Deleted original: {image_path.name}")
+        return True
+    except Exception as e:
+        print(f"   ⚠️ Could not delete {image_path.name}: {e}")
         return False
 
 
@@ -56,7 +70,6 @@ def main():
     skipped = 0
     failed = 0
     
-    # Find all image files
     image_extensions = ('.jpg', '.jpeg', '.png')
     image_files = []
     
@@ -83,6 +96,10 @@ def main():
                 webp_size = get_file_size(output_path)
                 reduction = (1 - os.path.getsize(output_path) / os.path.getsize(image_path)) * 100
                 print(f"✓ ({original_size} → {webp_size}, {reduction:.0f}% smaller)")
+                
+                if DELETE_ORIGINALS:
+                    delete_original(image_path)
+
                 converted += 1
             else:
                 failed += 1
@@ -91,7 +108,10 @@ def main():
     
     if converted > 0:
         print(f"\nWebP images created in: {assets_dir}")
-        print("Update your HTML to use picture/source elements with WebP support.")
+        if DELETE_ORIGINALS:
+            print("Original JPG/PNG files have been deleted after successful conversion.")
+        else:
+            print("Original JPG/PNG files were kept (deletion disabled).")
 
 
 if __name__ == '__main__':
