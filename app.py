@@ -130,13 +130,24 @@ if client is not None:
 
 # --- Logging ---
 if not app.debug:
-    os.makedirs('logs', exist_ok=True)
-    handler = RotatingFileHandler('logs/divsa.log', maxBytes=1024 * 1024, backupCount=3)
-    handler.setLevel(logging.INFO)
     formatter = logging.Formatter('%(asctime)s %(levelname)s: %(message)s [in %(pathname)s:%(lineno)d]')
-    handler.setFormatter(formatter)
-    app.logger.addHandler(handler)
     app.logger.setLevel(logging.INFO)
+
+    try:
+        logs_dir = os.path.join(app.root_path, 'logs')
+        os.makedirs(logs_dir, exist_ok=True)
+        handler = RotatingFileHandler(os.path.join(logs_dir, 'divsa.log'), maxBytes=1024 * 1024, backupCount=3)
+        handler.setLevel(logging.INFO)
+        handler.setFormatter(formatter)
+        app.logger.addHandler(handler)
+    except OSError:
+        # Serverless (e.g., Vercel) file system is read-only — fallback to stdout
+        stream_handler = logging.StreamHandler()
+        stream_handler.setLevel(logging.INFO)
+        stream_handler.setFormatter(formatter)
+        app.logger.addHandler(stream_handler)
+        app.logger.warning('File logging disabled (read-only filesystem); using stdout logger.')
+
     app.logger.info('Divsa Polymers startup')
 
 
