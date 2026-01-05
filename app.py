@@ -1,8 +1,8 @@
 import os
 import logging
-from logging.handlers import RotatingFileHandler
+import time
 from datetime import datetime
-from flask import Flask, render_template, request, flash, redirect, url_for, send_from_directory, make_response, session
+from flask import Flask, render_template, request, flash, redirect, url_for, send_from_directory, make_response, session, g
 from functools import wraps
 import smtplib
 from email.mime.text import MIMEText
@@ -18,6 +18,24 @@ app = Flask(__name__, static_url_path='/static', static_folder='static', templat
 
 # Load configuration from config.py (which reads .env)
 app.config.from_object(Config)
+
+# Terminal logging setup (stdout) to suit serverless platforms
+def configure_logging():
+    level_name = os.environ.get('LOG_LEVEL', 'INFO').upper()
+    level = getattr(logging, level_name, logging.INFO)
+    formatter = logging.Formatter('%(asctime)s %(levelname)s %(message)s')
+    handler = logging.StreamHandler()
+    handler.setLevel(level)
+    handler.setFormatter(formatter)
+
+    for existing in list(app.logger.handlers):
+        app.logger.removeHandler(existing)
+
+    app.logger.addHandler(handler)
+    app.logger.setLevel(level)
+    app.logger.info('Logging configured', extra={'level': level_name})
+
+configure_logging()
 
 # File upload settings
 ALLOWED_IMAGE_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif', 'webp'}
@@ -64,7 +82,10 @@ def send_inquiry_email(inquiry):
             server.login(username, password)
         server.sendmail(from_email, [to_email], msg.as_string())
         server.quit()
-        app.logger.info('Inquiry notification email sent to %s', to_email)
+        app.logger.info(
+            'Inquiry email sent',
+            extra={'to': to_email, 'from': from_email, 'name': inquiry.get('name'), 'email': inquiry.get('email')}
+        )
     except Exception as e:
         app.logger.error('Failed to send inquiry email: %s', e)
         app.logger.exception('Email send failure')
@@ -130,25 +151,22 @@ if client is not None:
 
 # --- Logging ---
 if not app.debug:
-    formatter = logging.Formatter('%(asctime)s %(levelname)s: %(message)s [in %(pathname)s:%(lineno)d]')
+    # Keep logs flowing to the platform default stdout/stderr (suitable for serverless)
     app.logger.setLevel(logging.INFO)
+    app.logger.info('Divsa Polymers startup (stdout logging enabled)')
 
-    try:
-        logs_dir = os.path.join(app.root_path, 'logs')
-        os.makedirs(logs_dir, exist_ok=True)
-        handler = RotatingFileHandler(os.path.join(logs_dir, 'divsa.log'), maxBytes=1024 * 1024, backupCount=3)
-        handler.setLevel(logging.INFO)
-        handler.setFormatter(formatter)
-        app.logger.addHandler(handler)
-    except OSError:
-        # Serverless (e.g., Vercel) file system is read-only — fallback to stdout
-        stream_handler = logging.StreamHandler()
-        stream_handler.setLevel(logging.INFO)
-        stream_handler.setFormatter(formatter)
-        app.logger.addHandler(stream_handler)
-        app.logger.warning('File logging disabled (read-only filesystem); using stdout logger.')
 
-    app.logger.info('Divsa Polymers startup')
+@app.before_request
+def log_request_start():
+    g.request_start_time = time.time()
+    ip = request.headers.get('X-Forwarded-For', request.remote_addr)
+    app.logger.info(
+        'REQUEST START %s %s ip=%s ua=%s',
+        request.method,
+        request.path,
+        ip,
+        (request.user_agent.string or '')[:200]
+    )
 
 
 @app.after_request
@@ -159,6 +177,15 @@ def set_security_headers(response):
     response.headers['Permissions-Policy'] = 'geolocation=()'
     # HSTS only for HTTPS deployments
     response.headers.setdefault('Strict-Transport-Security', 'max-age=31536000; includeSubDomains')
+
+    duration_ms = int((time.time() - getattr(g, 'request_start_time', time.time())) * 1000)
+    app.logger.info(
+        'REQUEST END %s %s status=%s duration_ms=%s',
+        request.method,
+        request.path,
+        response.status_code,
+        duration_ms
+    )
     return response
 
 
@@ -186,6 +213,7 @@ def submit_inquiry():
 
     if not name or not email or not phone:
         flash('Please provide name, email and phone.', 'error')
+        app.logger.warning('Inquiry validation failed', extra={'name': name, 'email': email, 'phone': phone})
         # Redirect back to products page if product_id exists, otherwise home
         if product_id:
             return redirect(url_for('products'))
@@ -207,7 +235,7 @@ def submit_inquiry():
         if inquiries_collection is not None:
             result = inquiries_collection.insert_one(inquiry_data)
             flash(f'Success! {name}, your inquiry has been saved.', 'success')
-            app.logger.info('New inquiry saved: %s', email)
+            app.logger.info('New inquiry saved', extra={'email': email, 'id': str(result.inserted_id), 'product_id': product_id})
         else:
             app.logger.warning('No database configured; skipping save.')
             flash(f'Thank you {name}, we received your inquiry.', 'success')
@@ -240,9 +268,11 @@ def admin_login():
         if password == app.config.get('ADMIN_PASSWORD'):
             session['admin_logged_in'] = True
             flash('Successfully logged in!', 'success')
+            app.logger.info('Admin login success', extra={'ip': request.headers.get('X-Forwarded-For', request.remote_addr)})
             return redirect(url_for('admin_products'))
         else:
             flash('Invalid password. Please try again.', 'error')
+            app.logger.warning('Admin login failed', extra={'ip': request.headers.get('X-Forwarded-For', request.remote_addr)})
     return render_template('admin/login.html')
 
 
@@ -333,6 +363,7 @@ def view_inquiries():
 def admin_products():
     if products_collection is None:
         flash('No database configured.', 'error')
+        app.logger.error('Products requested but database not configured')
         products_list = []
     else:
         try:
@@ -344,6 +375,7 @@ def admin_products():
             app.logger.error(f'Error fetching products: {e}')
             flash('Error loading products.', 'error')
             products_list = []
+            app.logger.exception('Products fetch failure')
     return render_template('admin/products.html', products=products_list)
 
 
@@ -367,6 +399,7 @@ def admin_add_product():
             extension = uploaded_image.filename.rsplit('.', 1)[-1].lower() if '.' in uploaded_image.filename else ''
             if extension not in ALLOWED_IMAGE_EXTENSIONS:
                 flash('Invalid image type. Allowed: PNG, JPG, JPEG, GIF, WEBP.', 'error')
+                app.logger.warning('Invalid product image type', extra={'filename': uploaded_image.filename})
                 return render_template('admin/add_product.html')
 
             safe_name = secure_filename(uploaded_image.filename)
@@ -379,11 +412,12 @@ def admin_add_product():
                 app.logger.exception('Error saving uploaded product image')
                 flash('There was a problem saving the image. Please try again.', 'error')
                 return render_template('admin/add_product.html')
-        
+
         if not name or not description or not product_type or not quality:
             flash('Please fill in all required fields (name, description, type, quality).', 'error')
+            app.logger.warning('Product add validation failed', extra={'name': name, 'type': product_type})
             return render_template('admin/add_product.html')
-        
+
         product_data = {
             'name': name,
             'description': description,
@@ -399,10 +433,11 @@ def admin_add_product():
             if products_collection is not None:
                 products_collection.insert_one(product_data)
                 flash(f'Product "{name}" added successfully!', 'success')
-                app.logger.info(f'New product added: {name}')
+                app.logger.info('Product added', extra={'name': name, 'type': product_type})
                 return redirect(url_for('admin_products'))
             else:
                 flash('No database configured. Product not saved.', 'error')
+                app.logger.error('Add product attempted without database')
         except Exception as e:
             flash(f'Error saving product: {str(e)}', 'error')
             app.logger.exception('Error saving product')
@@ -423,6 +458,7 @@ def admin_edit_product(product_id):
         product = products_collection.find_one({'_id': ObjectId(product_id)})
         if not product:
             flash('Product not found.', 'error')
+            app.logger.warning('Edit product failed - not found', extra={'product_id': product_id})
             return redirect(url_for('admin_products'))
         
         if request.method == 'POST':
@@ -439,6 +475,7 @@ def admin_edit_product(product_id):
             if not name or not description or not product_type or not quality:
                 flash('Please fill in all required fields.', 'error')
                 product['features'] = '\n'.join(product.get('features', []))
+                app.logger.warning('Product edit validation failed', extra={'product_id': product_id, 'name': name})
                 return render_template('admin/edit_product.html', product=product)
             
             update_data = {
@@ -456,6 +493,7 @@ def admin_edit_product(product_id):
                 {'$set': update_data}
             )
             flash(f'Product "{name}" updated successfully!', 'success')
+            app.logger.info('Product updated', extra={'product_id': product_id, 'name': name})
             return redirect(url_for('admin_products'))
         
         # Convert features list to string for textarea
@@ -482,8 +520,10 @@ def admin_delete_product(product_id):
         result = products_collection.delete_one({'_id': ObjectId(product_id)})
         if result.deleted_count > 0:
             flash('Product deleted successfully!', 'success')
+            app.logger.info('Product deleted', extra={'product_id': product_id})
         else:
             flash('Product not found.', 'error')
+            app.logger.warning('Delete product failed - not found', extra={'product_id': product_id})
     except Exception as e:
         flash(f'Error deleting product: {str(e)}', 'error')
         app.logger.exception('Error deleting product')
@@ -547,8 +587,10 @@ def products():
         except Exception as e:
             app.logger.error(f'Error fetching products: {e}')
             products_data = []
+            app.logger.exception('Products page load failure')
     else:
         products_data = []
+        app.logger.warning('Products requested with no database configured')
     
     # If no products in database, show empty state
     return render_template('products.html', products=products_data)
