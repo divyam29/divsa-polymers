@@ -1,0 +1,14 @@
+# Local environment variables (do NOT commit real secrets)
+SECRET_KEY=
+FLASK_DEBUG=
+# MongoDB Atlas Connection
+MONGODB_URI=
+
+# SMTP settings for inquiry email notifications
+EMAIL_HOST=
+EMAIL_PORT=
+EMAIL_USERNAME=
+EMAIL_PASSWORD=
+EMAIL_USE_TLS=
+EMAIL_FROM=
+EMAIL_TO_ADMIN=

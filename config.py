@@ -18,6 +18,15 @@ class Config:
     # MongoDB Atlas configuration
     MONGODB_URI = os.environ.get('MONGODB_URI', '')
     
+    # Email (SMTP) settings for inquiry notifications
+    EMAIL_HOST = os.environ.get('EMAIL_HOST', '')
+    EMAIL_PORT = int(os.environ.get('EMAIL_PORT', 587))
+    EMAIL_USERNAME = os.environ.get('EMAIL_USERNAME', '')
+    EMAIL_PASSWORD = os.environ.get('EMAIL_PASSWORD', '')
+    EMAIL_USE_TLS = os.environ.get('EMAIL_USE_TLS', '1') == '1'
+    EMAIL_FROM = os.environ.get('EMAIL_FROM', EMAIL_USERNAME)
+    EMAIL_TO_ADMIN = os.environ.get('EMAIL_TO_ADMIN', 'divyamjain29@gmail.com')
+    
     # Legacy database configuration (SQLite)
     DATABASE_URL = os.environ.get('DATABASE_URL')
     if DATABASE_URL:

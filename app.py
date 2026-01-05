@@ -4,6 +4,9 @@ from logging.handlers import RotatingFileHandler
 from datetime import datetime
 from flask import Flask, render_template, request, flash, redirect, url_for, send_from_directory, make_response, session
 from functools import wraps
+import smtplib
+from email.mime.text import MIMEText
+from werkzeug.utils import secure_filename
 from pymongo import MongoClient
 from pymongo.errors import ServerSelectionTimeoutError
 import certifi
@@ -15,6 +18,56 @@ app = Flask(__name__, static_url_path='/static', static_folder='static', templat
 
 # Load configuration from config.py (which reads .env)
 app.config.from_object(Config)
+
+# File upload settings
+ALLOWED_IMAGE_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif', 'webp'}
+ASSETS_FOLDER = os.path.join(app.static_folder, 'assets')
+os.makedirs(ASSETS_FOLDER, exist_ok=True)
+
+# Email notification helper
+def send_inquiry_email(inquiry):
+    host = app.config.get('EMAIL_HOST')
+    port = app.config.get('EMAIL_PORT', 587)
+    username = app.config.get('EMAIL_USERNAME')
+    password = app.config.get('EMAIL_PASSWORD')
+    use_tls = app.config.get('EMAIL_USE_TLS', True)
+    from_email = app.config.get('EMAIL_FROM') or username
+    to_email = app.config.get('EMAIL_TO_ADMIN', 'divyamjain29@gmail.com')
+
+    if not host or not from_email or not to_email:
+        app.logger.warning('Email not sent - missing SMTP configuration')
+        return
+
+    subject = f"New inquiry from {inquiry.get('name', 'Unknown')}"
+    lines = [
+        f"Name: {inquiry.get('name', 'N/A')}",
+        f"Email: {inquiry.get('email', 'N/A')}",
+        f"Phone: {inquiry.get('phone', 'N/A')}",
+        f"City: {inquiry.get('city', 'N/A')}",
+        f"Business: {inquiry.get('business_info', 'N/A')}",
+        f"Quantity: {inquiry.get('quantity_required', 'N/A')}",
+        f"Product ID: {inquiry.get('product_id', 'N/A')}",
+        f"Submitted At (UTC): {datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S')}",
+    ]
+    body = '\n'.join(lines)
+
+    msg = MIMEText(body)
+    msg['Subject'] = subject
+    msg['From'] = from_email
+    msg['To'] = to_email
+
+    try:
+        server = smtplib.SMTP(host, port, timeout=30)
+        if use_tls:
+            server.starttls()
+        if username and password:
+            server.login(username, password)
+        server.sendmail(from_email, [to_email], msg.as_string())
+        server.quit()
+        app.logger.info('Inquiry notification email sent to %s', to_email)
+    except Exception as e:
+        app.logger.error('Failed to send inquiry email: %s', e)
+        app.logger.exception('Email send failure')
 
 # Expose secret key for extensions that read it directly
 app.secret_key = app.config.get('SECRET_KEY')
@@ -140,6 +193,7 @@ def submit_inquiry():
         else:
             app.logger.warning('No database configured; skipping save.')
             flash(f'Thank you {name}, we received your inquiry.', 'success')
+        send_inquiry_email(inquiry_data)
     except ServerSelectionTimeoutError as e:
         flash('Database connection timeout. Please try again in a moment.', 'error')
         app.logger.error(f'MongoDB connection timeout while saving inquiry: {e}')
@@ -179,6 +233,14 @@ def admin_logout():
     session.pop('admin_logged_in', None)
     flash('You have been logged out.', 'info')
     return redirect(url_for('admin_login'))
+
+@app.route('/admin')
+def admin_root():
+    # Simple entry point that routes admins to products or the login page
+    if session.get('admin_logged_in'):
+        return redirect(url_for('admin_products'))
+    return redirect(url_for('admin_login'))
+
 
 
 @app.route('/admin/inquiries')
@@ -276,10 +338,29 @@ def admin_add_product():
         product_type = (request.form.get('type') or '').strip()
         quality = (request.form.get('quality') or '').strip()
         image = (request.form.get('image') or '').strip()
+        uploaded_image = request.files.get('image_file')
         features_str = (request.form.get('features') or '').strip()
         
         # Convert features string to list
         features = [f.strip() for f in features_str.split('\n') if f.strip()]
+
+        if uploaded_image and uploaded_image.filename:
+            # Validate extension
+            extension = uploaded_image.filename.rsplit('.', 1)[-1].lower() if '.' in uploaded_image.filename else ''
+            if extension not in ALLOWED_IMAGE_EXTENSIONS:
+                flash('Invalid image type. Allowed: PNG, JPG, JPEG, GIF, WEBP.', 'error')
+                return render_template('admin/add_product.html')
+
+            safe_name = secure_filename(uploaded_image.filename)
+            timestamp = datetime.utcnow().strftime('%Y%m%d%H%M%S')
+            image = f'{timestamp}_{safe_name}'
+
+            try:
+                uploaded_image.save(os.path.join(ASSETS_FOLDER, image))
+            except Exception as e:
+                app.logger.exception('Error saving uploaded product image')
+                flash('There was a problem saving the image. Please try again.', 'error')
+                return render_template('admin/add_product.html')
         
         if not name or not description or not product_type or not quality:
             flash('Please fill in all required fields (name, description, type, quality).', 'error')
@@ -530,5 +611,5 @@ def robots_txt():
 
 if __name__ == '__main__':
     host = os.environ.get('HOST', '0.0.0.0')
-    port = int(os.environ.get('PORT', 8000))
+    port = int(os.environ.get('PORT', 12000))
     app.run(host=host, port=port, debug=app.config['DEBUG'])
