@@ -1,10 +1,10 @@
 {% extends 'base.html' %}
 
-{% block title %}PVC Garden Pipes | Durable Garden Watering Pipes — Divsa Polymers{% endblock %}
-{% block meta_description %}Buy PVC garden pipes from Divsa Polymers. UV-stabilized, flexible, and long-lasting garden hoses and pipes with pan-India delivery.{% endblock %}
-{% block meta_keywords %}PVC garden pipes, UV-resistant pipes, garden hoses, watering pipes, Divsa Polymers{% endblock %}
+{% block title %}PVC Garden Pipes | Durable Garden Watering Pipes — {{ SITE.brand_line }}{% endblock %}
+{% block meta_description %}Buy PVC garden pipes from {{ SITE.brand_line }}. UV-stabilized, flexible, and long-lasting garden hoses and pipes with pan-India delivery.{% endblock %}
+{% block meta_keywords %}PVC garden pipes, UV-resistant pipes, garden hoses, watering pipes, Divsa Polymers, Adinath Industries{% endblock %}
 {% block canonical %}{{ SITE.url }}/pvc-garden-pipes{% endblock %}
-{% block og_title %}PVC Garden Pipes | Divsa Polymers{% endblock %}
+{% block og_title %}PVC Garden Pipes | {{ SITE.brand_line }}{% endblock %}
 {% block og_description %}UV-stabilized PVC garden pipes — durable and flexible. Distributors welcome.{% endblock %}
 {% block og_image %}{{ SITE.url }}/static/assets/factory-hero.jpg{% endblock %}
 
@@ -29,9 +29,9 @@
 {% block content %}
 <section class="product-hero garden">
     <div class="container">
-        <span class="section-tag">Garden Pipes</span>
+        <span class="section-tag">Divsa Polymers by {{ SITE.parent_name }}</span>
         <h1>PVC Garden Pipes — Durable & UV-Stabilized</h1>
-        <p>Our PVC garden pipes are formulated for outdoor durability and easy handling. Perfect for residential gardening, nurseries, and light agricultural applications.</p>
+        <p>Our PVC garden pipes are formulated for outdoor durability and easy handling. Perfect for residential gardening, nurseries, and light agricultural applications under the {{ SITE.parent_name }} quality umbrella.</p>
     </div>
 </section>
 

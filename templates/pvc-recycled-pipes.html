@@ -1,10 +1,10 @@
 {% extends 'base.html' %}
 
-{% block title %}PVC Recycled Pipes | Sustainable PVC Solutions — Divsa Polymers{% endblock %}
+{% block title %}PVC Recycled Pipes | Sustainable PVC Solutions — {{ SITE.brand_line }}{% endblock %}
 {% block meta_description %}Sustainable recycled PVC pipes offering performance and reduced environmental impact. Distributor and bulk orders available.{% endblock %}
-{% block meta_keywords %}recycled PVC pipes, eco-friendly pipes, sustainable pipes, cost-effective pipes, Divsa Polymers{% endblock %}
+{% block meta_keywords %}recycled PVC pipes, eco-friendly pipes, sustainable pipes, cost-effective pipes, Divsa Polymers, Adinath Industries{% endblock %}
 {% block canonical %}{{ SITE.url }}/pvc-recycled-pipes{% endblock %}
-{% block og_title %}PVC Recycled Pipes | Divsa Polymers{% endblock %}
+{% block og_title %}PVC Recycled Pipes | {{ SITE.brand_line }}{% endblock %}
 {% block og_description %}Sustainable recycled PVC pipes with quality performance and reduced environmental impact.{% endblock %}
 {% block og_image %}{{ SITE.url }}/static/assets/factory-hero.jpg{% endblock %}
 
@@ -29,9 +29,9 @@
 {% block content %}
 <section class="product-hero recycled">
     <div class="container">
-        <span class="section-tag">Recycled Pipes</span>
+        <span class="section-tag">Divsa Polymers by {{ SITE.parent_name }}</span>
         <h1>PVC Recycled Pipes — Sustainable & Reliable</h1>
-        <p>Our recycled PVC range offers eco-friendly alternatives without compromising performance.</p>
+        <p>Our recycled PVC range offers eco-friendly alternatives without compromising performance, developed in the {{ SITE.parent_name }} sustainability program.</p>
     </div>
 </section>
 

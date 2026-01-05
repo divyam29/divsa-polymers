@@ -1,10 +1,10 @@
 {% extends 'base.html' %}
 
-{% block title %}Our Infrastructure | Manufacturing Excellence — Divsa Polymers{% endblock %}
-{% block meta_description %}Explore Divsa Polymers' state-of-the-art manufacturing facilities. Advanced machinery, quality labs, and eco-friendly recycling plants for PVC pipe production.{% endblock %}
-{% block meta_keywords %}PVC pipe manufacturing facility, manufacturing plant, quality control lab, recycling plant, industrial machinery, Divsa Polymers{% endblock %}
+{% block title %}Our Infrastructure | Manufacturing Excellence — {{ SITE.brand_line }}{% endblock %}
+{% block meta_description %}Explore {{ SITE.brand_line }} state-of-the-art manufacturing facilities. Advanced machinery, quality labs, and eco-friendly recycling plants for PVC pipe production.{% endblock %}
+{% block meta_keywords %}PVC pipe manufacturing facility, manufacturing plant, quality control lab, recycling plant, industrial machinery, Divsa Polymers, Adinath Industries{% endblock %}
 {% block canonical %}{{ SITE.url }}/infrastructure{% endblock %}
-{% block og_title %}Our Infrastructure | Divsa Polymers{% endblock %}
+{% block og_title %}Our Infrastructure | {{ SITE.brand_line }}{% endblock %}
 {% block og_description %}State-of-the-art PVC pipe manufacturing facilities with advanced machinery and quality assurance labs.{% endblock %}
 {% block og_image %}{{ SITE.url }}/static/assets/factory-hero.jpg{% endblock %}
 
@@ -14,9 +14,9 @@
     <section class="infrastructure-hero">
         <div class="container">
             <div class="hero-text animate-on-scroll">
-                <span class="section-tag">Manufacturing Excellence</span>
+                <span class="section-tag">An {{ SITE.parent_name }} facility</span>
                 <h1>State-of-the-Art Manufacturing</h1>
-                <p>5+ automated machines, ISO certified quality control, and pan-India logistics network.</p>
+                <p>5+ automated machines, ISO certified quality control, and pan-India logistics network—purpose-built for the {{ SITE.parent_name }} group.</p>
             </div>
         </div>
     </section>

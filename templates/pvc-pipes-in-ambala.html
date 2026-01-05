@@ -1,10 +1,10 @@
 {% extends 'base.html' %}
 
-{% block title %}PVC Pipes in Ambala | Local PVC Distributor — Divsa Polymers{% endblock %}
-{% block meta_description %}Divsa Polymers supplies PVC pipes in Ambala with fast local delivery and dealership opportunities across Haryana and PAN India.{% endblock %}
-{% block meta_keywords %}PVC pipes Ambala, local PVC distributor, pipes in Ambala, Haryana, Divsa Polymers{% endblock %}
+{% block title %}PVC Pipes in Ambala | Local PVC Distributor — {{ SITE.brand_line }}{% endblock %}
+{% block meta_description %}{{ SITE.brand_line }} supplies PVC pipes in Ambala with fast local delivery and dealership opportunities across Haryana and PAN India.{% endblock %}
+{% block meta_keywords %}PVC pipes Ambala, local PVC distributor, pipes in Ambala, Haryana, Divsa Polymers, Adinath Industries{% endblock %}
 {% block canonical %}{{ SITE.url }}/pvc-pipes-in-ambala{% endblock %}
-{% block og_title %}PVC Pipes in Ambala | Divsa Polymers{% endblock %}
+{% block og_title %}PVC Pipes in Ambala | {{ SITE.brand_line }}{% endblock %}
 {% block og_description %}Local PVC pipe supply and distribution in Ambala with pan-India dealer support.{% endblock %}
 
 {% block head_extra %}
@@ -12,7 +12,7 @@
 {
     "@context":"https://schema.org",
     "@type":"LocalBusiness",
-    "name":"Divsa Polymers",
+    "name":"{{ SITE.brand_line }}",
     "image":"{{ SITE.url }}/static/assets/factory-hero.jpg",
     "address":{
         "@type":"PostalAddress",

@@ -73,8 +73,11 @@ def send_inquiry_email(inquiry):
 app.secret_key = app.config.get('SECRET_KEY')
 
 # Site-wide settings (exposed to templates via context_processor)
+parent_company = app.config.get('PARENT_COMPANY_NAME', 'Adinath Industries')
 SITE = {
     'name': 'Divsa Polymers',
+    'brand_line': f'Divsa Polymers by {parent_company}',
+    'parent_name': parent_company,
     'url': app.config.get('SITE_URL', 'https://www.divsapolymers.com'),
     'phone': app.config.get('COMPANY_PHONE', '+918607125915'),
     'email': app.config.get('COMPANY_EMAIL', 'divyamjain29@gmail.com'),

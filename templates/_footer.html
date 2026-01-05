@@ -3,7 +3,8 @@
         <div class="footer-grid">
             <div class="footer-col">
                 <a href="{{ url_for('home') }}" class="footer-logo">Divsa Polymers</a>
-                <p>India's trusted manufacturer of premium PVC pipes and polymer solutions. Strength that flows through every meter.</p>
+                <div class="footer-subtext">An {{ SITE.parent_name }} brand</div>
+                <p>India's trusted manufacturer of premium PVC pipes and polymer solutions, powered by the engineering legacy of {{ SITE.parent_name }}. Strength that flows through every meter.</p>
                 <div class="social-links">
                     <a href="#" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
                     <a href="#" title="Instagram"><i class="fab fa-instagram"></i></a>
@@ -57,7 +58,7 @@
         </div>
 
         <div class="copyright">
-            © 2025 Divsa Polymers. All Rights Reserved. |
+            © 2025 Divsa Polymers by {{ SITE.parent_name }}. All Rights Reserved. |
             <a href="#" style="color: var(--text-light);">Privacy Policy</a> |
             <a href="#" style="color: var(--text-light);">Terms of Service</a>
         </div>

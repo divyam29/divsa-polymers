@@ -1,10 +1,10 @@
 {% extends 'base.html' %}
 
-{% block title %}PVC Pipes in Punjab | Local Suppliers — Divsa Polymers{% endblock %}
-{% block meta_description %}Divsa Polymers supports distributors and customers across Punjab with high-quality PVC products and dependable delivery.{% endblock %}
-{% block meta_keywords %}PVC pipes Punjab, Punjab distributor, local PVC supplier, Divsa Polymers{% endblock %}
+{% block title %}PVC Pipes in Punjab | Local Suppliers — {{ SITE.brand_line }}{% endblock %}
+{% block meta_description %}{{ SITE.brand_line }} supports distributors and customers across Punjab with high-quality PVC products and dependable delivery.{% endblock %}
+{% block meta_keywords %}PVC pipes Punjab, Punjab distributor, local PVC supplier, Divsa Polymers, Adinath Industries{% endblock %}
 {% block canonical %}{{ SITE.url }}/pvc-pipes-in-punjab{% endblock %}
-{% block og_title %}PVC Pipes in Punjab | Divsa Polymers{% endblock %}
+{% block og_title %}PVC Pipes in Punjab | {{ SITE.brand_line }}{% endblock %}
 {% block og_description %}Local distribution and dealer support across Punjab with quality PVC pipes and fast dispatch.{% endblock %}
 
 {% block head_extra %}
@@ -12,7 +12,7 @@
 {
     "@context":"https://schema.org",
     "@type":"LocalBusiness",
-    "name":"Divsa Polymers",
+    "name":"{{ SITE.brand_line }}",
     "address":{
         "@type":"PostalAddress",
         "addressRegion":"Punjab",

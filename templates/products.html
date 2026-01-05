@@ -1,19 +1,19 @@
 {% extends 'base.html' %}
 
-{% block title %}All Products | PVC Pipes Catalog — Divsa Polymers{% endblock %}
+{% block title %}All Products | PVC Pipes Catalog — {{ SITE.brand_line }}{% endblock %}
 {% block meta_description %}Browse our complete range of PVC pipes including garden pipes, braided pipes, and recycled pipes. Premium quality products with competitive pricing. Get a quote today.{% endblock %}
-{% block meta_keywords %}PVC pipes catalog, all products, garden pipes, braided pipes, recycled pipes, PVC pipe prices, Divsa Polymers{% endblock %}
+{% block meta_keywords %}PVC pipes catalog, all products, garden pipes, braided pipes, recycled pipes, PVC pipe prices, Divsa Polymers, Adinath Industries{% endblock %}
 {% block canonical %}{{ SITE.url }}/products{% endblock %}
-{% block og_title %}All Products | PVC Pipes Catalog — Divsa Polymers{% endblock %}
+{% block og_title %}All Products | PVC Pipes Catalog — {{ SITE.brand_line }}{% endblock %}
 {% block og_description %}Complete range of premium PVC pipes. Browse our products and get a price quote.{% endblock %}
 {% block og_image %}{{ SITE.url }}/static/assets/factory-hero.jpg{% endblock %}
 
 {% block content %}
 <section class="product-hero">
     <div class="container">
-        <span class="section-tag">Our Complete Product Range</span>
+        <span class="section-tag">Divsa Polymers by {{ SITE.parent_name }}</span>
         <h1>Explore All Our Products</h1>
-        <p>Browse our comprehensive catalog of premium PVC pipes. From garden pipes to industrial-grade braided pipes, find the perfect solution for your needs.</p>
+        <p>Browse our comprehensive catalog of premium PVC pipes. From garden pipes to industrial-grade braided pipes, find the perfect solution crafted within the {{ SITE.parent_name }} ecosystem.</p>
     </div>
 </section>
 

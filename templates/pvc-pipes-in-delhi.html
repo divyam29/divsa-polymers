@@ -1,10 +1,10 @@
 {% extends 'base.html' %}
 
-{% block title %}PVC Pipes in Delhi | Divsa Polymers — Pan India Delivery{% endblock %}
-{% block meta_description %}Divsa Polymers supplies PVC pipes across Delhi with fast distribution. Dealer enquiries welcome.{% endblock %}
-{% block meta_keywords %}PVC pipes Delhi, NCR pipes, Delhi distributor, Divsa Polymers{% endblock %}
+{% block title %}PVC Pipes in Delhi | {{ SITE.brand_line }} — Pan India Delivery{% endblock %}
+{% block meta_description %}{{ SITE.brand_line }} supplies PVC pipes across Delhi with fast distribution. Dealer enquiries welcome.{% endblock %}
+{% block meta_keywords %}PVC pipes Delhi, NCR pipes, Delhi distributor, Divsa Polymers, Adinath Industries{% endblock %}
 {% block canonical %}{{ SITE.url }}/pvc-pipes-in-delhi{% endblock %}
-{% block og_title %}PVC Pipes in Delhi | Divsa Polymers{% endblock %}
+{% block og_title %}PVC Pipes in Delhi | {{ SITE.brand_line }}{% endblock %}
 {% block og_description %}Reliable PVC pipe supply and nationwide logistics service in Delhi and NCR region.{% endblock %}
 
 {% block head_extra %}
@@ -12,7 +12,7 @@
 {
     "@context":"https://schema.org",
     "@type":"LocalBusiness",
-    "name":"Divsa Polymers",
+    "name":"{{ SITE.brand_line }}",
     "address":{
         "@type":"PostalAddress",
         "addressLocality":"Delhi",
