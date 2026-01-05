@@ -2,7 +2,8 @@ import os
 import logging
 from logging.handlers import RotatingFileHandler
 from datetime import datetime
-from flask import Flask, render_template, request, flash, redirect, url_for, send_from_directory, make_response
+from flask import Flask, render_template, request, flash, redirect, url_for, send_from_directory, make_response, session
+from functools import wraps
 from pymongo import MongoClient
 from pymongo.errors import ServerSelectionTimeoutError
 import certifi
@@ -52,6 +53,7 @@ else:
     client = None
 db = client['divsa'] if client is not None else None
 inquiries_collection = db['inquiries'] if db is not None else None
+products_collection = db['products'] if db is not None else None
 
 
 # MongoDB connection verification (app startup)
@@ -108,9 +110,14 @@ def submit_inquiry():
     phone = (request.form.get('phone') or '').strip()
     city = (request.form.get('city') or '').strip()
     business = (request.form.get('business') or '').strip()
+    quantity = (request.form.get('quantity') or '').strip()
+    product_id = (request.form.get('product_id') or '').strip()
 
     if not name or not email or not phone:
         flash('Please provide name, email and phone.', 'error')
+        # Redirect back to products page if product_id exists, otherwise home
+        if product_id:
+            return redirect(url_for('products'))
         return redirect(url_for('home') + '#dealership')
 
     inquiry_data = {
@@ -119,6 +126,9 @@ def submit_inquiry():
         'phone': phone,
         'city': city,
         'business_info': business,
+        'quantity_required': quantity if quantity else None,
+        'product_id': product_id if product_id else None,
+        'inquiry_type': 'product_quote' if product_id else 'general',
         'date_submitted': datetime.utcnow()
     }
 
@@ -141,12 +151,245 @@ def submit_inquiry():
     return redirect(url_for('thank_you'))
 
 
+# Admin authentication decorator
+def admin_required(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if not session.get('admin_logged_in'):
+            return redirect(url_for('admin_login'))
+        return f(*args, **kwargs)
+    return decorated_function
+
+
+@app.route('/admin/login', methods=['GET', 'POST'])
+def admin_login():
+    if request.method == 'POST':
+        password = request.form.get('password', '')
+        if password == app.config.get('ADMIN_PASSWORD'):
+            session['admin_logged_in'] = True
+            flash('Successfully logged in!', 'success')
+            return redirect(url_for('admin_products'))
+        else:
+            flash('Invalid password. Please try again.', 'error')
+    return render_template('admin/login.html')
+
+
+@app.route('/admin/logout')
+def admin_logout():
+    session.pop('admin_logged_in', None)
+    flash('You have been logged out.', 'info')
+    return redirect(url_for('admin_login'))
+
+
 @app.route('/admin/inquiries')
+@admin_required
 def view_inquiries():
     if inquiries_collection is None:
-        return 'No database configured.'
-    all_inquiries = list(inquiries_collection.find().sort('date_submitted', -1))
-    return f"Total Inquiries: {len(all_inquiries)}<br>" + "<br>".join([f"{i.get('name')} ({i.get('email')}) from {i.get('city')}" for i in all_inquiries])
+        flash('No database configured.', 'error')
+        inquiries_list = []
+    else:
+        try:
+            inquiries_list = list(inquiries_collection.find().sort('date_submitted', -1))
+            # Convert ObjectId to string and fetch product names if product_id exists
+            from bson import ObjectId
+            from bson.errors import InvalidId
+            
+            for inquiry in inquiries_list:
+                # Convert _id to string safely
+                if '_id' in inquiry:
+                    inquiry['_id'] = str(inquiry['_id'])
+                
+                # Format date for display
+                if 'date_submitted' in inquiry and inquiry['date_submitted']:
+                    try:
+                        if hasattr(inquiry['date_submitted'], 'strftime'):
+                            inquiry['date_formatted'] = inquiry['date_submitted'].strftime('%Y-%m-%d %H:%M')
+                        else:
+                            inquiry['date_formatted'] = str(inquiry['date_submitted'])
+                    except:
+                        inquiry['date_formatted'] = 'N/A'
+                else:
+                    inquiry['date_formatted'] = 'N/A'
+                
+                product_id = inquiry.get('product_id')
+                inquiry['product_name'] = None
+                
+                # Only try to fetch product if product_id exists and is not empty
+                if product_id and products_collection is not None:
+                    try:
+                        # Handle both string and ObjectId product_id
+                        if isinstance(product_id, str):
+                            # Try to convert string to ObjectId
+                            try:
+                                product_oid = ObjectId(product_id)
+                            except (InvalidId, ValueError):
+                                # If conversion fails, product_id might be invalid
+                                inquiry['product_name'] = 'Invalid Product ID'
+                                continue
+                        else:
+                            product_oid = product_id
+                        
+                        # Look up the product
+                        product = products_collection.find_one({'_id': product_oid})
+                        if product:
+                            inquiry['product_name'] = product.get('name', 'Unknown Product')
+                        else:
+                            inquiry['product_name'] = 'Product Not Found'
+                    except Exception as e:
+                        app.logger.warning(f'Error fetching product for inquiry: {e}')
+                        inquiry['product_name'] = 'Error Loading Product'
+        except Exception as e:
+            app.logger.error(f'Error fetching inquiries: {e}')
+            app.logger.exception('Full error traceback:')
+            flash(f'Error loading inquiries: {str(e)}', 'error')
+            inquiries_list = []
+    
+    return render_template('admin/inquiries.html', inquiries=inquiries_list)
+
+
+# Admin Product Management Routes
+@app.route('/admin/products')
+@admin_required
+def admin_products():
+    if products_collection is None:
+        flash('No database configured.', 'error')
+        products_list = []
+    else:
+        try:
+            products_list = list(products_collection.find().sort('date_created', -1))
+            # Convert ObjectId to string for template rendering
+            for product in products_list:
+                product['_id'] = str(product['_id'])
+        except Exception as e:
+            app.logger.error(f'Error fetching products: {e}')
+            flash('Error loading products.', 'error')
+            products_list = []
+    return render_template('admin/products.html', products=products_list)
+
+
+@app.route('/admin/products/add', methods=['GET', 'POST'])
+@admin_required
+def admin_add_product():
+    if request.method == 'POST':
+        name = (request.form.get('name') or '').strip()
+        description = (request.form.get('description') or '').strip()
+        product_type = (request.form.get('type') or '').strip()
+        quality = (request.form.get('quality') or '').strip()
+        image = (request.form.get('image') or '').strip()
+        features_str = (request.form.get('features') or '').strip()
+        
+        # Convert features string to list
+        features = [f.strip() for f in features_str.split('\n') if f.strip()]
+        
+        if not name or not description or not product_type or not quality:
+            flash('Please fill in all required fields (name, description, type, quality).', 'error')
+            return render_template('admin/add_product.html')
+        
+        product_data = {
+            'name': name,
+            'description': description,
+            'type': product_type,
+            'quality': quality,
+            'image': image or 'factory-hero.jpg',  # Default image
+            'features': features,
+            'date_created': datetime.utcnow(),
+            'date_updated': datetime.utcnow()
+        }
+        
+        try:
+            if products_collection is not None:
+                products_collection.insert_one(product_data)
+                flash(f'Product "{name}" added successfully!', 'success')
+                app.logger.info(f'New product added: {name}')
+                return redirect(url_for('admin_products'))
+            else:
+                flash('No database configured. Product not saved.', 'error')
+        except Exception as e:
+            flash(f'Error saving product: {str(e)}', 'error')
+            app.logger.exception('Error saving product')
+    
+    return render_template('admin/add_product.html')
+
+
+@app.route('/admin/products/edit/<product_id>', methods=['GET', 'POST'])
+@admin_required
+def admin_edit_product(product_id):
+    from bson import ObjectId
+    
+    if products_collection is None:
+        flash('No database configured.', 'error')
+        return redirect(url_for('admin_products'))
+    
+    try:
+        product = products_collection.find_one({'_id': ObjectId(product_id)})
+        if not product:
+            flash('Product not found.', 'error')
+            return redirect(url_for('admin_products'))
+        
+        if request.method == 'POST':
+            name = (request.form.get('name') or '').strip()
+            description = (request.form.get('description') or '').strip()
+            product_type = (request.form.get('type') or '').strip()
+            quality = (request.form.get('quality') or '').strip()
+            image = (request.form.get('image') or '').strip()
+            features_str = (request.form.get('features') or '').strip()
+            
+            # Convert features string to list
+            features = [f.strip() for f in features_str.split('\n') if f.strip()]
+            
+            if not name or not description or not product_type or not quality:
+                flash('Please fill in all required fields.', 'error')
+                product['features'] = '\n'.join(product.get('features', []))
+                return render_template('admin/edit_product.html', product=product)
+            
+            update_data = {
+                'name': name,
+                'description': description,
+                'type': product_type,
+                'quality': quality,
+                'image': image or 'factory-hero.jpg',
+                'features': features,
+                'date_updated': datetime.utcnow()
+            }
+            
+            products_collection.update_one(
+                {'_id': ObjectId(product_id)},
+                {'$set': update_data}
+            )
+            flash(f'Product "{name}" updated successfully!', 'success')
+            return redirect(url_for('admin_products'))
+        
+        # Convert features list to string for textarea
+        product['features'] = '\n'.join(product.get('features', []))
+        product['_id'] = str(product['_id'])
+        return render_template('admin/edit_product.html', product=product)
+        
+    except Exception as e:
+        flash(f'Error: {str(e)}', 'error')
+        app.logger.exception('Error editing product')
+        return redirect(url_for('admin_products'))
+
+
+@app.route('/admin/products/delete/<product_id>', methods=['POST'])
+@admin_required
+def admin_delete_product(product_id):
+    from bson import ObjectId
+    
+    if products_collection is None:
+        flash('No database configured.', 'error')
+        return redirect(url_for('admin_products'))
+    
+    try:
+        result = products_collection.delete_one({'_id': ObjectId(product_id)})
+        if result.deleted_count > 0:
+            flash('Product deleted successfully!', 'success')
+        else:
+            flash('Product not found.', 'error')
+    except Exception as e:
+        flash(f'Error deleting product: {str(e)}', 'error')
+        app.logger.exception('Error deleting product')
+    
+    return redirect(url_for('admin_products'))
 
 
 # Product routes
@@ -183,6 +426,34 @@ def pvc_recycled_pipes():
     return render_template('pvc-recycled-pipes.html', faqs=faqs)
 
 
+@app.route('/products')
+def products():
+    # Try to fetch products from database, fallback to empty list
+    if products_collection is not None:
+        try:
+            products_list = list(products_collection.find().sort('date_created', -1))
+            # Convert ObjectId to string and ensure all required fields exist
+            products_data = []
+            for product in products_list:
+                product_dict = {
+                    'id': str(product.get('_id', '')),
+                    'name': product.get('name', 'Unnamed Product'),
+                    'type': product.get('type', ''),
+                    'quality': product.get('quality', 'Standard'),
+                    'image': product.get('image', 'factory-hero.jpg'),
+                    'description': product.get('description', ''),
+                    'features': product.get('features', [])
+                }
+                products_data.append(product_dict)
+        except Exception as e:
+            app.logger.error(f'Error fetching products: {e}')
+            products_data = []
+    else:
+        products_data = []
+    
+    # If no products in database, show empty state
+    return render_template('products.html', products=products_data)
+
 
 # City / Local pages
 @app.route('/pvc-pipes-in-ambala')
@@ -210,10 +481,10 @@ def infrastructure():
     return render_template('infrastructure.html')
 
 
-# Serve favicon (if present in static)
+# Serve favicon (from assets folder)
 @app.route('/favicon.ico')
 def favicon():
-    return send_from_directory(os.path.join(app.root_path, 'static'), 'favicon.ico', mimetype='image/vnd.microsoft.icon')
+    return send_from_directory(os.path.join(app.root_path, 'static', 'assets'), 'favicon.ico', mimetype='image/vnd.microsoft.icon')
 
 
 # SEO Sitemap - for Google/Bing indexing
@@ -221,6 +492,7 @@ def favicon():
 def sitemap():
     pages = [
         {'loc': url_for('home', _external=True), 'priority': '1.0', 'changefreq': 'weekly'},
+        {'loc': url_for('products', _external=True), 'priority': '0.9', 'changefreq': 'weekly'},
         {'loc': url_for('pvc_garden_pipes', _external=True), 'priority': '0.9', 'changefreq': 'monthly'},
         {'loc': url_for('pvc_braided_pipes', _external=True), 'priority': '0.9', 'changefreq': 'monthly'},
         {'loc': url_for('pvc_recycled_pipes', _external=True), 'priority': '0.9', 'changefreq': 'monthly'},

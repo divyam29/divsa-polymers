@@ -1,0 +1,123 @@
+{% extends 'base.html' %}
+
+{% block title %}Admin - Inquiries Management | Divsa Polymers{% endblock %}
+
+{% block content %}
+<div style="min-height: 100vh; background-color: var(--grey); padding: 40px 0;">
+    <div class="container">
+        <div style="background: white; border-radius: 12px; padding: 30px; box-shadow: 0 4px 15px rgba(0,0,0,0.08);">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; flex-wrap: wrap; gap: 15px;">
+                <div>
+                    <h1 style="color: var(--dark-blue); margin-bottom: 5px;">
+                        <i class="fas fa-envelope"></i> Inquiries Management
+                    </h1>
+                    <p style="color: var(--text-secondary); margin: 0;">View and manage customer inquiries</p>
+                </div>
+                <div style="display: flex; gap: 10px;">
+                    <a href="{{ url_for('admin_products') }}" class="btn btn-dark">
+                        <i class="fas fa-box"></i> Manage Products
+                    </a>
+                    <a href="{{ url_for('admin_logout') }}" class="btn btn-dark">
+                        <i class="fas fa-sign-out-alt"></i> Logout
+                    </a>
+                </div>
+            </div>
+
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    {% for message in messages %}
+                        <div style="padding: 12px 15px; border-radius: 8px; margin-bottom: 20px; 
+                            {% if 'error' in message|lower %}background-color: #f8d7da; color: #721c24;
+                            {% elif 'success' in message|lower %}background-color: #d4edda; color: #155724;
+                            {% else %}background-color: #d1ecf1; color: #0c5460;{% endif %}">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+
+            {% if inquiries %}
+            <div style="overflow-x: auto;">
+                <table style="width: 100%; border-collapse: collapse;">
+                    <thead>
+                        <tr style="background-color: var(--light-blue);">
+                            <th style="padding: 15px; text-align: left; border-bottom: 2px solid var(--primary-blue);">Date</th>
+                            <th style="padding: 15px; text-align: left; border-bottom: 2px solid var(--primary-blue);">Name</th>
+                            <th style="padding: 15px; text-align: left; border-bottom: 2px solid var(--primary-blue);">Email</th>
+                            <th style="padding: 15px; text-align: left; border-bottom: 2px solid var(--primary-blue);">Phone</th>
+                            <th style="padding: 15px; text-align: left; border-bottom: 2px solid var(--primary-blue);">City</th>
+                            <th style="padding: 15px; text-align: left; border-bottom: 2px solid var(--primary-blue);">Type</th>
+                            <th style="padding: 15px; text-align: left; border-bottom: 2px solid var(--primary-blue);">Product</th>
+                            <th style="padding: 15px; text-align: left; border-bottom: 2px solid var(--primary-blue);">Quantity</th>
+                            <th style="padding: 15px; text-align: left; border-bottom: 2px solid var(--primary-blue);">Details</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for inquiry in inquiries %}
+                        <tr style="border-bottom: 1px solid #eee;">
+                            <td style="padding: 15px; color: var(--text-secondary); font-size: 0.9rem;">
+                                {{ inquiry.date_formatted or 'N/A' }}
+                            </td>
+                            <td style="padding: 15px; font-weight: 600; color: var(--dark-blue);">
+                                {{ inquiry.name }}
+                            </td>
+                            <td style="padding: 15px; color: var(--text-secondary);">
+                                <a href="mailto:{{ inquiry.email }}" style="color: var(--primary-blue);">{{ inquiry.email }}</a>
+                            </td>
+                            <td style="padding: 15px; color: var(--text-secondary);">
+                                <a href="tel:{{ inquiry.phone }}" style="color: var(--primary-blue);">{{ inquiry.phone }}</a>
+                            </td>
+                            <td style="padding: 15px; color: var(--text-secondary);">
+                                {{ inquiry.city or 'N/A' }}
+                            </td>
+                            <td style="padding: 15px; white-space: nowrap;">
+                                {% if inquiry.inquiry_type == 'product_quote' %}
+                                    <span style="display: inline-block; padding: 6px 14px; border-radius: 20px; font-size: 0.8rem; font-weight: 600; background-color: var(--accent-orange); color: var(--dark-blue); white-space: nowrap; line-height: 1.2;">
+                                        Product Quote
+                                    </span>
+                                {% else %}
+                                    <span style="display: inline-block; padding: 6px 14px; border-radius: 20px; font-size: 0.8rem; font-weight: 600; background-color: var(--primary-blue); color: white; white-space: nowrap; line-height: 1.2;">
+                                        General Inquiry
+                                    </span>
+                                {% endif %}
+                            </td>
+                            <td style="padding: 15px; color: var(--text-secondary);">
+                                {% if inquiry.product_name %}
+                                    <span style="color: var(--primary-blue); font-weight: 500;">{{ inquiry.product_name }}</span>
+                                {% else %}
+                                    <span style="color: var(--text-secondary);">N/A</span>
+                                {% endif %}
+                            </td>
+                            <td style="padding: 15px; color: var(--text-secondary);">
+                                {% if inquiry.quantity_required %}
+                                    <strong style="color: var(--dark-blue);">{{ inquiry.quantity_required }}</strong>
+                                {% else %}
+                                    <span style="color: var(--text-secondary);">N/A</span>
+                                {% endif %}
+                            </td>
+                            <td style="padding: 15px; color: var(--text-secondary); max-width: 200px;">
+                                {% if inquiry.business_info %}
+                                    <span title="{{ inquiry.business_info }}">{{ inquiry.business_info[:50] }}{% if inquiry.business_info|length > 50 %}...{% endif %}</span>
+                                {% else %}
+                                    <span style="color: var(--text-secondary);">N/A</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div style="margin-top: 20px; padding: 15px; background-color: var(--light-blue); border-radius: 8px;">
+                <strong>Total Inquiries: {{ inquiries|length }}</strong>
+            </div>
+            {% else %}
+            <div style="text-align: center; padding: 60px 20px;">
+                <i class="fas fa-inbox" style="font-size: 4rem; color: var(--text-secondary); margin-bottom: 20px;"></i>
+                <h3 style="color: var(--text-secondary); margin-bottom: 10px;">No Inquiries Found</h3>
+                <p style="color: var(--text-secondary);">No customer inquiries have been submitted yet.</p>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -11,6 +11,9 @@ class Config:
     SECRET_KEY = os.environ.get('SECRET_KEY', 'divsa_secret_key')
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     DEBUG = os.environ.get('FLASK_DEBUG', '0') == '1'
+    
+    # Admin authentication
+    ADMIN_PASSWORD = os.environ.get('ADMIN_PASSWORD', 'admin123')
 
     # MongoDB Atlas configuration
     MONGODB_URI = os.environ.get('MONGODB_URI', '')
