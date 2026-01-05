@@ -22,7 +22,7 @@ app.config.from_object(Config)
 # File upload settings
 ALLOWED_IMAGE_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif', 'webp'}
 ASSETS_FOLDER = os.path.join(app.static_folder, 'assets')
-os.makedirs(ASSETS_FOLDER, exist_ok=True)
+# os.makedirs(ASSETS_FOLDER, exist_ok=True)
 
 # Email notification helper
 def send_inquiry_email(inquiry):
