@@ -23,9 +23,34 @@
         "addressCountry":"IN"
     },
     "telephone":"{{ SITE.phone }}",
-    "geo": {"@type": "GeoCoordinates", "latitude": {{ SITE.latitude }}, "longitude": {{ SITE.longitude }} },
+    "geo": {"@type": "GeoCoordinates", "latitude": {{ SITE.latitude }}, "longitude": {{ SITE.longitude }}},
     "url":"{{ SITE.url }}",
-    "areaServed":"Ambala, Haryana, India"
+    "areaServed":["Ambala","Haryana","North India"],
+    "founder": {{ SITE.managing_partners | tojson }},
+    "foundingDate": "{{ SITE.founding_year }}"
+}
+</script>
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+        {
+            "@type": "Question",
+            "name": "Do you deliver PVC pipes across Ambala and Haryana?",
+            "acceptedAnswer": {"@type": "Answer", "text": "Yes. Divsa Polymers delivers directly from our Ambala facility across Haryana with dedicated logistics partners."}
+        },
+        {
+            "@type": "Question",
+            "name": "Can distributors pick up material from your Ambala factory?",
+            "acceptedAnswer": {"@type": "Answer", "text": "Yes. Pick-ups from the Dukheri Road facility are supported with scheduled loading windows for dealers."}
+        },
+        {
+            "@type": "Question",
+            "name": "Which PVC pipe ranges are stocked in Ambala?",
+            "acceptedAnswer": {"@type": "Answer", "text": "We stock PVC garden pipes, braided pipes, and recycled PVC pipes manufactured in-house by Divsa Polymers and {{ SITE.parent_name }}."}
+        }
+    ]
 }
 </script>
 {% endblock %}
@@ -39,7 +64,36 @@
 </section>
 
 <main class="container">
-    <a href="{{ url_for('home') }}#dealership" class="btn btn-primary">Partner With Us</a>
-    <a href="tel:{{ SITE.phone }}" class="btn btn-dark">Call Now</a>
+    <section class="location-content">
+        <h2>Local PVC Pipe Supply in Ambala</h2>
+        <p>Our Dukheri Road facility serves Ambala city, Ambala Cantt, and nearby industrial clusters with ready stock and fast dispatch.</p>
+        <ul>
+            <li>Made in Ambala by {{ SITE.parent_name }} with {{ SITE.group_experience_years }}+ years of expertise</li>
+            <li>In-house recycling plant for sustainable PVC grades</li>
+            <li>Dealer and bulk programs with priority dispatch slots</li>
+            <li>Direct factory pick-up or arranged delivery</li>
+        </ul>
+    </section>
+
+    <section class="location-content">
+        <h2>Dealer & Distributor Support</h2>
+        <p>Join the Ambala network for PVC garden pipes, braided pipes, and recycled PVC pipes with marketing support and stable supply.</p>
+        <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+            <a href="{{ url_for('home') }}#dealership" class="btn btn-primary">Partner With Us</a>
+            <a href="tel:{{ SITE.phone }}" class="btn btn-dark">Call Now</a>
+        </div>
+    </section>
+
+    <section class="location-content">
+        <h2>Ambala FAQs</h2>
+        <details>
+            <summary>Do you support urgent deliveries in Ambala?</summary>
+            <p>Yes. Same-day or next-day dispatch is available for stocked PVC pipes within Ambala district.</p>
+        </details>
+        <details>
+            <summary>Which SKUs are stocked locally?</summary>
+            <p>Core SKUs include PVC garden pipes, braided pipes, and recycled PVC pipes in common diameters from 1/2&quot; to 2&quot;.</p>
+        </details>
+    </section>
 </main>
 {% endblock %}

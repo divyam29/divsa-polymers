@@ -12,6 +12,22 @@
 <script type="application/ld+json">
 {
     "@context": "https://schema.org",
+    "@type": "Product",
+    "name": "PVC Braided Pipes",
+    "image": ["{{ SITE.url }}/static/assets/pvc-braided.jpg"],
+    "description": "High-pressure PVC braided pipes engineered for agriculture and commercial use by {{ SITE.brand_line }} and manufactured in Ambala, Haryana.",
+    "brand": {"@type": "Brand", "name": "{{ SITE.brand_line }}"},
+    "manufacturer": {"@type": "Organization", "name": "{{ SITE.parent_name }}"},
+    "category": "PVC Braided Pipes",
+    "material": "PVC",
+    "productionLocation": "Ambala, Haryana",
+    "areaServed": {{ SITE.service_regions | tojson }},
+    "url": "{{ SITE.url }}/pvc-braided-pipes"
+}
+</script>
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
     "@type": "FAQPage",
     "mainEntity": [
         {% for f in faqs %}

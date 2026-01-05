@@ -8,6 +8,33 @@
 {% block og_description %}Complete range of premium PVC pipes. Browse our products and get a price quote.{% endblock %}
 {% block og_image %}{{ SITE.url }}/static/assets/factory-hero.jpg{% endblock %}
 
+{% block head_extra %}
+{% if products %}
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    "itemListElement": [
+        {% for product in products %}
+        {
+            "@type": "ListItem",
+            "position": {{ loop.index }},
+            "item": {
+                "@type": "Product",
+                "name": {{ product.name | tojson }},
+                "description": {{ product.description | tojson }},
+                "url": "{{ SITE.url }}/products#{{ product.id }}",
+                "brand": {"@type": "Brand", "name": "{{ SITE.brand_line }}"},
+                "material": "PVC"
+            }
+        }{% if not loop.last %},{% endif %}
+        {% endfor %}
+    ]
+}
+</script>
+{% endif %}
+{% endblock %}
+
 {% block content %}
 <section class="product-hero">
     <div class="container">

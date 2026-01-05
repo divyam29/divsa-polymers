@@ -12,6 +12,22 @@
 <script type="application/ld+json">
 {
     "@context": "https://schema.org",
+    "@type": "Product",
+    "name": "PVC Recycled Pipes",
+    "image": ["{{ SITE.url }}/static/assets/factory-hero.jpg"],
+    "description": "Eco-friendly recycled PVC pipes produced in-house at Ambala with sustainability controls by {{ SITE.brand_line }}.",
+    "brand": {"@type": "Brand", "name": "{{ SITE.brand_line }}"},
+    "manufacturer": {"@type": "Organization", "name": "{{ SITE.parent_name }}"},
+    "category": "Recycled PVC Pipes",
+    "material": "Recycled PVC",
+    "productionLocation": "Ambala, Haryana",
+    "areaServed": {{ SITE.service_regions | tojson }},
+    "url": "{{ SITE.url }}/pvc-recycled-pipes"
+}
+</script>
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
     "@type": "FAQPage",
     "mainEntity": [
         {% for f in faqs %}

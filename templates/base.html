@@ -3,11 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% set base_url = SITE.url.rstrip('/') %}
     
     <!-- Dynamic SEO Title and Meta -->
     <title>{% block title %}PVC Pipes Manufacturer in Ambala | {{ SITE.brand_line }} — Quality & Reliability{% endblock %}</title>
-    <meta name="description" content="{% block meta_description %}{{ SITE.brand_line }} — Trusted PVC pipe manufacturer in Ambala, Haryana. Premium garden pipes, braided pipes, recycled pipes. 10+ years excellence. Backed by {{ SITE.parent_name }}.{% endblock %}">
-    <meta name="keywords" content="{% block meta_keywords %}PVC pipes Ambala, PVC pipes manufacturer India, garden pipes, braided pipes, recycled pipes HDPE, Divsa Polymers Ambala, Adinath Industries, PVC pipe distributor, quality pipes{% endblock %}">
+    <meta name="description" content="{% block meta_description %}{{ SITE.brand_line }} — Ambala-based PVC pipe manufacturer with in-house recycling. 30+ years {{ SITE.parent_name }} expertise delivering garden, braided, and recycled pipes across Haryana, Punjab, Delhi, and North India.{% endblock %}">
+    <meta name="keywords" content="{% block meta_keywords %}PVC pipes Ambala, PVC pipes Punjab, PVC pipes Delhi NCR, PVC pipes manufacturer India, garden pipes, braided pipes, recycled pipes, Divsa Polymers, Adinath Industries, PVC distributor North India{% endblock %}">
     <meta name="author" content="{{ SITE.brand_line }}">
     
     <!-- Geo Tags -->
@@ -71,9 +72,13 @@
         "@context": "https://schema.org",
         "@type": "Organization",
         "name": "{{ SITE.brand_line }}",
-        "url": "{{ SITE.url }}",
-        "logo": "{{ SITE.url }}/static/assets/logo.png",
-        "description": "Leading manufacturer of PVC pipes in Ambala, Haryana, India, backed by {{ SITE.parent_name }}",
+        "url": "{{ base_url }}",
+        "logo": "{{ base_url }}/static/assets/logo.png",
+        "description": "PVC garden, braided, and recycled pipe manufacturer with in-house recycling plant and 30+ years {{ SITE.parent_name }} expertise across North India.",
+        "founder": {{ SITE.managing_partners | tojson }},
+        "foundingDate": "{{ SITE.founding_year }}",
+        "foundingLocation": "Ambala, Haryana, India",
+        "knowsAbout": ["PVC garden pipes", "PVC braided pipes", "recycled PVC pipes", "dealer network in Haryana, Punjab, Delhi"],
         "address": {
             "@type": "PostalAddress",
             "streetAddress": "{{ SITE.address }}",
@@ -82,7 +87,7 @@
             "postalCode": "133004",
             "addressCountry": "IN"
         },
-        "areaServed": "IN",
+        "areaServed": {{ SITE.service_regions | tojson }},
         "telephone": "{{ SITE.phone }}",
         "email": "{{ SITE.email }}",
         "sameAs": [
@@ -93,7 +98,12 @@
         "parentOrganization": {
             "@type": "Organization",
             "name": "{{ SITE.parent_name }}"
-        }
+        },
+        "memberOf": {
+            "@type": "Organization",
+            "name": "{{ SITE.parent_name }}"
+        },
+        "slogan": "PVC pipe excellence with in-house recycling by {{ SITE.parent_name }}"
     }
     </script>
     
@@ -103,7 +113,7 @@
         "@context": "https://schema.org",
         "@type": "LocalBusiness",
         "name": "{{ SITE.brand_line }}",
-        "image": "{{ SITE.url }}/static/assets/factory-hero.jpg",
+        "image": "{{ base_url }}/static/assets/factory-hero.jpg",
         "description": "PVC Pipes Manufacturer and Distributor powered by {{ SITE.parent_name }}",
         "address": {
             "@type": "PostalAddress",
@@ -114,16 +124,81 @@
             "addressCountry": "IN"
         },
         "telephone": "{{ SITE.phone }}",
-        "url": "{{ SITE.url }}",
+        "url": "{{ base_url }}",
         "geo": {
             "@type": "GeoCoordinates",
             "latitude": {{ SITE.latitude }},
             "longitude": {{ SITE.longitude }}
         },
         "priceRange": "$$",
-        "areaServed": ["Ambala", "Haryana", "Punjab", "Delhi", "India"]
+        "areaServed": {{ SITE.service_regions | tojson }},
+        "founder": {{ SITE.managing_partners | tojson }},
+        "foundingDate": "{{ SITE.founding_year }}",
+        "parentOrganization": {
+            "@type": "Organization",
+            "name": "{{ SITE.parent_name }}"
+        }
     }
     </script>
+
+    <!-- Structured Data (Schema.org) - WebSite -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "{{ SITE.brand_line }}",
+        "url": "{{ base_url }}",
+        "inLanguage": "en-IN",
+        "publisher": {
+            "@type": "Organization",
+            "name": "{{ SITE.parent_name }}"
+        },
+        "potentialAction": {
+            "@type": "ContactAction",
+            "target": "{{ base_url }}#dealership",
+            "name": "Request distributor or bulk quote"
+        }
+    }
+    </script>
+
+    {% set breadcrumbs = [{'name': 'Home', 'url': base_url + '/'}] %}
+    {% if request.path == '/products' %}
+        {% set breadcrumbs = breadcrumbs + [{'name': 'Products', 'url': base_url + '/products'}] %}
+    {% elif request.path == '/pvc-garden-pipes' %}
+        {% set breadcrumbs = breadcrumbs + [{'name': 'Products', 'url': base_url + '/products'}, {'name': 'PVC Garden Pipes', 'url': base_url + '/pvc-garden-pipes'}] %}
+    {% elif request.path == '/pvc-braided-pipes' %}
+        {% set breadcrumbs = breadcrumbs + [{'name': 'Products', 'url': base_url + '/products'}, {'name': 'PVC Braided Pipes', 'url': base_url + '/pvc-braided-pipes'}] %}
+    {% elif request.path == '/pvc-recycled-pipes' %}
+        {% set breadcrumbs = breadcrumbs + [{'name': 'Products', 'url': base_url + '/products'}, {'name': 'PVC Recycled Pipes', 'url': base_url + '/pvc-recycled-pipes'}] %}
+    {% elif request.path == '/pvc-pipes-in-ambala' %}
+        {% set breadcrumbs = breadcrumbs + [{'name': 'PVC Pipes in Ambala', 'url': base_url + '/pvc-pipes-in-ambala'}] %}
+    {% elif request.path == '/pvc-pipes-in-delhi' %}
+        {% set breadcrumbs = breadcrumbs + [{'name': 'PVC Pipes in Delhi', 'url': base_url + '/pvc-pipes-in-delhi'}] %}
+    {% elif request.path == '/pvc-pipes-in-punjab' %}
+        {% set breadcrumbs = breadcrumbs + [{'name': 'PVC Pipes in Punjab', 'url': base_url + '/pvc-pipes-in-punjab'}] %}
+    {% elif request.path == '/infrastructure' %}
+        {% set breadcrumbs = breadcrumbs + [{'name': 'Infrastructure', 'url': base_url + '/infrastructure'}] %}
+    {% elif request.path == '/thank-you' %}
+        {% set breadcrumbs = breadcrumbs + [{'name': 'Thank You', 'url': base_url + '/thank-you'}] %}
+    {% endif %}
+    {% if breadcrumbs|length > 1 %}
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {% for crumb in breadcrumbs %}
+            {
+                "@type": "ListItem",
+                "position": {{ loop.index }},
+                "name": "{{ crumb.name }}",
+                "item": "{{ crumb.url }}"
+            }{% if not loop.last %},{% endif %}
+            {% endfor %}
+        ]
+    }
+    </script>
+    {% endif %}
     
     <!-- Extra head content (page-specific) -->
     {% block head_extra %}{% endblock %}

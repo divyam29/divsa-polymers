@@ -21,7 +21,27 @@
     },
     "telephone":"{{ SITE.phone }}",
     "url":"{{ SITE.url }}",
-    "areaServed":"Delhi, NCR, Pan India"
+    "areaServed":["Delhi","NCR","North India"],
+    "founder": {{ SITE.managing_partners | tojson }},
+    "foundingDate": "{{ SITE.founding_year }}"
+}
+</script>
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+        {
+            "@type": "Question",
+            "name": "Do you ship PVC pipes across Delhi and NCR?",
+            "acceptedAnswer": {"@type": "Answer", "text": "Yes. We service Delhi NCR with daily dispatches from Ambala and partner warehouses."}
+        },
+        {
+            "@type": "Question",
+            "name": "What delivery timelines can Delhi dealers expect?",
+            "acceptedAnswer": {"@type": "Answer", "text": "Standard deliveries reach Delhi in 1-2 days; urgent shipments can be arranged for stocked SKUs."}
+        }
+    ]
 }
 </script>
 {% endblock %}
@@ -35,7 +55,35 @@
 </section>
 
 <main class="container">
-    <a href="{{ url_for('home') }}#dealership" class="btn btn-primary">Become a Dealer</a>
-    <a href="tel:{{ SITE.phone }}" class="btn btn-dark">Call Now</a>
+    <section class="location-content">
+        <h2>Serving Delhi & NCR</h2>
+        <p>Divsa Polymers supplies PVC garden pipes, braided pipes, and recycled PVC pipes to Delhi and NCR with reliable trucking lanes from Ambala.</p>
+        <ul>
+            <li>Daily dispatches for Delhi, Gurgaon, Noida, and Ghaziabad</li>
+            <li>Bulk and distributor pricing backed by {{ SITE.parent_name }} manufacturing</li>
+            <li>Eco-friendly recycled PVC options with consistent quality</li>
+        </ul>
+    </section>
+
+    <section class="location-content">
+        <h2>Dealer Onboarding</h2>
+        <p>Join our Delhi NCR distributor network with marketing collateral, sales training, and dedicated account management.</p>
+        <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+            <a href="{{ url_for('home') }}#dealership" class="btn btn-primary">Become a Dealer</a>
+            <a href="tel:{{ SITE.phone }}" class="btn btn-dark">Call Now</a>
+        </div>
+    </section>
+
+    <section class="location-content">
+        <h2>Delhi FAQs</h2>
+        <details>
+            <summary>Can you deliver directly to construction sites in Delhi?</summary>
+            <p>Yes. We coordinate deliveries to warehouses, dealer hubs, and large construction sites across Delhi NCR.</p>
+        </details>
+        <details>
+            <summary>Do you support branded packaging for Delhi distributors?</summary>
+            <p>Yes. Custom and white-label options are available for qualified distributor partners.</p>
+        </details>
+    </section>
 </main>
 {% endblock %}

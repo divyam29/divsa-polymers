@@ -84,7 +84,11 @@ SITE = {
     'address': 'Khasra No. 92//21 & 108//1/1, Dukheri Road, Dukheri, Ambala-133004, Haryana, India',
     'latitude': 30.2758361,
     'longitude': 76.8669546,
-    'ga_measurement_id': app.config.get('GA_MEASUREMENT_ID', '')
+    'ga_measurement_id': app.config.get('GA_MEASUREMENT_ID', ''),
+    'service_regions': ['Ambala', 'Haryana', 'Punjab', 'Delhi', 'North India'],
+    'managing_partners': ['Divyam Jain', 'Mohit Jain'],
+    'group_experience_years': 30,
+    'founding_year': 1994
 }
 
 # MongoDB connection

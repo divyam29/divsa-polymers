@@ -12,6 +12,22 @@
 <script type="application/ld+json">
 {
     "@context": "https://schema.org",
+    "@type": "Product",
+    "name": "PVC Garden Pipes",
+    "image": ["{{ SITE.url }}/static/assets/factory-hero.jpg"],
+    "description": "UV-stabilized PVC garden pipes manufactured in Ambala, Haryana by {{ SITE.brand_line }} with {{ SITE.parent_name }} oversight.",
+    "brand": {"@type": "Brand", "name": "{{ SITE.brand_line }}"},
+    "manufacturer": {"@type": "Organization", "name": "{{ SITE.parent_name }}"},
+    "category": "PVC Garden Pipes",
+    "material": "PVC",
+    "productionLocation": "Ambala, Haryana",
+    "areaServed": {{ SITE.service_regions | tojson }},
+    "url": "{{ SITE.url }}/pvc-garden-pipes"
+}
+</script>
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
     "@type": "FAQPage",
     "mainEntity": [
         {% for f in faqs %}
