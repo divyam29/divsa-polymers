@@ -11,6 +11,7 @@ class Config:
     SECRET_KEY = os.environ.get('SECRET_KEY', 'divsa_secret_key')
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     DEBUG = os.environ.get('FLASK_DEBUG', '0') == '1'
+    SITE_URL = os.environ.get('SITE_URL', 'https://www.divsapolymers.com')
     
     # Admin authentication
     ADMIN_PASSWORD = os.environ.get('ADMIN_PASSWORD', 'admin123')

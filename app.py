@@ -18,6 +18,8 @@ app = Flask(__name__, static_url_path='/static', static_folder='static', templat
 
 # Load configuration from config.py (which reads .env)
 app.config.from_object(Config)
+# Allow both with/without trailing slashes without issuing redirects (helps avoid "Page with redirect" in crawlers)
+app.url_map.strict_slashes = False
 
 # Terminal logging setup (stdout) to suit serverless platforms
 def configure_logging():
@@ -95,11 +97,12 @@ app.secret_key = app.config.get('SECRET_KEY')
 
 # Site-wide settings (exposed to templates via context_processor)
 parent_company = app.config.get('PARENT_COMPANY_NAME', 'Adinath Industries')
+site_base_url = (app.config.get('SITE_URL') or 'https://www.divsapolymers.com').rstrip('/')
 SITE = {
     'name': 'Divsa Polymers',
     'brand_line': f'Divsa Polymers by {parent_company}',
     'parent_name': parent_company,
-    'url': app.config.get('SITE_URL', 'https://www.divsapolymers.com'),
+    'url': site_base_url,
     'phone': app.config.get('COMPANY_PHONE', '+918607125915'),
     'email': app.config.get('COMPANY_EMAIL', 'divyamjain29@gmail.com'),
     'address': 'Khasra No. 92//21 & 108//1/1, Dukheri Road, Dukheri, Ambala-133004, Haryana, India',
@@ -192,7 +195,12 @@ def set_security_headers(response):
 # Make SITE available in all templates
 @app.context_processor
 def inject_site():
-    return dict(SITE=SITE)
+    configured_url = (app.config.get('SITE_URL') or '').strip()
+    # Use configured canonical URL when provided; otherwise fall back to the current request host
+    base_url = configured_url.rstrip('/') if configured_url else request.url_root.rstrip('/')
+    site_context = dict(SITE)
+    site_context['url'] = base_url
+    return dict(SITE=site_context)
 
 
 @app.route('/')
@@ -673,4 +681,3 @@ if __name__ == '__main__':
     host = os.environ.get('HOST', '0.0.0.0')
     port = int(os.environ.get('PORT', 8000))
     app.run(host=host, port=port, debug=app.config['DEBUG'])
-
