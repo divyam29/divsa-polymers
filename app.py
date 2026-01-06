@@ -1,5 +1,6 @@
 import os
 import logging
+import sys
 import time
 from datetime import datetime
 from flask import Flask, render_template, request, flash, redirect, url_for, send_from_directory, make_response, session, g
@@ -26,7 +27,7 @@ def configure_logging():
     level_name = os.environ.get('LOG_LEVEL', 'INFO').upper()
     level = getattr(logging, level_name, logging.INFO)
     formatter = logging.Formatter('%(asctime)s %(levelname)s %(message)s')
-    handler = logging.StreamHandler()
+    handler = logging.StreamHandler(sys.stdout)
     handler.setLevel(level)
     handler.setFormatter(formatter)
 
