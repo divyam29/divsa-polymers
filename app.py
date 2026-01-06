@@ -111,7 +111,7 @@ SITE = {
     'longitude': 76.8669546,
     'ga_measurement_id': app.config.get('GA_MEASUREMENT_ID', ''),
     'service_regions': ['Ambala', 'Haryana', 'Punjab', 'Delhi', 'North India'],
-    'managing_partners': ['Divyam Jain', 'Mohit Jain'],
+    'managing_partners': ['Mohit Jain', 'Divyam Jain'],
     'group_experience_years': 30,
     'founding_year': 1994
 }
