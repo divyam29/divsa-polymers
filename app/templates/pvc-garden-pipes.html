@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+
+{% block title %}PVC Garden Pipes | Durable Garden Watering Pipes — {{ SITE.brand_line }}{% endblock %}
+{% block meta_description %}Buy PVC garden pipes from {{ SITE.brand_line }}. UV-stabilized, flexible, and long-lasting
+garden hoses and pipes with pan-India delivery.{% endblock %}
+{% block meta_keywords %}PVC garden pipes, UV-resistant pipes, garden hoses, watering pipes, Divsa Polymers, Adinath
+Industries{% endblock %}
+{% block canonical %}{{ SITE.url }}/pvc-garden-pipes{% endblock %}
+{% block og_title %}PVC Garden Pipes | {{ SITE.brand_line }}{% endblock %}
+{% block og_description %}UV-stabilized PVC garden pipes — durable and flexible. Distributors welcome.{% endblock %}
+{% block og_image %}{{ SITE.url }}/static/assets/factory-hero.jpg{% endblock %}
+
+{% block head_extra %}
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "name": "PVC Garden Pipes",
+    "image": ["{{ SITE.url }}/static/assets/factory-hero.jpg"],
+    "description": "UV-stabilized PVC garden pipes manufactured in Ambala, Haryana by {{ SITE.brand_line }} with {{ SITE.parent_name }} oversight.",
+    "brand": {"@type": "Brand", "name": "{{ SITE.brand_line }}"},
+    "manufacturer": {"@type": "Organization", "name": "{{ SITE.parent_name }}"},
+    "category": "PVC Garden Pipes",
+    "material": "PVC",
+    "productionLocation": "Ambala, Haryana",
+    "areaServed": {{ SITE.service_regions | tojson }},
+    "url": "{{ SITE.url }}/pvc-garden-pipes"
+}
+</script>
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+        {% for f in faqs %}
+        {
+            "@type": "Question",
+            "name": "{{ f.question }}",
+            "acceptedAnswer": {"@type": "Answer", "text": "{{ f.answer }}"}
+        }{% if not loop.last %},{% endif %}
+        {% endfor %}
+    ]
+}
+</script>
+{% endblock %}
+
+{% block content %}
+<section class="product-hero garden">
+    <div class="container">
+        <span class="section-tag">Divsa Polymers by {{ SITE.parent_name }}</span>
+        <h1>PVC Garden Pipes — Durable & UV-Stabilized</h1>
+        <p>Our PVC garden pipes are formulated for outdoor durability and easy handling. Perfect for residential
+            gardening, nurseries, and light agricultural applications under the {{ SITE.parent_name }} quality umbrella.
+        </p>
+    </div>
+</section>
+
+<main class="container">
+    <section>
+        <h2>Features & Benefits</h2>
+        <ul>
+            <li>UV-resistant outer layer for longer life</li>
+            <li>Lightweight and flexible — easy to carry and store</li>
+            <li>Available in multiple diameters and thicknesses</li>
+            <li>Cost-effective and recyclable packaging</li>
+        </ul>
+
+        <h2>Applications</h2>
+        <p>Home gardens, nurseries, irrigation, small farms, landscaping contractors.</p>
+
+        <h2>Sizes & Specifications</h2>
+        <ul>
+            <li>Available diameters: 1/2", 3/4", 1", 1.5", 2"</li>
+            <li>Length options: 10m, 25m, 50m</li>
+            <li>Standard compliance: ISI aligned manufacturing processes</li>
+        </ul>
+
+        <a href="{{ url_for('main.home') }}#dealership" class="btn btn-primary">Become a Distributor</a>
+        <a href="tel:{{ SITE.phone }}" class="btn btn-dark">Call Us</a>
+
+        <hr>
+        <h2>Frequently Asked Questions</h2>
+        <div id="faqs">
+            {% for f in faqs %}
+            <details>
+                <summary>{{ f.question }}</summary>
+                <p>{{ f.answer }}</p>
+            </details>
+            {% endfor %}
+        </div>
+    </section>
+</main>
+{% endblock %}

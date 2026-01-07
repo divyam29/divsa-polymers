@@ -1,0 +1,176 @@
+{% extends 'base.html' %}
+
+{% block title %}All Products | PVC Pipes Catalog — {{ SITE.brand_line }}{% endblock %}
+{% block meta_description %}Browse our complete range of PVC pipes including garden pipes, braided pipes, and recycled
+pipes. Premium quality products with competitive pricing. Get a quote today.{% endblock %}
+{% block meta_keywords %}PVC pipes catalog, all products, garden pipes, braided pipes, recycled pipes, PVC pipe prices,
+Divsa Polymers, Adinath Industries{% endblock %}
+{% block canonical %}{{ SITE.url }}/products{% endblock %}
+{% block og_title %}All Products | PVC Pipes Catalog — {{ SITE.brand_line }}{% endblock %}
+{% block og_description %}Complete range of premium PVC pipes. Browse our products and get a price quote.{% endblock %}
+{% block og_image %}{{ SITE.url }}/static/assets/factory-hero.jpg{% endblock %}
+
+{% block head_extra %}
+{% if products %}
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    "itemListElement": [
+        {% for product in products %}
+        {
+            "@type": "ListItem",
+            "position": {{ loop.index }},
+            "item": {
+                "@type": "Product",
+                "name": {{ product.name | tojson }},
+                "description": {{ product.description | tojson }},
+                "url": "{{ SITE.url }}/products#{{ product.id }}",
+                "brand": {"@type": "Brand", "name": "{{ SITE.brand_line }}"},
+                "material": "PVC"
+            }
+        }{% if not loop.last %},{% endif %}
+        {% endfor %}
+    ]
+}
+</script>
+{% endif %}
+{% endblock %}
+
+{% block content %}
+<section class="product-hero">
+    <div class="container">
+        <span class="section-tag">Divsa Polymers by {{ SITE.parent_name }}</span>
+        <h1>Explore All Our Products</h1>
+        <p>Browse our comprehensive catalog of premium PVC pipes. From garden pipes to industrial-grade braided pipes,
+            find the perfect solution crafted within the {{ SITE.parent_name }} ecosystem.</p>
+    </div>
+</section>
+
+<main class="container">
+    <section id="products-catalog" style="padding: 60px 0;">
+        <div class="products-header" style="text-align: center; margin-bottom: 3rem;">
+            <h2 style="margin-bottom: 1rem;">Premium Quality Pipes for Every Application</h2>
+            <p style="max-width: 700px; margin: 0 auto; font-size: 1.1rem;">Select from our wide range of products. Each
+                product is manufactured with precision and tested for quality.</p>
+        </div>
+
+        {% if products %}
+        <div class="products-grid">
+            {% for product in products %}
+            <div class="product-item">
+                <div class="product-image-wrapper">
+                    <img src="{{ url_for('static', filename='assets/' + product.image) }}" alt="{{ product.name }}"
+                        class="product-image">
+                    <span class="product-quality-badge quality-{{ product.quality.lower().replace(' ', '-') }}">
+                        {{ product.quality }}
+                    </span>
+                </div>
+                <div class="product-info">
+                    <div class="product-type">{{ product.type }}</div>
+                    <h3 class="product-name">{{ product.name }}</h3>
+                    <p class="product-description">{{ product.description }}</p>
+                    <ul class="product-features">
+                        {% for feature in product.features %}
+                        <li><i class="fas fa-check-circle"></i> {{ feature }}</li>
+                        {% endfor %}
+                    </ul>
+                    <button class="btn-quote"
+                        onclick="openQuoteModal('{{ product.id }}', '{{ product.name|replace("'", "\\'") }}')">
+                        <i class="fas fa-calculator"></i> Get Price Quote
+                    </button>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div style="text-align: center; padding: 60px 20px; background: var(--grey); border-radius: 12px;">
+            <i class="fas fa-box-open" style="font-size: 4rem; color: var(--text-secondary); margin-bottom: 20px;"></i>
+            <h3 style="color: var(--text-secondary); margin-bottom: 10px;">No Products Available</h3>
+            <p style="color: var(--text-secondary);">Products will be available soon. Please check back later.</p>
+        </div>
+        {% endif %}
+    </section>
+</main>
+
+<!-- Quote Modal -->
+<div id="quoteModal" class="quote-modal">
+    <div class="quote-modal-content">
+        <span class="quote-modal-close" onclick="closeQuoteModal()">&times;</span>
+        <h2>Get Price Quote</h2>
+        <p id="modalProductName" style="color: var(--primary-blue); font-weight: 600; margin-bottom: 1.5rem;"></p>
+        <form id="quoteForm" action="{{ url_for('main.submit_inquiry') }}" method="POST">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+            <input type="hidden" id="productId" name="product_id">
+            <div class="form-group">
+                <label for="quoteName">Your Name *</label>
+                <input type="text" id="quoteName" name="name" required minlength="2"
+                    title="Name must be at least 2 characters">
+            </div>
+            <div class="form-group">
+                <label for="quoteEmail">Email Address *</label>
+                <input type="email" id="quoteEmail" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="quotePhone">Phone Number *</label>
+                <input type="tel" id="quotePhone" name="phone" required minlength="10" pattern="[\d\s\-\+]{10,15}"
+                    title="Please enter a valid phone number (10-15 digits)">
+            </div>
+            <div class="form-group">
+                <label for="quoteCity">City / Location</label>
+                <input type="text" id="quoteCity" name="city">
+            </div>
+            <div class="form-group">
+                <label for="quoteQuantity">Quantity Required (optional)</label>
+                <input type="text" id="quoteQuantity" name="quantity" placeholder="e.g., 100 meters, 50 pieces">
+            </div>
+            <div class="form-group">
+                <label for="quoteMessage">Additional Details (optional)</label>
+                <textarea id="quoteMessage" name="business" rows="4"
+                    placeholder="Tell us about your requirements..."></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary" style="width: 100%; padding: 15px;">
+                Request Quote <i class="fas fa-paper-plane"></i>
+            </button>
+        </form>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+    function openQuoteModal(productId, productName) {
+        document.getElementById('productId').value = productId;
+        document.getElementById('modalProductName').textContent = productName;
+        document.getElementById('quoteModal').style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeQuoteModal() {
+        document.getElementById('quoteModal').style.display = 'none';
+        document.body.style.overflow = 'auto';
+        document.getElementById('quoteForm').reset();
+    }
+
+    // Close modal when clicking outside
+    window.onclick = function (event) {
+        const modal = document.getElementById('quoteModal');
+        if (event.target == modal) {
+            closeQuoteModal();
+        }
+    }
+
+    // Escape HTML for JavaScript strings
+    function escapeHtml(text) {
+        const map = {
+            '&': '&amp;',
+            '<': '&lt;',
+            '>': '&gt;',
+            '"': '&quot;',
+            "'": '&#039;'
+        };
+        return text.replace(/[&<>"']/g, m => map[m]);
+    }
+</script>
+{% endblock %}

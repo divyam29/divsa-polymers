@@ -1,0 +1,308 @@
+{% extends 'base.html' %}
+
+{% block title %}Our Infrastructure | Manufacturing Excellence — {{ SITE.brand_line }}{% endblock %}
+{% block meta_description %}Explore {{ SITE.brand_line }} state-of-the-art manufacturing facilities. Advanced machinery,
+quality labs, and eco-friendly recycling plants for PVC pipe production.{% endblock %}
+{% block meta_keywords %}PVC pipe manufacturing facility, manufacturing plant, quality control lab, recycling plant,
+industrial machinery, Divsa Polymers, Adinath Industries{% endblock %}
+{% block canonical %}{{ SITE.url }}/infrastructure{% endblock %}
+{% block og_title %}Our Infrastructure | {{ SITE.brand_line }}{% endblock %}
+{% block og_description %}State-of-the-art PVC pipe manufacturing facilities with advanced machinery and quality
+assurance labs.{% endblock %}
+{% block og_image %}{{ SITE.url }}/static/assets/factory-hero.jpg{% endblock %}
+
+{% block content %}
+<main>
+
+    <section class="infrastructure-hero">
+        <div class="container">
+            <div class="hero-text animate-on-scroll">
+                <span class="section-tag">An {{ SITE.parent_name }} facility</span>
+                <h1>State-of-the-Art Manufacturing</h1>
+                <p>5+ automated machines, ISO certified quality control, and pan-India logistics network—purpose-built
+                    for the {{ SITE.parent_name }} group.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="infrastructure-details">
+        <div class="container">
+            <div class="infra-grid">
+                <div class="infra-card animate-on-scroll">
+                    <div class="infra-card-icon">
+                        <i class="fas fa-industry"></i>
+                    </div>
+                    <h3>Manufacturing Facility</h3>
+                    <p>15,000+ sq. ft facility with 50+ automated extrusion machines. 500+ tons monthly capacity with
+                        24/7 operations and computer-aided monitoring.</p>
+                </div>
+
+                <div class="infra-card animate-on-scroll">
+                    <div class="infra-card-icon">
+                        <i class="fas fa-flask"></i>
+                    </div>
+                    <h3>Quality Testing Lab</h3>
+                    <p>In-house R&D laboratory with burst pressure, tensile strength, and thermal resistance testing.
+                        ISI, ASTM, and ISO 9001:2015 compliant.</p>
+                </div>
+
+                <div class="infra-card animate-on-scroll">
+                    <div class="infra-card-icon">
+                        <i class="fas fa-recycle"></i>
+                    </div>
+                    <h3>Recycling Plant</h3>
+                    <p>Dedicated 100+ tons/month capacity facility for sustainable recycled PVC production with
+                        shredding, pelletization, and purification processes.</p>
+                </div>
+
+                <div class="infra-card animate-on-scroll">
+                    <div class="infra-card-icon">
+                        <i class="fas fa-truck-fast"></i>
+                    </div>
+                    <h3>Logistics & Warehousing</h3>
+                    <p>Climate-controlled warehouses with 500+ tons storage capacity. Pan-India delivery network with
+                        next-day metro city delivery.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta-section">
+        <div class="container animate-on-scroll">
+            <h2>Ready to Partner With Us?</h2>
+            <p>Join India's fastest growing PVC pipe distribution network.</p>
+            <div class="cta-buttons">
+                <a href="{{ url_for('main.home') }}#dealership" class="btn btn-primary">Become a Distributor <i
+                        class="fas fa-arrow-right"></i></a>
+                <a href="tel:{{ SITE.phone }}" class="btn btn-dark">Call Us Now</a>
+            </div>
+        </div>
+    </section>
+
+</main>
+
+<style>
+    .infrastructure-hero {
+        background: linear-gradient(135deg, var(--dark-blue), var(--primary-blue));
+        color: white;
+        padding: 4rem 0;
+        text-align: center;
+    }
+
+    .infrastructure-hero h1 {
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+    }
+
+    .infrastructure-hero .section-tag {
+        background-color: rgba(255, 255, 255, 0.2);
+        color: var(--accent-orange);
+    }
+
+    .infrastructure-details {
+        background: #f8f9fa;
+        padding: 4rem 0;
+    }
+
+    .infra-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+        margin-top: 2rem;
+    }
+
+    .infra-card {
+        background: white;
+        border: 1px solid #eee;
+        border-radius: 8px;
+        padding: 2rem;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+    }
+
+    .infra-card:hover {
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        transform: translateY(-5px);
+    }
+
+    .infra-card-icon {
+        font-size: 2.5rem;
+        color: var(--primary-blue);
+        margin-bottom: 1rem;
+    }
+
+    .infra-card h3 {
+        color: var(--dark-blue);
+        margin-bottom: 1rem;
+        font-size: 1.3rem;
+    }
+
+    .infra-card ul {
+        list-style: none;
+        padding-left: 0;
+    }
+
+    .infra-card li {
+        padding: 0.5rem 0;
+        font-size: 0.95rem;
+        color: #555;
+    }
+
+    .infra-card strong {
+        color: var(--dark-blue);
+    }
+
+    .quality-process {
+        background: #f8f9fa;
+        padding: 4rem 0;
+    }
+
+    .process-timeline {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 2rem;
+    }
+
+    .process-step {
+        background: white;
+        padding: 2rem;
+        border-radius: 8px;
+        border-left: 4px solid var(--primary-blue);
+        text-align: center;
+    }
+
+    .step-number {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 50px;
+        height: 50px;
+        background: var(--primary-blue);
+        color: white;
+        border-radius: 50%;
+        font-size: 1.5rem;
+        font-weight: bold;
+        margin-bottom: 1rem;
+    }
+
+    .process-step h4 {
+        color: var(--dark-blue);
+        margin-bottom: 0.5rem;
+    }
+
+    .process-step p {
+        color: #666;
+        font-size: 0.95rem;
+    }
+
+    .infrastructure-stats {
+        padding: 4rem 0;
+    }
+
+    .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 2rem;
+    }
+
+    .stat-card {
+        background: linear-gradient(135deg, var(--primary-blue), var(--dark-blue));
+        color: white;
+        padding: 2rem;
+        border-radius: 8px;
+        text-align: center;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .stat-number {
+        font-size: 2rem;
+        font-weight: bold;
+        margin-bottom: 0.5rem;
+    }
+
+    .stat-card p {
+        font-size: 0.95rem;
+        opacity: 0.95;
+    }
+
+    .cta-section {
+        background: linear-gradient(135deg, var(--primary-blue), var(--dark-blue));
+        color: white;
+        padding: 4rem 0;
+        text-align: center;
+        margin-top: 3rem;
+    }
+
+    .cta-section h2 {
+        color: white;
+        margin-bottom: 1rem;
+        font-size: 2rem;
+    }
+
+    .cta-section p {
+        font-size: 1.1rem;
+        margin-bottom: 2rem;
+        color: rgba(255, 255, 255, 0.95);
+    }
+
+    .cta-buttons {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+
+    .cta-buttons .btn {
+        min-width: 200px;
+    }
+
+    .cta-buttons .btn-primary {
+        background-color: var(--accent-orange);
+        color: var(--dark-blue);
+    }
+
+    .cta-buttons .btn-primary:hover {
+        background-color: #ffca2c;
+        color: var(--dark-blue);
+    }
+
+    .cta-buttons .btn-dark {
+        background-color: white;
+        color: var(--primary-blue);
+        border: 2px solid white;
+    }
+
+    .cta-buttons .btn-dark:hover {
+        background-color: transparent;
+        color: white;
+        border: 2px solid white;
+    }
+
+    @media (max-width: 768px) {
+        .infrastructure-hero h1 {
+            font-size: 2rem;
+        }
+
+        .infra-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .process-timeline {
+            grid-template-columns: 1fr;
+        }
+
+        .stats-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        .cta-buttons {
+            flex-direction: column;
+        }
+
+        .cta-buttons .btn {
+            width: 100%;
+        }
+    }
+</style>
+
+{% endblock %}

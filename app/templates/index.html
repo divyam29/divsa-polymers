@@ -1,0 +1,358 @@
+{% extends 'base.html' %}
+
+{% block canonical %}{{ SITE.url }}/{% endblock %}
+{% block og_url %}{{ SITE.url }}/{% endblock %}
+
+{% block content %}
+<main>
+
+    <section class="hero" id="home">
+        <div class="container">
+            <div class="hero-content-wrapper">
+                <div class="hero-text animate-on-scroll">
+                    <div class="brand-ribbon"><i class="fas fa-industry"></i> An {{ SITE.parent_name }} Brand</div>
+                    <span class="section-tag">30+ Years of Manufacturing Excellence</span>
+                    <h1>Divsa Polymers, crafted by {{ SITE.parent_name }}</h1>
+                    <p>India's leading PVC division of {{ SITE.parent_name }}, creating high-quality garden pipes,
+                        braided pipes, and recycled pipes. Built for durability, tested for excellence, and trusted by
+                        distributors nationwide.</p>
+
+                    <div class="hero-buttons">
+                        <a href="#dealership" class="btn btn-primary">Partner with the Adinath Network <i
+                                class="fas fa-arrow-right"></i></a>
+                        <a href="#products" class="btn btn-secondary">Explore Product Range</a>
+                    </div>
+
+                    <div class="hero-stats">
+                        <div class="stat-item">
+                            <h3>{{ SITE.parent_name }}</h3>
+                            <p>Group Legacy</p>
+                        </div>
+                        <div class="stat-item">
+                            <h3>30+ yrs</h3>
+                            <p>Manufacturing</p>
+                        </div>
+                        <div class="stat-item">
+                            <i class="fas fa-check-circle" style="font-size: 2rem; margin-bottom: 0.25rem;"></i>
+                            <p>ISO Certified</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="hero-image animate-on-scroll">
+                    <img src="{{ url_for('static', filename='assets/factory-hero.jpg') }}" alt="Stack of PVC pipes">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="products">
+        <div class="container">
+            <div style="text-align: center;">
+                <span class="section-tag">Divsa Polymers by {{ SITE.parent_name }}</span>
+                <h2 class="animate-on-scroll">Premium Quality Pipes for Every Need</h2>
+                <p class="section-subtitle animate-on-scroll" style="color: var(--text-secondary);">Specialized polymer
+                    solutions from the {{ SITE.parent_name }} family, engineered for consistent supply and durability.
+                </p>
+            </div>
+
+            <div class="product-grid">
+                <div class="product-card animate-on-scroll">
+                    <span class="product-card-tag tag-best-seller">Best Seller</span>
+                    <div class="product-card-image">
+                        <img src="{{ url_for('static', filename='assets/factory-hero.jpg') }}"
+                            alt="Green PVC Garden Pipes">
+                    </div>
+                    <div class="product-card-content">
+                        <h3>PVC Garden Pipes</h3>
+                        <p>Durable, flexible garden pipes designed for efficient water flow and long-lasting
+                            performance in all weather conditions.</p>
+                        <ul>
+                            <li><i class="fas fa-check-circle"></i> UV resistant & weather-proof</li>
+                            <li><i class="fas fa-check-circle"></i> Lightweight & easy to install</li>
+                            <li><i class="fas fa-check-circle"></i> Available in multiple sizes</li>
+                        </ul>
+                        <a href="{{ url_for('main.pvc_garden_pipes') }}" class="view-details">View Details <i
+                                class="fas fa-long-arrow-alt-right"></i></a>
+                    </div>
+                </div>
+
+                <div class="product-card animate-on-scroll">
+                    <span class="product-card-tag tag-premium">Premium</span>
+                    <div class="product-card-image">
+                        <img src="{{ url_for('static', filename='assets/pvc-braided.jpg') }}"
+                            alt="PVC Braided Garden Pipes">
+                    </div>
+                    <div class="product-card-content">
+                        <h3>PVC Braided Garden Pipes</h3>
+                        <p>Heavy-duty braided pipes with reinforced strength for high-pressure applications and
+                            commercial use.</p>
+                        <ul>
+                            <li><i class="fas fa-check-circle"></i> High burst pressure resistance</li>
+                            <li><i class="fas fa-check-circle"></i> Kink-free & flexible design</li>
+                            <li><i class="fas fa-check-circle"></i> Long service life</li>
+                        </ul>
+                        <a href="{{ url_for('main.pvc_braided_pipes') }}" class="view-details">View Details <i
+                                class="fas fa-long-arrow-alt-right"></i></a>
+                    </div>
+                </div>
+
+                <div class="product-card animate-on-scroll">
+                    <span class="product-card-tag tag-eco">Eco-Friendly</span>
+                    <div class="product-card-image">
+                        <img src="{{ url_for('static', filename='assets/factory-hero.jpg') }}"
+                            alt="PVC Recycled Pipes in a warehouse">
+                    </div>
+                    <div class="product-card-content">
+                        <h3>PVC Recycled Pipes</h3>
+                        <p>Sustainable recycled PVC pipes that deliver quality performance while protecting the
+                            environment.</p>
+                        <ul>
+                            <li><i class="fas fa-check-circle"></i> Environmentally sustainable</li>
+                            <li><i class="fas fa-check-circle"></i> Cost-effective solution</li>
+                            <li><i class="fas fa-check-circle"></i> Maintains quality standards</li>
+                        </ul>
+                        <a href="{{ url_for('main.pvc_recycled_pipes') }}" class="view-details">View Details <i
+                                class="fas fa-long-arrow-alt-right"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div style="text-align: center; margin-top: 3rem;">
+                <a href="{{ url_for('main.products') }}" class="btn btn-primary">Explore All Our Products <i
+                        class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+    </section>
+
+    <section id="coming-soon">
+        <div class="container animate-on-scroll">
+            <i class="fas fa-shipping-fast" style="font-size: 2rem; margin-bottom: 1rem;"></i>
+            <h2>Expanding Our Product Line</h2>
+            <p>Coming Soon: PVC Conduits • Electrical Pipes • HDPE Pipes • PPR Pipes</p>
+            <a href="#" class="btn btn-primary" style="background-color: var(--white); color: var(--dark-blue);">
+                <i class="fas fa-download"></i> View Full Catalogue
+            </a>
+        </div>
+    </section>
+
+    <section id="infrastructure">
+        <div class="container">
+            <div class="infra-wrapper">
+                <div class="infra-text animate-on-scroll">
+                    <span class="section-tag">World-Class Infrastructure</span>
+                    <h2>State-of-the-Art Manufacturing Excellence</h2>
+                    <p>Our advanced manufacturing facilities are equipped with the latest technology and machinery,
+                        ensuring every pipe meets the highest quality standards. From production to quality control,
+                        we maintain excellence at every step—strengthened by the engineering oversight of
+                        {{ SITE.parent_name }}.</p>
+
+                    <div class="infra-features">
+                        <div class="infra-feature-item">
+                            <i class="fas fa-cogs"></i>
+                            <div>
+                                <h4>Advanced Machinery</h4>
+                                <p>5+ automated machines for precision manufacturing.</p>
+                            </div>
+                        </div>
+                        <div class="infra-feature-item">
+                            <i class="fas fa-recycle"></i>
+                            <div>
+                                <h4>Recycling Plant</h4>
+                                <p>Eco-friendly recycling facility for sustainable production.</p>
+                            </div>
+                        </div>
+                        <div class="infra-feature-item">
+                            <i class="fas fa-flask"></i>
+                            <div>
+                                <h4>R&D Laboratory</h4>
+                                <p>In-house testing and innovation center.</p>
+                            </div>
+                        </div>
+                        <div class="infra-feature-item">
+                            <i class="fas fa-shield-alt"></i>
+                            <div>
+                                <h4>Quality Assurance</h4>
+                                <p>Rigorous testing protocols for every batch.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <a href="{{ url_for('main.infrastructure') }}" class="btn btn-dark">Explore Our Infrastructure <i
+                            class="fas fa-arrow-right"></i></a>
+                </div>
+                <div class="infra-image animate-on-scroll">
+                    <img src="{{ url_for('static', filename='assets/factory-hero.jpg') }}"
+                        alt="Industrial machinery for pipe manufacturing">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="dealership">
+        <div class="container">
+            <div class="dealership-wrapper">
+                <div class="dealership-info animate-on-scroll">
+                    <span class="section-tag">Backed by {{ SITE.parent_name }}</span>
+                    <h2>Join India's Fastest Growing PVC Pipe Network</h2>
+                    <p>Partner with Divsa Polymers—the specialized pipe division of {{ SITE.parent_name }}—and gain
+                        access to premium products, competitive margins, and nationwide support. We are looking for
+                        hundreds of successful distributors across India. Start your partnership with our group today.
+                    </p>
+
+                    <div class="dealership-benefits">
+                        <div class="benefit-item">
+                            <i class="fas fa-percent"></i>
+                            <h4>High Margins (20-25%)</h4>
+                        </div>
+                        <div class="benefit-item">
+                            <i class="fas fa-truck-fast"></i>
+                            <h4>Fast, Pan-India Delivery</h4>
+                        </div>
+                        <div class="benefit-item">
+                            <i class="fas fa-headset"></i>
+                            <h4>Dedicated 24/7 Support</h4>
+                        </div>
+                        <div class="benefit-item">
+                            <i class="fas fa-chart-line"></i>
+                            <h4>Full Marketing Support</h4>
+                        </div>
+                    </div>
+
+                    <h3>Ready to Grow Your Business?</h3>
+                    <ul>
+                        <li><i class="fas fa-check" style="color: var(--accent-green); margin-right: 8px;"></i> No
+                            upfront franchise fees</li>
+                        <li><i class="fas fa-check" style="color: var(--accent-green); margin-right: 8px;"></i> Flexible
+                            order quantities</li>
+                        <li><i class="fas fa-check" style="color: var(--accent-green); margin-right: 8px;"></i>
+                            Exclusive territory options</li>
+                    </ul>
+                </div>
+
+                <div class="dealership-form-container animate-on-scroll">
+                    {% with messages = get_flashed_messages() %}
+                    {% if messages %}
+                    {% for message in messages %}
+                    <div
+                        style="padding: 10px; background-color: #d4edda; color: #155724; border-radius: 5px; margin-bottom: 20px;">
+                        {{ message }}
+                    </div>
+                    {% endfor %}
+                    {% endif %}
+                    {% endwith %}
+                    <h3>Become a Distributor</h3>
+                    <form id="distributor-form" action="{{ url_for('main.submit_inquiry') }}" method="POST">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+                        <div class="form-group">
+                            <label for="name">Your Name *</label>
+                            <input type="text" id="name" name="name" required minlength="2"
+                                title="Name must be at least 2 characters">
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email Address *</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Phone Number *</label>
+                            <input type="tel" id="phone" name="phone" required minlength="10"
+                                pattern="[\d\s\-\+]{10,15}" title="Please enter a valid phone number (10-15 digits)">
+                        </div>
+                        <div class="form-group">
+                            <label for="city">City / Location</label>
+                            <input type="text" id="city" name="city">
+                        </div>
+                        <div class="form-group">
+                            <label for="business">Tell us about your business (optional)</label>
+                            <textarea id="business" name="business"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary form-submit-btn">Submit Inquiry <i
+                                class="fas fa-paper-plane"></i></button>
+                        <p class="form-note">We'll get back to you within 24 hours</p>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="why-choose-us">
+        <div class="container">
+            <div style="text-align: center;">
+                <span class="section-tag" style="background-color: #193755; color: var(--text-light);">Our
+                    Commitment</span>
+                <h2 class="animate-on-scroll">Why Choose Divsa Polymers by {{ SITE.parent_name }}?</h2>
+                <p class="section-subtitle animate-on-scroll">Built on a foundation of quality, innovation, and trust —
+                    we're committed to delivering excellence in every pipe as part of the {{ SITE.parent_name }} family.
+                </p>
+            </div>
+
+            <div class="why-grid">
+                <div class="why-card animate-on-scroll">
+                    <i class="fas fa-medal"></i>
+                    <h3>Quality First</h3>
+                    <p>Every pipe undergoes rigorous quality testing to ensure it meets international standards and
+                        exceeds customer expectations.</p>
+                </div>
+                <div class="why-card animate-on-scroll">
+                    <i class="fas fa-seedling"></i>
+                    <h3>Sustainability</h3>
+                    <p>Our in-house recycling plant and eco-friendly manufacturing processes help build a greener future
+                        for India.</p>
+                </div>
+                <div class="why-card animate-on-scroll">
+                    <i class="fas fa-lightbulb"></i>
+                    <h3>Innovation</h3>
+                    <p>Continuous R&D and product development keep us ahead in delivering cutting-edge piping solutions
+                        for modern needs.</p>
+                </div>
+                <div class="why-card animate-on-scroll">
+                    <i class="fas fa-users"></i>
+                    <h3>Customer Focus</h3>
+                    <p>Your success is our success. We provide dedicated support and reliable service to help your
+                        business thrive.</p>
+                </div>
+                <div class="why-card animate-on-scroll">
+                    <i class="fas fa-sync-alt"></i>
+                    <h3>Reliability</h3>
+                    <p>With 10+ years of expertise and ₹10 crore annual revenue, we're a trusted partner you can count
+                        on.</p>
+                </div>
+                <div class="why-card animate-on-scroll">
+                    <i class="fas fa-globe-asia"></i>
+                    <h3>Pan-India Reach</h3>
+                    <p>A nationwide distribution network ensures timely delivery and consistent supply across all
+                        regions of India.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="stats">
+        <div class="container">
+            <div class="stats-bar-wrapper">
+                <div class="stats-bar-item animate-on-scroll">
+                    <h3>30+</h3>
+                    <p>Years Experience</p>
+                </div>
+                <div class="stats-bar-item animate-on-scroll">
+                    <h3>100+</h3>
+                    <p>Distributors</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Location Map Section -->
+    <div id="location-map" style="width: 100%; background-color: #f5f5f5; padding: 40px 0;">
+        <div class="container">
+            <h2 style="text-align: center; margin-bottom: 30px; color: var(--dark-blue);">Visit Our {{ SITE.parent_name
+                }} Unit</h2>
+            <div style="display: flex; justify-content: center;">
+                <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3445.64003184277!2d76.864626!3d30.275836!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390fb52dd5ef05fb%3A0x958fef11a12a1cc1!2sAdinath%20Industries!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin"
+                    width="100%" height="450" style="border:0; border-radius: 8px; max-width: 900px;" allowfullscreen=""
+                    loading="lazy"></iframe>
+            </div>
+        </div>
+    </div>
+
+</main>
+{% endblock %}

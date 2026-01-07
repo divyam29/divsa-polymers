@@ -1,0 +1,36 @@
+/* Performance optimization styles */
+
+/* Lazy loading image transitions */
+img[loading="lazy"] {
+    transition: opacity 0.3s ease-in;
+    opacity: 0.95;
+}
+
+img[loading="lazy"].loaded {
+    opacity: 1;
+}
+
+/* Prevent layout shift on lazy images */
+img[loading="lazy"] {
+    min-height: 1px;
+}
+
+/* Industry items hover effect */
+.industry-item {
+    transition: all 0.3s ease;
+}
+
+.industry-item:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+}
+
+/* Testimonial cards */
+.testimonial-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.testimonial-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15) !important;
+}

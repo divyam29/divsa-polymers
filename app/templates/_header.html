@@ -1,0 +1,21 @@
+<header>
+    <nav class="container navbar">
+        <a href="{{ url_for('main.home') }}" class="brand-mark">
+            <span class="logo">Divsa Polymers</span>
+            <span class="brand-subtext">By {{ SITE.parent_name }}</span>
+        </a>
+
+        <input type="checkbox" id="menu-toggle">
+        <label for="menu-toggle" class="menu-icon"><i class="fas fa-bars"></i></label>
+
+        <ul class="nav-links">
+            <li><a href="{{ url_for('main.home') }}#home">Home</a></li>
+            <li><a href="{{ url_for('main.home') }}#about">About Us</a></li>
+            <li><a href="{{ url_for('main.home') }}#products">Products</a></li>
+            <li><a href="{{ url_for('main.home') }}#infrastructure">Infrastructure</a></li>
+            <li><a href="{{ url_for('main.home') }}#dealership">Distribution</a></li>
+            <li><a href="{{ url_for('main.home') }}#location-map">Locate Us</a></li>
+        </ul>
+        <a href="{{ url_for('main.home') }}#dealership" class="btn btn-primary">Become a Distributor</a>
+    </nav>
+</header>

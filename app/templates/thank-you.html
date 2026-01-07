@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block title %}Thank You — {{ SITE.brand_line }}{% endblock %}
+{% block meta_description %}Thank you for contacting {{ SITE.brand_line }}. We'll reach out shortly to discuss your
+requirements.{% endblock %}
+{% block canonical %}{{ SITE.url }}/thank-you{% endblock %}
+
+{% block content %}
+<main class="container">
+    <section style="text-align: center; padding: 100px 20px;">
+        <h1 style="color: var(--accent-green);">Thank You!</h1>
+        <p style="font-size: 1.2rem; max-width: 600px; margin: 2rem auto;">We appreciate your inquiry. A member of our
+            team will contact you within 24 hours.</p>
+        <a href="{{ url_for('main.home') }}" class="btn btn-primary">Return Home <i class="fas fa-home"></i></a>
+    </section>
+</main>
+{% endblock %}

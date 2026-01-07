@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+
+{% block title %}PVC Pipes in Punjab | Local Suppliers — {{ SITE.brand_line }}{% endblock %}
+{% block meta_description %}{{ SITE.brand_line }} supports distributors and customers across Punjab with high-quality
+PVC products and dependable delivery.{% endblock %}
+{% block meta_keywords %}PVC pipes Punjab, Punjab distributor, local PVC supplier, Divsa Polymers, Adinath Industries{%
+endblock %}
+{% block canonical %}{{ SITE.url }}/pvc-pipes-in-punjab{% endblock %}
+{% block og_title %}PVC Pipes in Punjab | {{ SITE.brand_line }}{% endblock %}
+{% block og_description %}Local distribution and dealer support across Punjab with quality PVC pipes and fast
+dispatch.{% endblock %}
+
+{% block head_extra %}
+<script type="application/ld+json">
+{
+    "@context":"https://schema.org",
+    "@type":"LocalBusiness",
+    "name":"{{ SITE.brand_line }}",
+    "address":{
+        "@type":"PostalAddress",
+        "addressRegion":"Punjab",
+        "addressCountry":"IN"
+    },
+    "telephone":"{{ SITE.phone }}",
+    "url":"{{ SITE.url }}",
+    "areaServed":["Punjab","Haryana","North India"],
+    "founder": {{ SITE.managing_partners | tojson }},
+    "foundingDate": "{{ SITE.founding_year }}"
+}
+</script>
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+        {
+            "@type": "Question",
+            "name": "Do you cover all major Punjab cities?",
+            "acceptedAnswer": {"@type": "Answer", "text": "Yes. We supply PVC pipes to Ludhiana, Amritsar, Jalandhar, Patiala, Bathinda, and other Punjab markets."}
+        },
+        {
+            "@type": "Question",
+            "name": "Can I get bulk pricing for Punjab districts?",
+            "acceptedAnswer": {"@type": "Answer", "text": "Yes. Bulk and distributor pricing is available with stable supply from our Ambala manufacturing hub."}
+        }
+    ]
+}
+</script>
+{% endblock %}
+
+{% block content %}
+<section class="product-hero location">
+    <div class="container">
+        <h1>PVC Pipes in Punjab</h1>
+        <p>Local distribution and dealer support across Punjab. Fast dispatch and tailored dealer programs available.
+        </p>
+    </div>
+</section>
+
+<main class="container">
+    <section class="location-content">
+        <h2>Distribution Across Punjab</h2>
+        <p>We supply PVC garden pipes, braided pipes, and recycled pipes to key industrial hubs across Punjab.</p>
+        <ul>
+            <li>Dedicated lanes for Ludhiana, Amritsar, Jalandhar, and Patiala</li>
+            <li>High-pressure braided pipes suited for agriculture-heavy districts</li>
+            <li>Eco-friendly recycled PVC lines from our in-house recycling plant</li>
+        </ul>
+    </section>
+
+    <section class="location-content">
+        <h2>Partner With Divsa Polymers</h2>
+        <p>Grow your dealership portfolio with {{ SITE.parent_name }} backed manufacturing and a North India logistics
+            network.</p>
+        <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+            <a href="{{ url_for('main.home') }}#dealership" class="btn btn-primary">Join Our Network</a>
+            <a href="tel:{{ SITE.phone }}" class="btn btn-dark">Call Now</a>
+        </div>
+    </section>
+
+    <section class="location-content">
+        <h2>Punjab FAQs</h2>
+        <details>
+            <summary>How fast can you deliver to Punjab?</summary>
+            <p>Standard deliveries reach most Punjab cities within 2-3 days from Ambala; urgent dispatches can be
+                scheduled.</p>
+        </details>
+        <details>
+            <summary>Do you support agriculture-focused braided pipes?</summary>
+            <p>Yes. We produce braided pipes designed for high-pressure agricultural and irrigation use across Punjab.
+            </p>
+        </details>
+    </section>
+</main>
+{% endblock %}
