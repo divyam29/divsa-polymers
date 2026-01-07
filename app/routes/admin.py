@@ -88,8 +88,15 @@ def add_product():
                 timestamp = datetime.utcnow().strftime('%Y%m%d%H%M%S')
                 image_filename = f'{timestamp}_{safe_name}'
                 # Save path needs to be absolute or relative to app root
-                assets_folder = os.path.join(current_app.static_folder, 'assets')
-                uploaded_image.save(os.path.join(assets_folder, image_filename))
+                try:
+                    assets_folder = os.path.join(current_app.static_folder, 'assets')
+                    if not os.path.exists(assets_folder):
+                        os.makedirs(assets_folder, exist_ok=True)
+                    uploaded_image.save(os.path.join(assets_folder, image_filename))
+                except Exception as e:
+                    current_app.logger.error(f"Image upload failed: {e}")
+                    flash(f"Warning: Image upload failed ({e}). Note that Vercel has a read-only filesystem. Your product was saved with the default image.", 'error')
+                    image_filename = 'factory-hero.jpg'
         
         product_data = {
             'name': name,
@@ -127,8 +134,17 @@ def edit_product(product_id):
                 safe_name = secure_filename(uploaded_image.filename)
                 timestamp = datetime.utcnow().strftime('%Y%m%d%H%M%S')
                 image_filename = f'{timestamp}_{safe_name}'
-                assets_folder = os.path.join(current_app.static_folder, 'assets')
-                uploaded_image.save(os.path.join(assets_folder, image_filename))
+                try:
+                    assets_folder = os.path.join(current_app.static_folder, 'assets')
+                    if not os.path.exists(assets_folder):
+                        os.makedirs(assets_folder, exist_ok=True)
+                    uploaded_image.save(os.path.join(assets_folder, image_filename))
+                except Exception as e:
+                    current_app.logger.error(f"Image update failed: {e}")
+                    flash(f"Warning: Image update failed ({e}). Note that Vercel has a read-only filesystem.", 'error')
+                    # Retain original image if upload fails
+                    existing_product = db.products.find_one({'_id': ObjectId(product_id)})
+                    image_filename = existing_product.get('image', 'factory-hero.jpg') if existing_product else 'factory-hero.jpg'
         
         update_data = {
             'name': name,
