@@ -73,16 +73,16 @@
                     <input type="file" id="image_file" name="image_file" accept=".png,.jpg,.jpeg,.gif,.webp"
                         style="width: 100%; padding: 12px 15px; border: 1px solid #ccc; border-radius: 8px; font-family: 'Poppins', sans-serif; font-size: 1rem;">
                     <small style="color: var(--text-secondary); font-size: 0.85rem; display: block; margin-top: 5px;">
-                        If provided, the image will be uploaded to static/assets/ and used automatically.
+                        Recommended: Your image will be securely uploaded to Vercel Blob.
                     </small>
                 </div>
 
                 <div class="form-group">
-                    <label for="image">Image Filename</label>
-                    <input type="text" id="image" name="image"
-                        placeholder="e.g., factory-hero.jpg (must exist in static/assets/)" value="factory-hero.jpg">
+                    <label for="image">Image URL / Filename</label>
+                    <input type="text" id="image" name="image" placeholder="e.g., factory-hero.jpg or https://..."
+                        value="factory-hero.jpg">
                     <small style="color: var(--text-secondary); font-size: 0.85rem; display: block; margin-top: 5px;">
-                        Use this if you want to reference an existing file in static/assets/ instead of uploading.
+                        Manually provide a URL or a filename existing in static/assets/.
                     </small>
                 </div>
 

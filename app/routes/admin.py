@@ -1,11 +1,12 @@
 from flask import Blueprint, render_template, request, flash, redirect, url_for, session, current_app
 from functools import wraps
 from datetime import datetime
+import os
+import vercel_blob
+from app.db import get_db
+from bson import ObjectId
 from werkzeug.utils import secure_filename
 from werkzeug.security import check_password_hash
-from app.db import get_db
-import os
-from bson import ObjectId
 
 admin_bp = Blueprint('admin', __name__, url_prefix='/admin')
 
@@ -19,6 +20,19 @@ def admin_required(f):
             return redirect(url_for('admin.login'))
         return f(*args, **kwargs)
     return decorated_function
+
+def upload_to_blob(file, filename):
+    """Uploads a file to Vercel Blob and returns the URL."""
+    try:
+        # Seek to beginning just in case
+        file.seek(0)
+        file_bytes = file.read()
+        # vercel_blob uses BLOB_READ_WRITE_TOKEN env var automatically
+        resp = vercel_blob.put(filename, file_bytes)
+        return resp.get('url')
+    except Exception as e:
+        current_app.logger.error(f"Vercel Blob upload failed: {e}")
+        return None
 
 @admin_bp.route('/', methods=['GET'])
 def root():
@@ -86,17 +100,27 @@ def add_product():
             if ext in ALLOWED_IMAGE_EXTENSIONS:
                 safe_name = secure_filename(uploaded_image.filename)
                 timestamp = datetime.utcnow().strftime('%Y%m%d%H%M%S')
-                image_filename = f'{timestamp}_{safe_name}'
-                # Save path needs to be absolute or relative to app root
-                try:
-                    assets_folder = os.path.join(current_app.static_folder, 'assets')
-                    if not os.path.exists(assets_folder):
-                        os.makedirs(assets_folder, exist_ok=True)
-                    uploaded_image.save(os.path.join(assets_folder, image_filename))
-                except Exception as e:
-                    current_app.logger.error(f"Image upload failed: {e}")
-                    flash(f"Warning: Image upload failed ({e}). Note that Vercel has a read-only filesystem. Your product was saved with the default image.", 'error')
-                    image_filename = 'factory-hero.jpg'
+                blob_filename = f'{timestamp}_{safe_name}'
+                
+                # Attempt to upload to Vercel Blob
+                blob_url = upload_to_blob(uploaded_image, blob_filename)
+                
+                if blob_url:
+                    image_filename = blob_url
+                    flash('Image uploaded to Vercel Blob.', 'success')
+                else:
+                    # Fallback to local (though it'll likely fail on Vercel, it works in dev)
+                    try:
+                        assets_folder = os.path.join(current_app.static_folder, 'assets')
+                        if not os.path.exists(assets_folder):
+                            os.makedirs(assets_folder, exist_ok=True)
+                        uploaded_image.seek(0)
+                        uploaded_image.save(os.path.join(assets_folder, blob_filename))
+                        image_filename = blob_filename
+                    except Exception as e:
+                        current_app.logger.error(f"Local upload also failed: {e}")
+                        flash('Image upload failed. Using default image.', 'error')
+                        image_filename = 'factory-hero.jpg'
         
         product_data = {
             'name': name,
@@ -133,18 +157,27 @@ def edit_product(product_id):
             if ext in ALLOWED_IMAGE_EXTENSIONS:
                 safe_name = secure_filename(uploaded_image.filename)
                 timestamp = datetime.utcnow().strftime('%Y%m%d%H%M%S')
-                image_filename = f'{timestamp}_{safe_name}'
-                try:
-                    assets_folder = os.path.join(current_app.static_folder, 'assets')
-                    if not os.path.exists(assets_folder):
-                        os.makedirs(assets_folder, exist_ok=True)
-                    uploaded_image.save(os.path.join(assets_folder, image_filename))
-                except Exception as e:
-                    current_app.logger.error(f"Image update failed: {e}")
-                    flash(f"Warning: Image update failed ({e}). Note that Vercel has a read-only filesystem.", 'error')
-                    # Retain original image if upload fails
-                    existing_product = db.products.find_one({'_id': ObjectId(product_id)})
-                    image_filename = existing_product.get('image', 'factory-hero.jpg') if existing_product else 'factory-hero.jpg'
+                blob_filename = f'{timestamp}_{safe_name}'
+                
+                # Attempt to upload to Vercel Blob
+                blob_url = upload_to_blob(uploaded_image, blob_filename)
+                
+                if blob_url:
+                    image_filename = blob_url
+                else:
+                    try:
+                        assets_folder = os.path.join(current_app.static_folder, 'assets')
+                        if not os.path.exists(assets_folder):
+                            os.makedirs(assets_folder, exist_ok=True)
+                        uploaded_image.seek(0)
+                        uploaded_image.save(os.path.join(assets_folder, blob_filename))
+                        image_filename = blob_filename
+                    except Exception as e:
+                        current_app.logger.error(f"Local update failed: {e}")
+                        flash('Image update failed. Retaining current image.', 'error')
+                        # Retain current
+                        existing_product = db.products.find_one({'_id': ObjectId(product_id)})
+                        image_filename = existing_product.get('image', 'factory-hero.jpg')
         
         update_data = {
             'name': name,

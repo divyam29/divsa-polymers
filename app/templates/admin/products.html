@@ -64,7 +64,7 @@
                         {% for product in products %}
                         <tr style="border-bottom: 1px solid #eee;">
                             <td style="padding: 15px;">
-                                <img src="{{ url_for('static', filename='assets/' + (product.image or 'factory-hero.jpg')) }}"
+                                <img src="{{ product.image if product.image.startswith('http') else url_for('static', filename='assets/' + (product.image or 'factory-hero.jpg')) }}"
                                     alt="{{ product.name }}"
                                     style="width: 60px; height: 60px; object-fit: cover; border-radius: 8px;">
                             </td>

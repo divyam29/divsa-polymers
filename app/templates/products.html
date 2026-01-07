@@ -60,8 +60,8 @@ Divsa Polymers, Adinath Industries{% endblock %}
             {% for product in products %}
             <div class="product-item">
                 <div class="product-image-wrapper">
-                    <img src="{{ url_for('static', filename='assets/' + product.image) }}" alt="{{ product.name }}"
-                        class="product-image">
+                    <img src="{{ product.image if product.image.startswith('http') else url_for('static', filename='assets/' + (product.image or 'factory-hero.jpg')) }}"
+                        alt="{{ product.name }}" class="product-image">
                     <span class="product-quality-badge quality-{{ product.quality.lower().replace(' ', '-') }}">
                         {{ product.quality }}
                     </span>
