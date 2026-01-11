@@ -130,18 +130,59 @@ def robots_txt():
 
 @main_bp.route('/sitemap.xml')
 def sitemap():
-    # ... sitemap logic ...
-    # Simplified for brevity
-    pages = [
-         {'loc': url_for('main.home', _external=True), 'priority': '1.0'},
-         # ... add others
+    """
+    Generate a sitemap dynamically.
+    """
+    # URLs that should not be in the sitemap
+    excluded_endpoints = [
+        'static',
+        'main.sitemap',
+        'main.robots_txt',
+        'main.submit_inquiry',
+        'main.favicon',
+        'admin.index',
+        'admin.login',
+        'admin.logout',
+        'admin.add_product',
+        'admin.edit_product',
+        'admin.delete_product',
+        'admin.inquiries',
+        'admin.products'
     ]
-    xml = ['<?xml version="1.0" encoding="UTF-8"?>', '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">']
-    for p in pages:
-        xml.append(f"<url><loc>{p['loc']}</loc></url>")
+
+    pages = []
+    # Get all routes from the app
+    for rule in current_app.url_map.iter_rules():
+        # Exclude specified endpoints and admin routes
+        if rule.endpoint not in excluded_endpoints and 'admin' not in rule.endpoint:
+            # Check for dynamic parts in the URL, we can skip them for this sitemap
+            if not '<' in rule.rule:
+                # Use url_for to generate the full URL
+                url = url_for(rule.endpoint, _external=True)
+                priority = '1.0' if rule.endpoint == 'main.home' else '0.9'
+                pages.append({'loc': url, 'priority': priority})
+
+    # Sort pages by URL for consistency
+    pages.sort(key=lambda x: x['loc'])
+    
+    # Start XML generation
+    xml = ['<?xml version="1.0" encoding="UTF-8"?>',
+           '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">']
+
+    # Add each page to the XML
+    for page in pages:
+        xml.append('<url>')
+        xml.append(f"    <loc>{page['loc']}</loc>")
+        xml.append(f"    <priority>{page['priority']}</priority>")
+        # You can add <lastmod> and <changefreq> if you have that info
+        xml.append('</url>')
+    
     xml.append('</urlset>')
+
+    # Create the response
     response = make_response('\n'.join(xml))
     response.headers['Content-Type'] = 'application/xml'
+
     return response
 
 @main_bp.route('/favicon.ico')
