@@ -5,10 +5,10 @@ Simple Flask site for Divsa Polymers.
 Quick start (development):
 
 ```bash
-python -m venv .venv
+python3 -m venv .venv
 .venv\Scripts\activate    # Windows
-pip install -r requirements.txt
-python app.py
+pip3 install -r requirements.txt
+python3 app.py
 ```
 
 Production notes:
