@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="Divsa Polymers favicon">
+<path fill="#075DA8" fill-rule="evenodd" d="M19 12 H60 C91 12 110 33 110 64 C110 95 91 116 60 116 H19 Z M43 36 V92 H59 C78 92 85 80 85 64 C85 48 77 36 59 36 Z"/>
+<path d="M15 55 C39 39 59 57 79 69 C91 77 101 82 112 80" fill="none" stroke="#fff" stroke-width="20" stroke-linecap="round"/>
+<path d="M15 55 C39 39 59 57 79 69 C91 77 101 82 112 80" fill="none" stroke="#55BE2B" stroke-width="13" stroke-linecap="round"/>
+<path d="M15 47 C41 33 63 53 81 64 C93 72 102 75 112 73" fill="none" stroke="#075DA8" stroke-width="7" stroke-linecap="round"/>
+<ellipse cx="111" cy="78" rx="11" ry="13" fill="#0982C8" transform="rotate(22 111 78)"/>
+<ellipse cx="112" cy="78" rx="6" ry="8" fill="#073E72" transform="rotate(22 112 78)"/>
+</svg>

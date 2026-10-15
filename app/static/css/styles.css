@@ -157,7 +157,7 @@ header {
 }
 
 .logo {
-    font-size: 1.6rem;
+    font-size: 1.3rem;
     font-weight: 700;
     color: var(--dark-blue);
     text-transform: uppercase;
@@ -167,10 +167,20 @@ header {
 .brand-mark {
     display: flex;
     flex-direction: column;
+    align-items: center;
+    text-align: center;
+    flex-shrink: 0;
     line-height: 1.1;
     gap: 4px;
     text-decoration: none;
     color: var(--dark-blue);
+}
+
+.brand-logo {
+    display: block;
+    width: 240px;
+    height: auto;
+    object-fit: contain;
 }
 
 .brand-subtext {
@@ -778,13 +788,35 @@ footer {
     margin-bottom: 40px;
 }
 
-.footer-logo {
-    font-size: 2rem;
-    font-weight: 700;
-    color: var(--white);
-    text-transform: uppercase;
+.footer-brand {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    max-width: 100%;
+    gap: 12px;
+    text-align: left;
     margin-bottom: 0.5rem;
+}
+
+.footer-logo {
     display: block;
+    position: relative;
+    width: 270px;
+    max-width: 100%;
+    aspect-ratio: 3.9;
+    overflow: hidden;
+}
+
+/* Compensate for the emblem PNG's transparent outer padding without
+   changing the original asset or adding a background. */
+.footer-logo img {
+    display: block;
+    position: absolute;
+    width: 114%;
+    max-width: none;
+    height: auto;
+    left: -9.2%;
+    top: -26%;
 }
 
 .footer-subtext {
@@ -956,7 +988,20 @@ footer {
     }
 
     .brand-mark {
-        align-items: flex-start;
+        align-items: center;
+    }
+
+    .brand-logo {
+        width: 210px;
+        height: auto;
+    }
+
+    .logo {
+        font-size: 1.1rem;
+    }
+
+    .brand-subtext {
+        font-size: 0.65rem;
     }
 
     .navbar .btn-primary {

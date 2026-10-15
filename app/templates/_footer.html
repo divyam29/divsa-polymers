@@ -2,8 +2,10 @@
     <div class="container">
         <div class="footer-grid">
             <div class="footer-col">
-                <a href="{{ url_for('main.home') }}" class="footer-logo">Divsa Polymers</a>
-                <div class="footer-subtext">An {{ SITE.parent_name }} brand</div>
+                <div class="footer-brand">
+                    <a href="{{ url_for('main.home') }}" class="footer-logo"><img src="{{ url_for('static', filename='assets/Divsa_Polymers_Favicon_Pack/DIVSA Polymers Hose Emblem.png') }}" alt="Divsa Polymers" width="270" height="90" loading="lazy"></a>
+                    <div class="footer-subtext">An {{ SITE.parent_name }} brand</div>
+                </div>
                 <p>India's trusted manufacturer of premium PVC pipes and polymer solutions, powered by the engineering
                     legacy of {{ SITE.parent_name }}. Strength that flows through every meter.</p>
                 <div class="social-links">
