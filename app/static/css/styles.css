@@ -234,7 +234,7 @@ header {
 
 /* --- 1️⃣ Hero Section --- */
 .hero {
-    background: linear-gradient(135deg, rgba(15, 47, 82, 0.9), rgba(12, 30, 50, 0.85)), url('../assets/factory-hero.jpg') no-repeat center center/cover;
+    background: linear-gradient(135deg, rgba(15, 47, 82, 0.9), rgba(12, 30, 50, 0.85)), url('../assets/factory-hero.webp') no-repeat center center/cover;
     color: var(--white);
     padding: 100px 0 80px 0;
     min-height: 80vh;
@@ -1568,4 +1568,16 @@ main.container h1+p {
         font-size: 1.5rem;
         padding-right: 30px;
     }
+}
+.inquiry-message {
+    padding: 12px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    background: #d4edda;
+    color: #155724;
+}
+
+.inquiry-message-error {
+    background: #f8d7da;
+    color: #721c24;
 }

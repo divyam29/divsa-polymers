@@ -1,0 +1,30 @@
+Required deployment configuration
+
+1. Generate a random session secret:
+   python -c 'import secrets; print(secrets.token_hex(32))'
+   Set SECRET_KEY in the deployment environment to the generated value.
+   Changing it invalidates existing sessions.
+
+2. Run python scripts/generate_hash.py. Enter and confirm a strong admin password.
+   Set ADMIN_PASSWORD_HASH to the complete output (including dollar signs).
+   When using a shell, single-quote the value to prevent variable expansion.
+   ADMIN_PASSWORD is no longer supported.
+
+3. Keep SESSION_COOKIE_SECURE=1 for HTTPS deployments. Local HTTP development
+   must explicitly set SESSION_COOKIE_SECURE=0.
+
+4. Set MONGODB_URI. Login throttling stores atomic counters in the existing divsa
+   database's admin_login_attempts collection, shared across workers/instances.
+   Its account needs read/write and createIndex permissions. A TTL index removes
+   expired counters. Login returns 503 if the throttle database is unavailable.
+   Five attempts are allowed per remote address in each 15-minute fixed window;
+   further attempts return 429 with Retry-After. Attempts include successful logins.
+   Limits use request.remote_addr, not caller-supplied forwarded headers. If your
+   host exposes a shared proxy address, users share a limit; configure trusted
+   proxy handling only after verifying your deployment's exact proxy topology.
+
+The app refuses startup if SECRET_KEY or ADMIN_PASSWORD_HASH is missing/invalid.
+No credentials are generated or written to .env automatically.
+
+Regression checks (no external database or email service is contacted):
+   python -m unittest discover -s tests -p 'test_high_priority.py' -v

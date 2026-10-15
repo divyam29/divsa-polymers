@@ -4,6 +4,7 @@ from datetime import datetime
 from werkzeug.utils import secure_filename
 from werkzeug.security import check_password_hash
 from app.db import get_db
+from app.utils.security import check_login_limit, LoginLimitUnavailable
 import os
 from bson import ObjectId
 
@@ -32,17 +33,21 @@ def login():
         password = request.form.get('password', '')
         admin_hash = current_app.config.get('ADMIN_PASSWORD_HASH')
         
-        if not admin_hash:
-            # Fallback
-            if password == current_app.config.get('ADMIN_PASSWORD'):
-                session['admin_logged_in'] = True
-                flash('Successfully logged in! (Legacy)', 'success')
-                return redirect(url_for('admin.view_products'))
-        elif check_password_hash(admin_hash, password):
+        try:
+            retry_after = check_login_limit()
+        except LoginLimitUnavailable:
+            flash('Login is temporarily unavailable. Please try again later.', 'error')
+            return render_template('admin/login.html'), 503
+        if retry_after:
+            flash('Too many login attempts. Please try again later.', 'error')
+            return render_template('admin/login.html'), 429, {'Retry-After': str(retry_after)}
+
+        if check_password_hash(admin_hash, password):
+            session.clear()
             session['admin_logged_in'] = True
             flash('Successfully logged in!', 'success')
             return redirect(url_for('admin.view_products'))
-            
+
         flash('Invalid password.', 'error')
     return render_template('admin/login.html')
 

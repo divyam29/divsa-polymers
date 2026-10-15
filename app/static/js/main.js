@@ -1,34 +1,5 @@
-// --- Simple Form Submission Handler (for demo) ---
+// Forms use native POST/redirect navigation so flash messages render once.
 document.addEventListener('DOMContentLoaded', function () {
-    const distributorForm = document.getElementById('distributor-form');
-    if (distributorForm) {
-        distributorForm.addEventListener('submit', function (e) {
-            e.preventDefault();
-
-            const formData = new FormData(distributorForm);
-
-            // Send the form to the Flask endpoint
-            fetch('/submit-inquiry', {
-                method: 'POST',
-                body: formData,
-                credentials: 'same-origin'
-            })
-            .then(response => {
-                // If server redirected, follow it in the browser so flashed messages render
-                if (response.redirected) {
-                    window.location = response.url;
-                } else {
-                    // Fallback: go to dealership section
-                    window.location = '/#dealership';
-                }
-            })
-            .catch(err => {
-                console.error('Form submit error:', err);
-                alert('There was an error submitting the form. Please try again later.');
-            });
-        });
-    }
-
     // --- Scroll Animation Handler (Intersection Observer) ---
     const animatedElements = document.querySelectorAll('.animate-on-scroll');
 

@@ -8,7 +8,7 @@ load_dotenv(env_path)
 
 
 class Config:
-    SECRET_KEY = os.environ.get('SECRET_KEY', 'divsa_secret_key')
+    SECRET_KEY = os.environ.get('SECRET_KEY')
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     DEBUG = os.environ.get('FLASK_DEBUG', '0') == '1'
     SITE_URL = os.environ.get('SITE_URL', 'https://www.divsapolymers.com')
@@ -17,9 +17,11 @@ class Config:
     MAX_CONTENT_LENGTH = 16 * 1024 * 1024  # 16MB max upload
     SESSION_COOKIE_HTTPONLY = True
     SESSION_COOKIE_SAMESITE = 'Lax'
+    SESSION_COOKIE_SECURE = os.environ.get('SESSION_COOKIE_SECURE', '1') == '1'
+    ADMIN_LOGIN_LIMIT = 5
+    ADMIN_LOGIN_WINDOW_SECONDS = 900
     
     # Admin authentication
-    ADMIN_PASSWORD = os.environ.get('ADMIN_PASSWORD', 'admin123')
     ADMIN_PASSWORD_HASH = os.environ.get('ADMIN_PASSWORD_HASH')
 
     # MongoDB Atlas configuration
@@ -50,6 +52,7 @@ class ProductionConfig(Config):
 
 class DevelopmentConfig(Config):
     DEBUG = True
+    SESSION_COOKIE_SECURE = False
 
 
 class TestingConfig(Config):

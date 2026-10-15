@@ -12,3 +12,12 @@ EMAIL_PASSWORD=
 EMAIL_USE_TLS=
 EMAIL_FROM=
 EMAIL_TO_ADMIN=
+
+# Required: generate with python -c 'import secrets; print(secrets.token_hex(32))'
+# SECRET_KEY above must contain at least 32 random characters.
+# Required: run python scripts/generate_hash.py and paste its output below.
+ADMIN_PASSWORD_HASH=
+# Keep 1 on HTTPS deployments; set 0 only for local HTTP development.
+SESSION_COOKIE_SECURE=1
+# Login throttling uses MONGODB_URI above and the admin_login_attempts collection.
+# The database account needs read/write and createIndex permissions for TTL cleanup.

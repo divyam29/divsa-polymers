@@ -3,12 +3,15 @@ from flask_wtf.csrf import CSRFProtect
 from app.config import Config
 from app.utils.logging import configure_logging
 from app.db import init_app
+from app.utils.security import validate_security_config
 
 csrf = CSRFProtect()
 
 def create_app(config_class=Config):
     app = Flask(__name__)
     app.config.from_object(config_class)
+
+    validate_security_config(app)
 
     # Initialize extensions
     csrf.init_app(app)

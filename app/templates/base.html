@@ -28,22 +28,21 @@
     <link rel="apple-touch-icon" sizes="180x180" href="{{ url_for('static', filename='assets/Divsa_Polymers_Favicon_Pack/apple-touch-icon.png') }}">
     <link rel="manifest" href="{{ url_for('static', filename='assets/Divsa_Polymers_Favicon_Pack/site.webmanifest') }}">
     
-    <!-- Preload hero image for performance (Core Web Vitals) -->
-    <link rel="preload" as="image" href="{{ url_for('static', filename='assets/factory-hero.webp') }}" type="image/webp">
-    <link rel="preload" as="image" href="{{ url_for('static', filename='assets/factory-hero.jpg') }}" type="image/jpeg">
-    <link rel="preload" as="image" href="{{ url_for('static', filename='assets/factory-1.webp') }}" type="image/webp">
-    <link rel="preload" as="image" href="{{ url_for('static', filename='assets/factory-1.jpg') }}" type="image/jpeg">
-    <link rel="preload" as="image" href="{{ url_for('static', filename='assets/factory-2.webp') }}" type="image/webp">
-    <link rel="preload" as="image" href="{{ url_for('static', filename='assets/factory-2.jpg') }}" type="image/jpeg">
-    <link rel="preload" as="image" href="{{ url_for('static', filename='assets/pvc-braided-page.webp') }}" type="image/webp">
-    <link rel="preload" as="image" href="{{ url_for('static', filename='assets/pvc-braided-page.jpg') }}" type="image/jpeg">
-    <link rel="preload" as="image" href="{{ url_for('static', filename='assets/pvc-braided.webp') }}" type="image/webp">
-    <link rel="preload" as="image" href="{{ url_for('static', filename='assets/pvc-braided.jpg') }}" type="image/jpeg">
-    <link rel="preload" as="image" href="{{ url_for('static', filename='assets/pvc-garden.webp') }}" type="image/webp">
-    <link rel="preload" as="image" href="{{ url_for('static', filename='assets/pvc-garden.jpg') }}" type="image/jpeg">
-    <link rel="preload" as="image" href="{{ url_for('static', filename='assets/pvc-recycled.webp') }}" type="image/webp">
-    <link rel="preload" as="image" href="{{ url_for('static', filename='assets/pvc-recycled.jpg') }}" type="image/jpeg">
-    
+    {# Match each page's actual hero; pages without an image need no preload. #}
+    {% set hero_images = {
+        'main.home': 'factory-hero.webp',
+        'main.products': 'factory-1.webp',
+        'main.pvc_garden_pipes': 'pvc-garden.webp',
+        'main.pvc_braided_pipes': 'pvc-braided.webp',
+        'main.pvc_recycled_pipes': 'pvc-recycled.webp',
+        'main.pvc_pipes_in_ambala': 'factory-2.webp',
+        'main.pvc_pipes_in_delhi': 'factory-2.webp',
+        'main.pvc_pipes_in_punjab': 'factory-2.webp'
+    } %}
+    {% if request.endpoint in hero_images %}
+    <link rel="preload" as="image" href="{{ url_for('static', filename='assets/' + hero_images[request.endpoint]) }}" type="image/webp" fetchpriority="high">
+    {% endif %}
+
     <!-- Fonts and Icons -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

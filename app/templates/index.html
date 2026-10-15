@@ -40,7 +40,7 @@
                 </div>
 
                 <div class="hero-image animate-on-scroll">
-                    <img src="{{ url_for('static', filename='assets/factory-hero.jpg') }}" alt="Stack of PVC pipes">
+                    <img fetchpriority="high" decoding="async" src="{{ url_for('static', filename='assets/factory-hero.webp') }}" alt="Stack of PVC pipes">
                 </div>
             </div>
         </div>
@@ -60,7 +60,7 @@
                 <div class="product-card animate-on-scroll">
                     <span class="product-card-tag tag-best-seller">Best Seller</span>
                     <div class="product-card-image">
-                        <img src="{{ url_for('static', filename='assets/factory-hero.jpg') }}"
+                        <img loading="lazy" decoding="async" src="{{ url_for('static', filename='assets/factory-hero.webp') }}"
                             alt="Green PVC Garden Pipes">
                     </div>
                     <div class="product-card-content">
@@ -80,7 +80,7 @@
                 <div class="product-card animate-on-scroll">
                     <span class="product-card-tag tag-premium">Premium</span>
                     <div class="product-card-image">
-                        <img src="{{ url_for('static', filename='assets/pvc-braided.jpg') }}"
+                        <img loading="lazy" decoding="async" src="{{ url_for('static', filename='assets/pvc-braided.webp') }}"
                             alt="PVC Braided Garden Pipes">
                     </div>
                     <div class="product-card-content">
@@ -100,7 +100,7 @@
                 <div class="product-card animate-on-scroll">
                     <span class="product-card-tag tag-eco">Eco-Friendly</span>
                     <div class="product-card-image">
-                        <img src="{{ url_for('static', filename='assets/factory-hero.jpg') }}"
+                        <img loading="lazy" decoding="async" src="{{ url_for('static', filename='assets/factory-hero.webp') }}"
                             alt="PVC Recycled Pipes in a warehouse">
                     </div>
                     <div class="product-card-content">
@@ -180,7 +180,7 @@
                             class="fas fa-arrow-right"></i></a>
                 </div>
                 <div class="infra-image animate-on-scroll">
-                    <img src="{{ url_for('static', filename='assets/factory-hero.jpg') }}"
+                    <img loading="lazy" decoding="async" src="{{ url_for('static', filename='assets/factory-hero.webp') }}"
                         alt="Industrial machinery for pipe manufacturing">
                 </div>
             </div>
@@ -229,11 +229,10 @@
                 </div>
 
                 <div class="dealership-form-container animate-on-scroll">
-                    {% with messages = get_flashed_messages() %}
+                    {% with messages = get_flashed_messages(with_categories=true) %}
                     {% if messages %}
-                    {% for message in messages %}
-                    <div
-                        style="padding: 10px; background-color: #d4edda; color: #155724; border-radius: 5px; margin-bottom: 20px;">
+                    {% for category, message in messages %}
+                    <div class="inquiry-message inquiry-message-{{ category }}" role="alert">
                         {{ message }}
                     </div>
                     {% endfor %}
